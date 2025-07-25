@@ -1,1 +1,313 @@
-test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanengelandt.net - Your Business Partner</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Light gray background */
+        }
+        /* Custom styles for subtle shadows and rounded corners */
+        .card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            border-radius: 0.75rem; /* rounded-xl */
+        }
+        .btn-primary {
+            background-color: #3b82f6; /* Blue-500 */
+            color: white;
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb; /* Blue-600 */
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo/Site Title -->
+            <a href="#" class="text-2xl font-bold text-gray-800 rounded-lg p-2 hover:bg-gray-100 transition-colors">
+                Vanengelandt.net
+            </a>
+
+            <!-- Navigation Menu (Desktop) -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="#home" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Home</a>
+                <a href="#services" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Services</a>
+                <a href="#about" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">About Us</a>
+                <a href="#contact" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Contact</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-2 shadow-md">
+            <nav class="flex flex-col items-center space-y-2">
+                <a href="#home" class="block text-gray-700 hover:bg-gray-100 w-full text-center py-2 rounded-md">Home</a>
+                <a href="#services" class="block text-gray-700 hover:bg-gray-100 w-full text-center py-2 rounded-md">Services</a>
+                <a href="#about" class="block text-gray-700 hover:bg-gray-100 w-full text-center py-2 rounded-md">About Us</a>
+                <a href="#contact" class="block text-gray-700 hover:bg-gray-100 w-full text-center py-2 rounded-md">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 md:py-32 rounded-b-xl shadow-lg">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+                Empowering Your Business Growth
+            </h1>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                At Vanengelandt.net, we provide innovative solutions and expert guidance to help your business thrive in today's dynamic market.
+            </p>
+            <a href="#contact" class="btn-primary inline-block hover:scale-105 transform transition-transform duration-300">
+                Get in Touch
+            </a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 md:py-24 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Our Services</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Card 1 -->
+                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
+                    <div class="text-blue-500 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h4l2-2m-6-2h5a2 2 0 002-2V9a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Strategic Consulting</h3>
+                    <p class="text-gray-600">
+                        We offer tailored strategies to optimize your business operations and achieve long-term goals.
+                    </p>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
+                    <div class="text-blue-500 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Web Development</h3>
+                    <p class="text-gray-600">
+                        Crafting modern, responsive, and high-performing websites to elevate your online presence.
+                    </p>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
+                    <div class="text-blue-500 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 16v-2m8-6h2M4 12H2m15.32-6.68l.707-.707M6.68 17.32l-.707.707M17.32 17.32l.707.707M6.68 6.68l-.707-.707"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Digital Marketing</h3>
+                    <p class="text-gray-600">
+                        Driving targeted traffic and increasing conversions through effective digital marketing campaigns.
+                    </p>
+                </div>
+
+                <!-- Service Card 4 -->
+                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
+                    <div class="text-blue-500 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">IT Solutions</h3>
+                    <p class="text-gray-600">
+                        Providing robust and scalable IT infrastructure and support to keep your business running smoothly.
+                    </p>
+                </div>
+
+                <!-- Service Card 5 -->
+                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
+                    <div class="text-blue-500 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2v8m0-8V4m0 2v8m0 0a2 2 0 100 4 2 2 0 000-4z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Data Analytics</h3>
+                    <p class="text-gray-600">
+                        Unlocking insights from your data to inform decision-making and identify growth opportunities.
+                    </p>
+                </div>
+
+                <!-- Service Card 6 -->
+                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
+                    <div class="text-blue-500 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Cloud Solutions</h3>
+                    <p class="text-gray-600">
+                        Implementing scalable and secure cloud infrastructure for enhanced flexibility and efficiency.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-16 md:py-24 bg-white">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2">
+                <img src="https://placehold.co/600x400/e0e7ff/3b82f6?text=About+Us" alt="About Us Image" class="rounded-xl shadow-lg w-full h-auto object-cover">
+            </div>
+            <div class="md:w-1/2">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">About Vanengelandt.net</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    Founded with a vision to empower businesses, Vanengelandt.net is a leading consulting and technology firm dedicated to delivering exceptional results. With years of experience and a team of seasoned experts, we pride ourselves on our client-centric approach and commitment to innovation.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    We believe in building strong, lasting partnerships with our clients, understanding their unique challenges, and providing solutions that drive sustainable growth and competitive advantage.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="bg-blue-600 text-white py-16 md:py-20 text-center rounded-t-xl shadow-lg">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Business?</h2>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                Let's discuss how Vanengelandt.net can help you achieve your business objectives. Contact us today for a free consultation.
+            </p>
+            <a href="#contact" class="btn-primary inline-block bg-white text-blue-600 hover:bg-gray-100 hover:text-blue-700 transform transition-transform duration-300">
+                Schedule a Consultation
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 md:py-24 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Contact Us</h2>
+            <div class="max-w-3xl mx-auto bg-white p-8 card">
+                <form class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-gray-700 text-sm font-medium mb-2">Name</label>
+                        <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors" placeholder="Your Name" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email</label>
+                        <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors" placeholder="your.email@example.com" required>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-gray-700 text-sm font-medium mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors" placeholder="How can we help you?" required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn-primary w-full md:w-auto hover:scale-105 transform transition-transform duration-300">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+                <div class="mt-8 text-center text-gray-600">
+                    <p class="mb-2"><strong>Email:</strong> info@vanengelandt.net</p>
+                    <p class="mb-2"><strong>Phone:</strong> +32 123 45 67 89</p>
+                    <p><strong>Address:</strong> 123 Business Street, 8560 Wevelgem, Belgium</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-white py-8 rounded-t-xl shadow-inner">
+        <div class="container mx-auto px-4 text-center text-sm">
+            <p>&copy; 2025 Vanengelandt.net. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                // Close mobile menu if open
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Toggle mobile menu visibility
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Basic form submission (for demonstration, no actual backend)
+        const contactForm = document.querySelector('#contact form');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real application, you would send this data to a server
+            console.log('Form submitted!');
+            // You could show a "Thank You" message here instead of an alert
+            alert('Thank you for your message! We will get back to you soon.');
+            contactForm.reset();
+        });
+
+        // Replace alert with a custom message box for better UX
+        function showAlert(message) {
+            const existingMessageBox = document.getElementById('custom-message-box');
+            if (existingMessageBox) {
+                existingMessageBox.remove();
+            }
+
+            const messageBox = document.createElement('div');
+            messageBox.id = 'custom-message-box';
+            messageBox.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50';
+            messageBox.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
+                    <p class="text-lg font-semibold text-gray-800 mb-4">${message}</p>
+                    <button id="close-message-box" class="btn-primary">OK</button>
+                </div>
+            `;
+            document.body.appendChild(messageBox);
+
+            document.getElementById('close-message-box').addEventListener('click', () => {
+                messageBox.remove();
+            });
+        }
+
+        // Override the default alert to use our custom one
+        window.alert = showAlert;
+
+    </script>
+</body>
+</html>
