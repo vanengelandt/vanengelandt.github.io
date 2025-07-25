@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VanEngelandt.NET - Event Lighting & Technical Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter (for body text) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Bebas Neue (for stylish logo) -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -42,6 +45,7 @@
         .rainbow-letter {
             display: inline-block; /* Allows individual animation and spacing */
             animation: rainbow-shift 8s linear infinite; /* Apply animation to each letter/word */
+            font-family: 'Bebas Neue', sans-serif; /* Apply the new stylish font here */
         }
     </style>
 </head>
@@ -50,8 +54,8 @@
     <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
         <div class="container mx-auto px-4 flex flex-col items-center">
             <!-- Logo/Site Title with Per-Letter Rainbow Effect and doubled font size -->
-            <!-- Added w-full to make it take full width -->
-            <a href="#" class="font-bold rounded-lg p-2 hover:bg-gray-100 transition-colors text-4xl mb-4 w-full text-center">
+            <!-- Changed text-4xl to text-7xl for a much bigger font -->
+            <a href="#" class="font-bold rounded-lg p-2 hover:bg-gray-100 transition-colors text-7xl mb-4 w-full text-center">
                 <span class="rainbow-letter" style="animation-delay: 0s;">V</span>
                 <span class="rainbow-letter" style="animation-delay: 0.2s;">a</span>
                 <span class="rainbow-letter" style="animation-delay: 0.4s;">n</span>
