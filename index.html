@@ -78,8 +78,7 @@
                 0.9vw 0.9vw 0px rgba(0,0,0,0.1),
                 1.0vw 1.0vw 0px rgba(0,0,0,0.1); /* Adjust values for desired depth using vw */
             position: relative; /* Needed for transform to work correctly */
-            font-size: 8vw; /* Scale font size with viewport width */
-            line-height: 1; /* Adjust line height to prevent excessive spacing */
+            /* Removed font-size and line-height from here, now handled by parent <a> tag's Tailwind classes */
         }
         .rainbow-word {
             display: inline-block; /* Allows individual animation and spacing for words */
@@ -101,7 +100,8 @@
     <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
         <div class="container mx-auto px-4 flex flex-col items-center">
             <!-- Logo/Site Title with Per-Letter Rainbow Effect and scaled font size -->
-            <a href="#" class="font-bold rounded-lg p-2 hover:bg-gray-100 transition-colors text-7xl mb-2 w-full text-center">
+            <!-- Added whitespace-nowrap and responsive text sizing -->
+            <a href="#" class="font-bold rounded-lg p-2 hover:bg-gray-100 transition-colors mb-2 w-full text-center whitespace-nowrap text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
                 <span class="rainbow-letter" style="animation-delay: 0s;">V</span>
                 <span class="rainbow-letter" style="animation-delay: 0.2s;">a</span>
                 <span class="rainbow-letter" style="animation-delay: 0.4s;">n</span>
