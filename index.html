@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vanengelandt.net - Event Lighting & Technical Solutions</title>
+    <title>VanEngelandt.NET - Event Lighting & Technical Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -26,16 +26,50 @@
         .btn-primary:hover {
             background-color: #2563eb; /* Blue-600 */
         }
+
+        /* Rainbow text animation for individual letters */
+        /* This keyframe definition is still used by the main logo */
+        @keyframes rainbow-shift {
+            0% { color: #FF0000; } /* Red */
+            16% { color: #FF7F00; } /* Orange */
+            33% { color: #FFFF00; } /* Yellow */
+            50% { color: #00FF00; } /* Green */
+            66% { color: #0000FF; } /* Blue */
+            83% { color: #4B0082; } /* Indigo */
+            100% { color: #9400D3; } /* Violet */
+        }
+
+        .rainbow-letter {
+            display: inline-block; /* Allows individual animation and spacing */
+            animation: rainbow-shift 8s linear infinite; /* Apply animation to each letter/word */
+        }
     </style>
 </head>
 <body class="antialiased">
 
     <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-gray-800 rounded-lg p-2 hover:bg-gray-100 transition-colors">
-                Vanengelandt.net
+        <div class="container mx-auto px-4 flex flex-col items-center">
+            <!-- Logo/Site Title with Per-Letter Rainbow Effect and doubled font size -->
+            <a href="#" class="font-bold rounded-lg p-2 hover:bg-gray-100 transition-colors text-4xl mb-4">
+                <span class="rainbow-letter" style="animation-delay: 0s;">V</span>
+                <span class="rainbow-letter" style="animation-delay: 0.2s;">a</span>
+                <span class="rainbow-letter" style="animation-delay: 0.4s;">n</span>
+                <span class="rainbow-letter" style="animation-delay: 0.6s;">E</span>
+                <span class="rainbow-letter" style="animation-delay: 0.8s;">n</span>
+                <span class="rainbow-letter" style="animation-delay: 1.0s;">g</span>
+                <span class="rainbow-letter" style="animation-delay: 1.2s;">e</span>
+                <span class="rainbow-letter" style="animation-delay: 1.4s;">l</span>
+                <span class="rainbow-letter" style="animation-delay: 1.6s;">a</span>
+                <span class="rainbow-letter" style="animation-delay: 1.8s;">n</span>
+                <span class="rainbow-letter" style="animation-delay: 2.0s;">d</span>
+                <span class="rainbow-letter" style="animation-delay: 2.2s;">t</span>
+                <span class="rainbow-letter" style="animation-delay: 2.4s;">.</span>
+                <span class="rainbow-letter" style="animation-delay: 2.6s;">N</span>
+                <span class="rainbow-letter" style="animation-delay: 2.8s;">E</span>
+                <span class="rainbow-letter" style="animation-delay: 3.0s;">T</span>
             </a>
 
+            <!-- Navigation Menu (Desktop) -->
             <nav class="hidden md:flex space-x-6">
                 <a href="#home" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Home</a>
                 <a href="#services" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Services</a>
@@ -43,6 +77,7 @@
                 <a href="#contact" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Contact</a>
             </nav>
 
+            <!-- Mobile Menu Button -->
             <div class="md:hidden">
                 <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -52,6 +87,7 @@
             </div>
         </div>
 
+        <!-- Mobile Menu (Hidden by default) -->
         <div id="mobile-menu" class="hidden md:hidden bg-white py-2 shadow-md">
             <nav class="flex flex-col items-center space-y-2">
                 <a href="#home" class="block text-gray-700 hover:bg-gray-100 w-full text-center py-2 rounded-md">Home</a>
@@ -65,7 +101,14 @@
     <section id="home" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 md:py-32 rounded-b-xl shadow-lg">
         <div class="container mx-auto px-4 text-center">
             <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
-                Expert Lighting Solutions for the Event Industry
+                <!-- Apply rainbow effect to each word of the heading -->
+                <span class="rainbow-letter" style="animation-delay: 0s;">Expert</span>
+                <span class="rainbow-letter" style="animation-delay: 0.4s;">Lighting</span>
+                <span class="rainbow-letter" style="animation-delay: 0.8s;">Solutions</span>
+                <span class="rainbow-letter" style="animation-delay: 1.2s;">for</span>
+                <span class="rainbow-letter" style="animation-delay: 1.6s;">the</span>
+                <span class="rainbow-letter" style="animation-delay: 2.0s;">Event</span>
+                <span class="rainbow-letter" style="animation-delay: 2.4s;">Industry</span>
             </h1>
             <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
                 As a dedicated freelancer, I provide specialized lighting design, operation, and technical support to businesses in the dynamic event sector.
@@ -171,10 +214,13 @@
             <div class="md:w-1/2">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">About Me</h2>
                 <p class="text-gray-700 leading-relaxed mb-4">
-                    Hello! I'm a 52-year-old male freelancer based in Wevelgem, Belgium, specializing in providing high-quality lighting and technical services to businesses within the event industry. With a passion for creating impactful visual experiences, I bring extensive experience and a meticulous approach to every project.
+                    Hello! I'm a freelancer based in Wevelgem, Belgium, specializing in providing high-quality lighting, laser, and video technical services to businesses within the event industry. I primarily work with **Chamsys MQ500M+** and **MA3** lighting consoles, bringing advanced control and precision to every lighting design and operation.
+                </p>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    For laser projects, I utilize **Pangolin Beyond Ultimate** software to create stunning and safe laser displays. My pre-visualization capabilities are powered by **Vectorworks Designer** and **Capture**, allowing for detailed planning and realistic renderings of event setups. For video projects, I mostly use **Resolume Arena** to deliver dynamic and impactful visual content.
                 </p>
                 <p class="text-gray-700 leading-relaxed">
-                    My focus is on understanding the unique needs of each event and collaborating closely with clients to deliver lighting solutions that enhance atmosphere, highlight key elements, and ensure seamless technical execution. I am dedicated to professionalism, reliability, and bringing your event's vision to light.
+                    With a passion for creating impactful visual experiences, I bring extensive experience and a meticulous approach to every project. My focus is on understanding the unique needs of each event and collaborating closely with clients to deliver solutions that enhance atmosphere, highlight key elements, and ensure seamless technical execution. I am dedicated to professionalism, reliability, and bringing your event's vision to light.
                 </p>
             </div>
         </div>
@@ -198,6 +244,13 @@
             <div class="max-w-3xl mx-auto bg-white p-8 card">
                 <div class="mt-8 text-center text-gray-600">
                     <p class="mb-2"><strong>Email:</strong> info@vanengelandt.net</p>
+                    <p class="mb-2">
+                        <strong>Facebook:</strong>
+                        <a href="https://www.facebook.com/vanengelandt" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                            facebook.com/vanengelandt
+                        </a>
+                    </p>
+                    <p class="mb-2"><strong>BTW:</strong> BE0671817248</p>
                     <p><strong>Address:</strong> Plaatsweg 17, 8560 Gullegem, Belgium</p>
                 </div>
             </div>
@@ -206,7 +259,7 @@
 
     <footer class="bg-gray-800 text-white py-8 rounded-t-xl shadow-inner">
         <div class="container mx-auto px-4 text-center text-sm">
-            <p>&copy; 2025 Vanengelandt.net. All rights reserved.</p>
+            <p>&copy; 2025 VanEngelandt.NET. All rights reserved.</p>
             <div class="mt-4 space-x-4">
                 <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
                 <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
