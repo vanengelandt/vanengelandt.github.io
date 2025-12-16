@@ -1,207 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VanEngelandt.NET - Event Lighting & Technical Solutions</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      overflow-x: hidden;
-      transition: background-color 0.5s, color 0.5s;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f8fafc;
-      color: #1f2937;
-    }
-    body.dark {
-      background-color: #111827;
-      color: #f8fafc;
-    }
-    .card {
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
-      border-radius: 0.75rem;
-      transition: background-color 0.5s, color 0.5s;
-    }
-    body.dark .card {
-      background-color: #1f2937;
-      color: #f8fafc;
-    }
-    .btn-primary {
-      background-color: #3b82f6;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      transition: all 0.3s;
-    }
-    .btn-primary:hover {
-      background-color: #2563eb;
-    }
-    .rainbow-letter, .rainbow-word {
-      display: inline-block;
-      animation: rainbow-shift 8s linear infinite;
-      position: relative;
-    }
-    @keyframes rainbow-shift {
-      0% { color: #FF0000; }
-      16% { color: #FF7F00; }
-      33% { color: #FFFF00; }
-      50% { color: #00FF00; }
-      66% { color: #0000FF; }
-      83% { color: #4B0082; }
-      100% { color: #9400D3; }
-    }
-    /* Laser beams and volumetric cones */
-    .laser-container {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-    .laser-beam {
-      position: absolute;
-      width: 2px;
-      height: 100%;
-      background: linear-gradient(to bottom, rgba(255,0,0,0.7), rgba(255,0,0,0));
-      animation: laser-move 2s infinite alternate;
-    }
-    @keyframes laser-move {
-      0% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(50%) rotate(10deg); }
-      100% { transform: translateY(0) rotate(-10deg); }
-    }
-    /* Dark mode toggle */
-    .toggle-switch {
-      cursor: pointer;
-      width: 50px;
-      height: 26px;
-      background: #ccc;
-      border-radius: 9999px;
-      position: relative;
-      transition: background 0.3s;
-    }
-    .toggle-switch::after {
-      content: '';
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      width: 22px;
-      height: 22px;
-      background: white;
-      border-radius: 9999px;
-      transition: transform 0.3s;
-    }
-    .toggle-switch.active {
-      background: #3b82f6;
-    }
-    .toggle-switch.active::after {
-      transform: translateX(24px);
-    }
-    /* Show mode effects */
-    .show-mode .laser-beam {
-      opacity: 1;
-      animation-duration: 1s;
-    }
-    .show-mode body {
-      background: linear-gradient(45deg, #0f172a, #1e3a8a);
-      transition: background 0.5s;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VanEngelandt.NET - Event Lighting</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0; padding: 0;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.5s, color 0.5s;
+  background-color: #111827;
+  color: #f8fafc;
+  overflow-x: hidden;
+}
+
+.card {
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+  border-radius: 0.75rem;
+  background-color: #1f2937;
+  transition: background-color 0.5s, color 0.5s;
+}
+
+/* Rainbow text */
+.rainbow-letter { display: inline-block; animation: rainbow-shift 8s linear infinite; }
+@keyframes rainbow-shift {
+  0% { color: #FF0000; } 16% { color: #FF7F00; } 33% { color: #FFFF00; } 
+  50% { color: #00FF00; } 66% { color: #0000FF; } 83% { color: #4B0082; } 100% { color: #9400D3; }
+}
+
+/* Laser Container */
+.laser-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1; /* behind content */
+  perspective: 1000px;
+}
+.laser-beam {
+  position: absolute;
+  width: 2px;
+  height: 150vh; /* longer than screen for diagonal effect */
+  background: linear-gradient(to bottom, rgba(0,255,255,0.6), transparent);
+  transform-origin: bottom center;
+  animation: laser-move 2s infinite alternate;
+}
+@keyframes laser-move {
+  0% { transform: translateY(-50vh) rotateX(15deg) rotateZ(0deg); opacity: 0.4; }
+  50% { transform: translateY(0vh) rotateX(15deg) rotateZ(15deg); opacity: 0.8; }
+  100% { transform: translateY(-50vh) rotateX(15deg) rotateZ(-15deg); opacity: 0.4; }
+}
+
+/* Dark mode toggle */
+.toggle-switch {
+  cursor: pointer;
+  width: 50px; height: 26px;
+  background: #ccc; border-radius: 9999px; position: relative; transition: background 0.3s;
+}
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 22px; height: 22px; background: white; border-radius: 9999px; transition: transform 0.3s;
+}
+.toggle-switch.active { background: #3b82f6; }
+.toggle-switch.active::after { transform: translateX(24px); }
+</style>
 </head>
-<body class="antialiased">
+<body>
 
-  <!-- Laser beams background -->
-  <div class="laser-container" id="laser-container"></div>
+<!-- Laser beams background -->
+<div class="laser-container" id="laser-container"></div>
 
-  <header class="bg-white dark:bg-gray-900 shadow-sm py-4 sticky top-0 z-50 transition-colors duration-500">
-    <div class="container mx-auto px-4 flex flex-col items-center">
-      <a href="#" class="font-bold rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors mb-2 w-full text-center whitespace-nowrap text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
-        <span class="rainbow-letter" style="animation-delay: 0s;">V</span>
-        <span class="rainbow-letter" style="animation-delay: 0.2s;">a</span>
-        <span class="rainbow-letter" style="animation-delay: 0.4s;">n</span>
-        <span class="rainbow-letter" style="animation-delay: 0.6s;">E</span>
-        <span class="rainbow-letter" style="animation-delay: 0.8s;">n</span>
-        <span class="rainbow-letter" style="animation-delay: 1s;">g</span>
-        <span class="rainbow-letter" style="animation-delay: 1.2s;">e</span>
-        <span class="rainbow-letter" style="animation-delay: 1.4s;">l</span>
-        <span class="rainbow-letter" style="animation-delay: 1.6s;">a</span>
-        <span class="rainbow-letter" style="animation-delay: 1.8s;">n</span>
-        <span class="rainbow-letter" style="animation-delay: 2s;">d</span>
-        <span class="rainbow-letter" style="animation-delay: 2.2s;">t</span>
-        <span class="rainbow-letter" style="animation-delay: 2.4s;">.</span>
-        <span class="rainbow-letter" style="animation-delay: 2.6s;">N</span>
-        <span class="rainbow-letter" style="animation-delay: 2.8s;">E</span>
-        <span class="rainbow-letter" style="animation-delay: 3s;">T</span>
-      </a>
-
-      <!-- Dark Mode Toggle -->
-      <div class="mt-2 flex space-x-4 items-center">
-        <span>🌞</span>
-        <div id="dark-toggle" class="toggle-switch"></div>
-        <span>🌜</span>
-
-        <!-- Show Mode Toggle -->
-        <button id="show-toggle" class="btn-primary ml-4">Show Mode</button>
-      </div>
-    </div>
-  </header>
-
-  <section id="home" class="py-20 md:py-32 text-center">
-    <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
-      <span class="rainbow-letter">Expert</span>
-      <span class="rainbow-letter">Lighting</span>
-      <span class="rainbow-letter">Solutions</span>
-      <span class="rainbow-letter">for</span>
-      <span class="rainbow-letter">the</span>
-      <span class="rainbow-letter">Event</span>
-      <span class="rainbow-letter">Industry</span>
-    </h1>
-    <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-      As a dedicated freelancer, I provide specialised lighting design, operation, and technical support to businesses in the dynamic event sector.
-    </p>
-    <a href="#contact" class="btn-primary inline-block hover:scale-105 transform transition-transform duration-300">
-      Let's Illuminate Your Next Event
+<header class="bg-gray-900 shadow-sm py-4 sticky top-0 z-50">
+  <div class="container mx-auto px-4 flex flex-col items-center">
+    <a href="#" class="font-bold rounded-lg p-2 mb-2 w-full text-center whitespace-nowrap text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+      <span class="rainbow-letter">V</span><span class="rainbow-letter">a</span><span class="rainbow-letter">n</span>
+      <span class="rainbow-letter">E</span><span class="rainbow-letter">n</span><span class="rainbow-letter">g</span>
+      <span class="rainbow-letter">e</span><span class="rainbow-letter">l</span><span class="rainbow-letter">a</span>
+      <span class="rainbow-letter">n</span><span class="rainbow-letter">d</span><span class="rainbow-letter">t</span>
+      <span class="rainbow-letter">.</span><span class="rainbow-letter">N</span><span class="rainbow-letter">E</span><span class="rainbow-letter">T</span>
     </a>
-  </section>
+    <div class="mt-2 flex space-x-4 items-center">
+      <span>🌞</span>
+      <div id="dark-toggle" class="toggle-switch"></div>
+      <span>🌜</span>
+      <button id="show-toggle" class="px-4 py-2 bg-blue-600 rounded-lg text-white">Show Mode</button>
+    </div>
+  </div>
+</header>
 
-  <!-- Add more sections as needed ... -->
+<section id="home" class="py-20 md:py-32 text-center">
+  <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+    <span class="rainbow-letter">Expert</span>
+    <span class="rainbow-letter">Lighting</span>
+    <span class="rainbow-letter">Solutions</span>
+    <span class="rainbow-letter">for</span>
+    <span class="rainbow-letter">the</span>
+    <span class="rainbow-letter">Event</span>
+    <span class="rainbow-letter">Industry</span>
+  </h1>
+</section>
 
-  <script>
-    // Dark Mode Toggle
-    const darkToggle = document.getElementById('dark-toggle');
-    darkToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      darkToggle.classList.toggle('active');
-    });
+<script>
+const darkToggle = document.getElementById('dark-toggle');
+darkToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  darkToggle.classList.toggle('active');
+});
 
-    // Show Mode Toggle
-    const showToggle = document.getElementById('show-toggle');
-    showToggle.addEventListener('click', () => {
-      document.body.classList.toggle('show-mode');
-      generateLasers();
-    });
+const showToggle = document.getElementById('show-toggle');
+showToggle.addEventListener('click', () => {
+  document.body.classList.toggle('show-mode');
+  generateLasers();
+});
 
-    // Laser beam generation
-    function generateLasers() {
-      const container = document.getElementById('laser-container');
-      container.innerHTML = '';
-      if(!document.body.classList.contains('show-mode')) return;
-      for(let i = 0; i < 20; i++) {
-        const laser = document.createElement('div');
-        laser.className = 'laser-beam';
-        laser.style.left = `${Math.random() * 100}vw`;
-        laser.style.background = `linear-gradient(to bottom, hsl(${Math.random()*360}, 100%, 50%), transparent)`;
-        laser.style.animationDuration = `${1 + Math.random() * 2}s`;
-        container.appendChild(laser);
-      }
-    }
-  </script>
+function generateLasers() {
+  const container = document.getElementById('laser-container');
+  container.innerHTML = '';
+  if (!document.body.classList.contains('show-mode')) return;
+  for (let i = 0; i < 25; i++) {
+    const laser = document.createElement('div');
+    laser.className = 'laser-beam';
+    laser.style.left = `${Math.random()*100}vw`;
+    laser.style.background = `linear-gradient(to bottom, hsl(${Math.random()*360},100%,50%), transparent)`;
+    laser.style.animationDuration = `${0.5 + Math.random()*2}s`;
+    container.appendChild(laser);
+  }
+}
+
+// Initial laser setup if show mode active
+if (document.body.classList.contains('show-mode')) generateLasers();
+</script>
+
 </body>
 </html>
