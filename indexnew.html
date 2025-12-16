@@ -29,47 +29,35 @@
 
     <style>
         :root {
-            /* Default shadow color for Light Mode (subtle black) */
             --shadow-color: rgba(0,0,0,0.1);
         }
-
-        /* Dark Mode Override */
         html.dark {
-            /* Shadow color for Dark Mode (subtle white/grey to separate from dark bg) */
             --shadow-color: rgba(255,255,255,0.05); 
         }
-
         html, body {
             margin: 0;
             padding: 0;
             width: 100%;
             overflow-x: hidden;
         }
-        
         body {
             font-family: 'Inter', sans-serif;
-            /* Transition background color smoothly when toggling modes */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
-        /* Custom styles for subtle shadows and rounded corners */
         .card {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
             border-radius: 0.75rem;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        
-        /* Dark mode specific card shadow adjustment */
         html.dark .card {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
         }
-
         .btn-primary {
             background-color: #3b82f6;
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
-            transition: background-color 0.3s ease, transform 0.2s;
+            transition: background-color 0.3s ease;
         }
         .btn-primary:hover {
             background-color: #2563eb;
@@ -85,43 +73,25 @@
             83% { color: #4B0082; }
             100% { color: #9400D3; }
         }
-
         @keyframes shadow-shift-left-right {
             0% { transform: translateX(0); }
             50% { transform: translateX(0.5vw); }
             100% { transform: translateX(0); }
         }
-
         .rainbow-letter {
             display: inline-block;
             animation: rainbow-shift 8s linear infinite, shadow-shift-left-right 4s ease-in-out infinite alternate;
             font-family: 'Bebas Neue', sans-serif;
             position: relative;
-            /* Using CSS Variable for shadow color to support Dark Mode */
-            text-shadow:
-                0.1vw 0.1vw 0px var(--shadow-color),
-                0.2vw 0.2vw 0px var(--shadow-color),
-                0.3vw 0.3vw 0px var(--shadow-color),
-                0.4vw 0.4vw 0px var(--shadow-color),
-                0.5vw 0.5vw 0px var(--shadow-color),
-                0.6vw 0.6vw 0px var(--shadow-color),
-                0.7vw 0.7vw 0px var(--shadow-color),
-                0.8vw 0.8vw 0px var(--shadow-color),
-                0.9vw 0.9vw 0px var(--shadow-color),
-                1.0vw 1.0vw 0px var(--shadow-color);
+            text-shadow: 0.1vw 0.1vw 0px var(--shadow-color), 0.2vw 0.2vw 0px var(--shadow-color), 0.3vw 0.3vw 0px var(--shadow-color), 0.4vw 0.4vw 0px var(--shadow-color);
         }
-
         .rainbow-word {
             display: inline-block;
             animation: rainbow-shift 8s linear infinite, shadow-shift-left-right 4s ease-in-out infinite alternate;
             font-family: 'Inter', sans-serif;
             font-weight: 600;
             position: relative;
-            text-shadow:
-                0.05vw 0.05vw 0px var(--shadow-color),
-                0.1vw 0.1vw 0px var(--shadow-color),
-                0.15vw 0.15vw 0px var(--shadow-color),
-                0.2vw 0.2vw 0px var(--shadow-color);
+            text-shadow: 0.05vw 0.05vw 0px var(--shadow-color), 0.1vw 0.1vw 0px var(--shadow-color);
         }
     </style>
     
@@ -138,7 +108,7 @@
     <header class="bg-white dark:bg-gray-900 shadow-sm dark:shadow-gray-800 py-4 sticky top-0 z-50 transition-colors duration-300">
         <div class="container mx-auto px-4 flex flex-col items-center">
             
-            <a href="#" aria-label="VanEngelandt.NET" class="font-bold rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors mb-2 w-full text-center whitespace-nowrap text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+            <a href="#" aria-label="VanEngelandt.NET" class="font-bold rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors mb-2 w-full text-center whitespace-nowrap text-4xl sm:text-6xl md:text-7xl lg:text-8xl">
                 <span class="rainbow-letter" aria-hidden="true" style="animation-delay: 0s;">V</span>
                 <span class="rainbow-letter" aria-hidden="true" style="animation-delay: 0.2s;">a</span>
                 <span class="rainbow-letter" aria-hidden="true" style="animation-delay: 0.4s;">n</span>
@@ -166,7 +136,7 @@
                 <span class="rainbow-word" style="animation-delay: 1.0s;">Organisations</span>
             </p>
 
-            <div class="flex items-center space-x-6">
+            <div class="flex items-center gap-4">
                 <nav class="hidden md:flex space-x-6">
                     <a href="#home" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">Home</a>
                     <a href="#services" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">Services</a>
@@ -175,13 +145,13 @@
                     <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">Contact</a>
                 </nav>
 
-                <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
-                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 ml-2 border border-gray-200 dark:border-gray-700">
+                    <svg id="theme-toggle-dark-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
                     <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
                 </button>
 
                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none">
+                    <button id="mobile-menu-button" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none p-2">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
@@ -251,3 +221,215 @@
                 </div>
 
                 <div class="bg-white dark:bg-gray-800 p-8 card text-center hover:scale-105 transform transition-transform duration-300">
+                    <div class="text-blue-500 dark:text-blue-400 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 16v-2m8-6h2M4 12H2m15.32-6.68l.707-.707M6.68 17.32l-.707.707M17.32 17.32l.707.707M6.68 6.68l-.707-.707"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Technical Setup & Support</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Installation, configuration, and troubleshooting of lighting equipment to ensure flawless performance.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-8 card text-center hover:scale-105 transform transition-transform duration-300">
+                    <div class="text-blue-500 dark:text-blue-400 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Equipment Consultation</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Guidance on optimal lighting equipment selection and assistance with rental coordination for your projects.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-8 card text-center hover:scale-105 transform transition-transform duration-300">
+                    <div class="text-blue-500 dark:text-blue-400 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2v8m0-8V4m0 2v8m0 0a2 2 0 100 4 2 2 0 000-4z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Event Project Support</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Assistance with technical aspects of event planning and coordination, ensuring smooth execution.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 p-8 card text-center hover:scale-105 transform transition-transform duration-300">
+                    <div class="text-blue-500 dark:text-blue-400 mb-4">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Custom Technical Solutions</h3>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Developing bespoke technical solutions to meet unique event requirements and challenges.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-16 md:py-24 bg-white dark:bg-gray-850 transition-colors duration-300">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2">
+                <img src="https://placehold.co/600x400/e0e7ff/3b82f6?text=About+Me" alt="About Me Image" class="rounded-xl shadow-lg w-full h-auto object-cover border-2 border-transparent dark:border-gray-700">
+            </div>
+            <div class="md:w-1/2">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-6">About Me</h2>
+                <div class="text-gray-700 dark:text-gray-300 leading-relaxed space-y-4">
+                    <p>
+                        Hello! I'm a freelancer based in Wevelgem, Belgium, specialising in providing high-quality lighting, laser, and video technical services to businesses within the event industry. I primarily work with <strong class="text-blue-600 dark:text-blue-400">Chamsys MQ500M+</strong> and <strong class="text-blue-600 dark:text-blue-400">MA3</strong> lighting consoles, bringing advanced control and precision to every lighting design and operation.
+                    </p>
+                    <p>
+                        For laser projects, I utilize <strong>Pangolin Beyond Ultimate</strong> software to create stunning and safe laser displays. My pre-visualisation capabilities are powered by <strong>Vectorworks Designer</strong> and <strong>Capture</strong>, allowing for detailed planning and realistic renderings. For video projects, I use <strong>Resolume Arena</strong> to deliver dynamic visual content.
+                    </p>
+                    <p>
+                        With a passion for creating impactful visual experiences, I bring extensive experience and a meticulous approach to every project. My focus is on understanding the unique needs of each event and collaborating closely with clients to deliver solutions that enhance atmosphere and ensure seamless technical execution.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-blue-600 dark:bg-blue-800 text-white py-16 md:py-20 text-center rounded-t-xl shadow-lg transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Illuminate Your Next Project?</h2>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-blue-100">
+                Let's discuss how my expertise in event lighting can elevate your next production. Contact me today for a consultation.
+            </p>
+            <a href="#contact" class="btn-primary inline-block bg-white text-blue-600 hover:bg-gray-100 hover:text-blue-700 dark:bg-gray-900 dark:text-blue-400 dark:hover:bg-gray-950 transform transition-transform duration-300">
+                Get a Quote
+            </a>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 md:py-24 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 dark:text-white mb-12">Contact Me</h2>
+            <div class="max-w-3xl mx-auto bg-white dark:bg-gray-800 p-8 card transition-colors duration-300">
+                <div class="mt-8 text-center text-gray-600 dark:text-gray-300">
+                    <p class="mb-2"><strong>Email:</strong> info@vanengelandt.net</p>
+                    <p class="mb-2">
+                        <strong>Website:</strong>
+                        <a href="http://www.vanengelandt.net" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
+                            www.vanengelandt.net
+                        </a>
+                    </p>
+                    <p class="mb-2">
+                        <strong>Facebook:</strong>
+                        <a href="https://www.facebook.com/vanengelandt" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
+                            facebook.com/vanengelandt
+                        </a>
+                    </p>
+                    <hr class="my-4 border-gray-200 dark:border-gray-700 w-1/2 mx-auto">
+                    <p class="mb-2"><strong>BTW:</strong> BE0671.817.248</p>
+                    <p class="mb-2"><strong>Bank:</strong> BELFIUS BANK</p>
+                    <p class="mb-2"><strong>IBAN:</strong> BE33 0689 3189 0646</p>
+                    <p class="mb-2"><strong>Address:</strong> Plaatsweg 17, 8560 Wevelgem, Belgium</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gray-800 dark:bg-gray-950 text-white py-8 rounded-t-xl shadow-inner transition-colors duration-300">
+        <div class="container mx-auto px-4 text-center text-sm">
+            <p>&copy; 2025 VanEngelandt.NET. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // --- 1. Dark Mode Toggle Logic (Refined) ---
+        var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        var themeToggleBtn = document.getElementById('theme-toggle');
+
+        // Check state on load and adjust icons immediately
+        if (document.documentElement.classList.contains('dark')) {
+            themeToggleLightIcon.classList.remove('hidden');
+            themeToggleDarkIcon.classList.add('hidden');
+        } else {
+            themeToggleLightIcon.classList.add('hidden');
+            themeToggleDarkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            // Toggle icons
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            // Toggle Class and LocalStorage
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+
+        // --- 2. Navigation Smooth Scrolling & Mobile Menu ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- 3. Custom Alert Box ---
+        function showAlert(message) {
+            const existingMessageBox = document.getElementById('custom-message-box');
+            if (existingMessageBox) {
+                existingMessageBox.remove();
+            }
+
+            const messageBox = document.createElement('div');
+            messageBox.id = 'custom-message-box';
+            messageBox.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50';
+            messageBox.innerHTML = `
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl max-w-sm w-full text-center border dark:border-gray-700">
+                    <p class="text-lg font-semibold text-gray-800 dark:text-white mb-4">${message}</p>
+                    <button id="close-message-box" class="btn-primary">OK</button>
+                </div>
+            `;
+            document.body.appendChild(messageBox);
+
+            document.getElementById('close-message-box').addEventListener('click', () => {
+                messageBox.remove();
+            });
+        }
+
+        window.alert = showAlert;
+    </script>
+</body>
+</html>
