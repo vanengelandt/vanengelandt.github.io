@@ -5,25 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VanEngelandt.NET - Event Lighting & Technical Solutions</title>
     <meta name="description" content="Freelance lighting, laser and video technician from Wevelgem, Belgium. Lighting design, pre-visualisation and live operation for events and organisations.">
-    <meta name="theme-color" content="#07060f">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='.5' stop-color='%23a855f7'/%3E%3Cstop offset='1' stop-color='%23f472b6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%2307060f'/%3E%3Cpath d='M14 16h9l9 26 9-26h9L37 50h-10z' fill='url(%23g)'/%3E%3C/svg%3E">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/png" href="images/logo-mark-128.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #07060f;
-            --bg-2: #0e0c1d;
+            --bg: #000000;
+            --bg-2: #0a0a0a;
             --surface: rgba(255, 255, 255, 0.04);
             --surface-hover: rgba(255, 255, 255, 0.07);
             --border: rgba(255, 255, 255, 0.09);
-            --text: #ece9f7;
-            --muted: #a09cb8;
-            --cyan: #22d3ee;
-            --violet: #a855f7;
-            --pink: #f472b6;
-            --amber: #fbbf24;
-            --grad: linear-gradient(100deg, var(--cyan), var(--violet) 50%, var(--pink));
+            --text: #f2f2f2;
+            --muted: #a6a6a6;
+            --blue: #9a9aff;
+            --purple: #b77fd6;
+            --red: #ff8f8f;
+            --green: #8cf5a0;
+            --grad: linear-gradient(100deg, var(--red), var(--purple) 50%, var(--blue));
             --radius: 18px;
             --max: 1140px;
         }
@@ -61,7 +61,7 @@
         .eyebrow {
             display: inline-flex; align-items: center; gap: 8px;
             font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-            color: var(--cyan);
+            color: var(--blue);
         }
         .eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--grad); border-radius: 2px; }
 
@@ -75,10 +75,10 @@
             transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
         }
         .btn-primary {
-            background: var(--grad); color: #0b0616;
-            box-shadow: 0 10px 30px -10px rgba(168, 85, 247, .7);
+            background: var(--grad); color: #000;
+            box-shadow: 0 10px 30px -10px rgba(183, 127, 214, .7);
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px -10px rgba(34, 211, 238, .7); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px -10px rgba(154, 154, 255, .7); }
         .btn-ghost { border: 1px solid var(--border); background: var(--surface); color: var(--text); }
         .btn-ghost:hover { background: var(--surface-hover); transform: translateY(-2px); }
         .btn svg { width: 18px; height: 18px; }
@@ -86,7 +86,7 @@
         /* ---------- Header ---------- */
         .site-header {
             position: sticky; top: 0; z-index: 50;
-            background: rgba(7, 6, 15, 0.72);
+            background: rgba(0, 0, 0, 0.72);
             backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border);
         }
@@ -95,11 +95,11 @@
             font-family: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif; font-size: clamp(1.5rem, 6vw, 2rem); white-space: nowrap; letter-spacing: 0.04em;
             text-decoration: none; display: flex; align-items: center; gap: 10px; line-height: 1;
         }
-        .logo-mark { width: 30px; height: 30px; flex: none; }
+        .logo-mark { width: 40px; height: auto; flex: none; }
         .nav-links { display: none; gap: 30px; align-items: center; }
         .nav-links a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: 0.95rem; transition: color .2s; }
         .nav-links a:hover { color: var(--text); }
-        .nav-links .btn { padding: 10px 20px; color: #0b0616; }
+        .nav-links .btn { padding: 10px 20px; color: #000; }
 
         .menu-btn {
             background: var(--surface); border: 1px solid var(--border); color: var(--text);
@@ -122,7 +122,7 @@
             position: relative; overflow: hidden; isolation: isolate;
             padding: 96px 0 120px;
             background:
-                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(168, 85, 247, .22), transparent 70%),
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(183, 127, 214, .22), transparent 70%),
                 linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
         }
         @media (min-width: 900px) { .hero { padding: 140px 0 170px; } }
@@ -137,10 +137,10 @@
             mix-blend-mode: screen;
             opacity: .55;
         }
-        .beam.b1 { left: 4%;  background: linear-gradient(180deg, rgba(34, 211, 238, .9), rgba(34, 211, 238, 0) 85%); animation: sweep-a 9s ease-in-out infinite alternate; }
-        .beam.b2 { left: 31%; background: linear-gradient(180deg, rgba(168, 85, 247, .9), rgba(168, 85, 247, 0) 85%); animation: sweep-b 11s ease-in-out infinite alternate; }
-        .beam.b3 { right: 31%; background: linear-gradient(180deg, rgba(244, 114, 182, .85), rgba(244, 114, 182, 0) 85%); animation: sweep-a 10s ease-in-out infinite alternate-reverse; }
-        .beam.b4 { right: 4%; background: linear-gradient(180deg, rgba(251, 191, 36, .75), rgba(251, 191, 36, 0) 85%); animation: sweep-b 12s ease-in-out infinite alternate-reverse; }
+        .beam.b1 { left: 4%;  background: linear-gradient(180deg, rgba(154, 154, 255, .9), rgba(154, 154, 255, 0) 85%); animation: sweep-a 9s ease-in-out infinite alternate; }
+        .beam.b2 { left: 31%; background: linear-gradient(180deg, rgba(183, 127, 214, .9), rgba(183, 127, 214, 0) 85%); animation: sweep-b 11s ease-in-out infinite alternate; }
+        .beam.b3 { right: 31%; background: linear-gradient(180deg, rgba(255, 143, 143, .85), rgba(255, 143, 143, 0) 85%); animation: sweep-a 10s ease-in-out infinite alternate-reverse; }
+        .beam.b4 { right: 4%; background: linear-gradient(180deg, rgba(140, 245, 160, .75), rgba(140, 245, 160, 0) 85%); animation: sweep-b 12s ease-in-out infinite alternate-reverse; }
         @keyframes sweep-a { from { transform: rotate(-22deg); } to { transform: rotate(14deg); } }
         @keyframes sweep-b { from { transform: rotate(18deg); } to { transform: rotate(-16deg); } }
 
@@ -152,7 +152,7 @@
             position: absolute; left: 0; right: 0; bottom: 0; height: 120px; z-index: -1;
             background:
                 repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 60px),
-                linear-gradient(0deg, rgba(168, 85, 247, .15), transparent);
+                linear-gradient(0deg, rgba(183, 127, 214, .15), transparent);
             transform: perspective(400px) rotateX(60deg); transform-origin: bottom;
             mask-image: linear-gradient(0deg, #000, transparent);
             -webkit-mask-image: linear-gradient(0deg, #000, transparent);
@@ -160,10 +160,8 @@
 
         .hero-inner { text-align: center; max-width: 860px; margin: 0 auto; }
         .brand {
-            font-family: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
-            font-size: clamp(2.6rem, 12vw, 7.5rem);
-            letter-spacing: 0.02em; line-height: .95; margin: 22px 0 6px;
-            filter: drop-shadow(0 8px 40px rgba(168, 85, 247, .35));
+            display: block; width: min(440px, 82vw); height: auto; margin: 26px auto 18px;
+            filter: drop-shadow(0 10px 50px rgba(183, 127, 214, .35));
         }
         .tagline { font-size: clamp(1rem, 2.4vw, 1.3rem); color: var(--muted); font-weight: 500; margin: 0 0 30px; }
         .hero h1 { font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 18px; }
@@ -176,7 +174,7 @@
             border: 1px solid var(--border); background: var(--surface);
             font-size: .82rem; color: var(--muted);
         }
-        .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 10px #34d399; }
+        .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
 
         /* ---------- Sections ---------- */
         section { position: relative; }
@@ -204,7 +202,7 @@
         }
         .card::after {
             content: ""; position: absolute; width: 220px; height: 220px; top: -110px; right: -110px;
-            background: radial-gradient(circle, var(--glow, rgba(34, 211, 238, .25)), transparent 70%);
+            background: radial-gradient(circle, var(--glow, rgba(154, 154, 255, .25)), transparent 70%);
             pointer-events: none;
         }
         .card:hover { transform: translateY(-6px); background: var(--surface-hover); }
@@ -213,14 +211,14 @@
         .card p { color: var(--muted); margin: 0; font-size: .97rem; }
         .icon {
             width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center;
-            background: var(--icon-bg, rgba(34, 211, 238, .12)); color: var(--icon, var(--cyan));
+            background: var(--icon-bg, rgba(154, 154, 255, .12)); color: var(--icon, var(--blue));
             border: 1px solid var(--border);
         }
         .icon svg { width: 28px; height: 28px; }
-        .c-cyan   { --icon: var(--cyan);   --icon-bg: rgba(34, 211, 238, .12);  --glow: rgba(34, 211, 238, .22); }
-        .c-violet { --icon: var(--violet); --icon-bg: rgba(168, 85, 247, .14);  --glow: rgba(168, 85, 247, .25); }
-        .c-pink   { --icon: var(--pink);   --icon-bg: rgba(244, 114, 182, .13); --glow: rgba(244, 114, 182, .22); }
-        .c-amber  { --icon: var(--amber);  --icon-bg: rgba(251, 191, 36, .12);  --glow: rgba(251, 191, 36, .2); }
+        .c-blue   { --icon: var(--blue);   --icon-bg: rgba(154, 154, 255, .12);  --glow: rgba(154, 154, 255, .22); }
+        .c-purple { --icon: var(--purple); --icon-bg: rgba(183, 127, 214, .14);  --glow: rgba(183, 127, 214, .25); }
+        .c-red   { --icon: var(--red);   --icon-bg: rgba(255, 143, 143, .13); --glow: rgba(255, 143, 143, .22); }
+        .c-green  { --icon: var(--green);  --icon-bg: rgba(140, 245, 160, .12);  --glow: rgba(140, 245, 160, .2); }
 
         /* About */
         .about { background: linear-gradient(180deg, var(--bg), var(--bg-2)); }
@@ -228,8 +226,8 @@
         @media (min-width: 900px) { .about-grid { grid-template-columns: 1fr 1.1fr; gap: 64px; } }
         .about-visual {
             border-radius: 24px; overflow: hidden; border: 1px solid var(--border);
-            background: radial-gradient(ellipse at 50% 0%, #1b1535, var(--bg) 75%);
-            box-shadow: 0 30px 80px -30px rgba(168, 85, 247, .45);
+            background: radial-gradient(ellipse at 50% 0%, #161616, var(--bg) 75%);
+            box-shadow: 0 30px 80px -30px rgba(183, 127, 214, .45);
         }
         .about-visual svg { width: 100%; height: auto; }
         .about p { color: var(--muted); margin: 0 0 16px; }
@@ -246,9 +244,9 @@
         .cta-band {
             position: relative; overflow: hidden; border-radius: 28px; padding: 64px 28px; text-align: center;
             background:
-                radial-gradient(circle at 15% 20%, rgba(34, 211, 238, .35), transparent 45%),
-                radial-gradient(circle at 85% 80%, rgba(244, 114, 182, .35), transparent 45%),
-                linear-gradient(135deg, #1a1036, #100c22);
+                radial-gradient(circle at 15% 20%, rgba(154, 154, 255, .35), transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(255, 143, 143, .35), transparent 45%),
+                linear-gradient(135deg, #141414, #0a0a0a);
             border: 1px solid var(--border);
         }
         .cta-band h2 { margin-top: 0; }
@@ -261,11 +259,11 @@
         .contact-card h3 { font-size: 1.05rem; margin-bottom: 18px; color: var(--muted); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
         .contact-row { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); }
         .contact-row:last-child { border-bottom: 0; }
-        .contact-row .ci { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: rgba(168, 85, 247, .12); color: var(--violet); }
+        .contact-row .ci { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: rgba(183, 127, 214, .12); color: var(--purple); }
         .contact-row .ci svg { width: 19px; height: 19px; }
         .contact-row small { display: block; color: var(--muted); font-size: .78rem; letter-spacing: .04em; }
         .contact-row a, .contact-row span { color: var(--text); text-decoration: none; font-weight: 500; overflow-wrap: anywhere; }
-        .contact-row a:hover { color: var(--cyan); }
+        .contact-row a:hover { color: var(--blue); }
 
         /* Footer */
         footer { border-top: 1px solid var(--border); padding: 36px 0; color: var(--muted); font-size: .9rem; }
@@ -290,15 +288,7 @@
     <header class="site-header">
         <div class="container nav">
             <a href="#home" class="logo" aria-label="VanEngelandt.NET home">
-                <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
-                    <defs>
-                        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-                            <stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#a855f7"/><stop offset="1" stop-color="#f472b6"/>
-                        </linearGradient>
-                    </defs>
-                    <rect width="64" height="64" rx="14" fill="#15112a"/>
-                    <path d="M14 16h9l9 26 9-26h9L37 50H27z" fill="url(#lg)"/>
-                </svg>
+                <img class="logo-mark" src="images/logo-mark-128.png" alt="" width="40" height="38">
                 <span class="gradient-text">VanEngelandt.NET</span>
             </a>
             <nav class="nav-links" aria-label="Main">
@@ -332,7 +322,7 @@
 
         <div class="container hero-inner">
             <span class="chip"><span class="dot"></span> Freelance &middot; Wevelgem, Belgium</span>
-            <div class="brand gradient-text">VanEngelandt<wbr>.NET</div>
+            <img class="brand" src="images/logo-dark-600.png" alt="VanEngelandt Event Services logo" width="600" height="570">
             <p class="tagline">Multimedia Services for Events &amp; Organisations</p>
             <h1>Expert Lighting Solutions for the Event Industry</h1>
             <p class="lead">
@@ -356,7 +346,7 @@
                 <p>Light, lasers and video, from the first sketch to the last cue.</p>
             </div>
             <div class="grid">
-                <article class="card c-cyan reveal">
+                <article class="card c-blue reveal">
                     <div class="icon">
                         <!-- moving head -->
                         <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 21h10M9 21l1-4h4l1 4"/><path d="M6 6a6 6 0 0 1 12 0v5a6 6 0 0 1-12 0z"/><circle cx="12" cy="8" r="2.5"/></svg>
@@ -365,7 +355,7 @@
                     <p>Crafting innovative and impactful lighting designs that bring your event vision to life, with detailed pre-visualisation.</p>
                 </article>
 
-                <article class="card c-violet reveal">
+                <article class="card c-purple reveal">
                     <div class="icon">
                         <!-- console faders -->
                         <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8v8M12 8v8M16 8v8"/><path d="M6.5 13h3M10.5 10h3M14.5 14h3"/></svg>
@@ -374,7 +364,7 @@
                     <p>Expert control and dynamic operation of lighting systems during live events for seamless execution.</p>
                 </article>
 
-                <article class="card c-pink reveal">
+                <article class="card c-red reveal">
                     <div class="icon">
                         <!-- wrench -->
                         <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3-3 8-8M14.7 6.3 13 4.6a4 4 0 0 0-5.6 5.6L3 14.6 6.4 18l4.4-4.4"/></svg>
@@ -383,7 +373,7 @@
                     <p>Installation, configuration, and troubleshooting of lighting equipment to ensure flawless performance.</p>
                 </article>
 
-                <article class="card c-amber reveal">
+                <article class="card c-green reveal">
                     <div class="icon">
                         <!-- flight case -->
                         <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 12h18M10 12v2h4v-2"/></svg>
@@ -392,7 +382,7 @@
                     <p>Guidance on optimal lighting equipment selection and assistance with rental coordination for your projects.</p>
                 </article>
 
-                <article class="card c-cyan reveal">
+                <article class="card c-blue reveal">
                     <div class="icon">
                         <!-- clipboard / planning -->
                         <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/></svg>
@@ -401,7 +391,7 @@
                     <p>Assistance with technical aspects of event planning and coordination, ensuring smooth execution.</p>
                 </article>
 
-                <article class="card c-violet reveal">
+                <article class="card c-purple reveal">
                     <div class="icon">
                         <!-- sparkles -->
                         <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>
@@ -419,14 +409,14 @@
                 <!-- Illustrated stage: truss with fixtures, beams and a crowd. Swap for a photo any time, e.g. <img src="images/about.jpg"> -->
                 <svg viewBox="0 0 600 440">
                     <defs>
-                        <linearGradient id="bc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity=".85"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
-                        <linearGradient id="bv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a855f7" stop-opacity=".85"/><stop offset="1" stop-color="#a855f7" stop-opacity="0"/></linearGradient>
-                        <linearGradient id="bp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f472b6" stop-opacity=".85"/><stop offset="1" stop-color="#f472b6" stop-opacity="0"/></linearGradient>
-                        <linearGradient id="ba" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24" stop-opacity=".8"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0"/></linearGradient>
-                        <radialGradient id="floor" cx="50%" cy="100%" r="60%"><stop offset="0" stop-color="#a855f7" stop-opacity=".45"/><stop offset="1" stop-color="#a855f7" stop-opacity="0"/></radialGradient>
+                        <linearGradient id="bc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a9aff" stop-opacity=".85"/><stop offset="1" stop-color="#9a9aff" stop-opacity="0"/></linearGradient>
+                        <linearGradient id="bv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b77fd6" stop-opacity=".85"/><stop offset="1" stop-color="#b77fd6" stop-opacity="0"/></linearGradient>
+                        <linearGradient id="bp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8f8f" stop-opacity=".85"/><stop offset="1" stop-color="#ff8f8f" stop-opacity="0"/></linearGradient>
+                        <linearGradient id="ba" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8cf5a0" stop-opacity=".8"/><stop offset="1" stop-color="#8cf5a0" stop-opacity="0"/></linearGradient>
+                        <radialGradient id="floor" cx="50%" cy="100%" r="60%"><stop offset="0" stop-color="#b77fd6" stop-opacity=".45"/><stop offset="1" stop-color="#b77fd6" stop-opacity="0"/></radialGradient>
                         <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
                     </defs>
-                    <rect width="600" height="440" fill="#0b0918"/>
+                    <rect width="600" height="440" fill="#050505"/>
                     <!-- beams -->
                     <g filter="url(#soft)" style="mix-blend-mode:screen">
                         <polygon points="95,78 105,78 230,380 10,380" fill="url(#bc)"/>
@@ -435,32 +425,32 @@
                         <polygon points="495,78 505,78 590,380 380,380" fill="url(#ba)"/>
                     </g>
                     <!-- laser fan -->
-                    <g stroke="#34d399" stroke-width="1.2" opacity=".7">
+                    <g stroke="#ffffff" stroke-width="1.2" opacity=".7">
                         <line x1="300" y1="90" x2="40" y2="250"/><line x1="300" y1="90" x2="120" y2="290"/>
                         <line x1="300" y1="90" x2="220" y2="310"/><line x1="300" y1="90" x2="380" y2="310"/>
                         <line x1="300" y1="90" x2="480" y2="290"/><line x1="300" y1="90" x2="560" y2="250"/>
                     </g>
                     <!-- truss -->
-                    <g stroke="#6b6590" stroke-width="2" fill="none">
+                    <g stroke="#6b6b6b" stroke-width="2" fill="none">
                         <rect x="30" y="44" width="540" height="22"/>
                         <path d="M30 66 52 44 74 66 96 44 118 66 140 44 162 66 184 44 206 66 228 44 250 66 272 44 294 66 316 44 338 66 360 44 382 66 404 44 426 66 448 44 470 66 492 44 514 66 536 44 558 66"/>
                     </g>
                     <!-- fixtures -->
-                    <g fill="#1f1a38" stroke="#8a84b3" stroke-width="1.5">
+                    <g fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5">
                         <rect x="88" y="66" width="24" height="16" rx="4"/><rect x="218" y="66" width="24" height="16" rx="4"/>
                         <rect x="358" y="66" width="24" height="16" rx="4"/><rect x="488" y="66" width="24" height="16" rx="4"/>
                         <circle cx="300" cy="80" r="10"/>
                     </g>
                     <g>
-                        <circle cx="100" cy="80" r="4" fill="#22d3ee"/><circle cx="230" cy="80" r="4" fill="#a855f7"/>
-                        <circle cx="370" cy="80" r="4" fill="#f472b6"/><circle cx="500" cy="80" r="4" fill="#fbbf24"/>
-                        <circle cx="300" cy="84" r="4" fill="#34d399"/>
+                        <circle cx="100" cy="80" r="4" fill="#9a9aff"/><circle cx="230" cy="80" r="4" fill="#b77fd6"/>
+                        <circle cx="370" cy="80" r="4" fill="#ff8f8f"/><circle cx="500" cy="80" r="4" fill="#8cf5a0"/>
+                        <circle cx="300" cy="84" r="4" fill="#ffffff"/>
                     </g>
                     <!-- stage + glow -->
                     <rect x="0" y="330" width="600" height="110" fill="url(#floor)"/>
-                    <rect x="40" y="360" width="520" height="10" rx="3" fill="#221c40"/>
+                    <rect x="40" y="360" width="520" height="10" rx="3" fill="#1e1e1e"/>
                     <!-- crowd -->
-                    <g fill="#05040b">
+                    <g fill="#000">
                         <path d="M0 440V412c10-14 26-14 34 0 6-18 30-20 38-2 8-16 30-16 36 2 8-14 28-14 36 0 6-20 32-20 40-2 8-12 26-14 34 2 10-16 32-16 40 0 8-14 26-14 34 0 8-18 32-18 40 0 8-12 28-12 34 2 8-18 30-18 38 0 8-14 30-14 36 0 8-16 30-16 38 0 6-14 24-14 32 0 8-16 28-16 30-6V440z"/>
                         <path d="M118 400l-10-40 6-2 12 40zM468 398l14-44 6 2-12 44z"/>
                     </g>
