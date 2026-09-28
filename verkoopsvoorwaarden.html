@@ -1,469 +1,624 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl" data-page="terms">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algemene Verhuur- en Verkoopvoorwaarden - VanEngelandt.NET</title>
-    <meta name="description" content="Algemene verhuur- en verkoopvoorwaarden van VanEngelandt.NET, Peter Van Engelandt.">
-    <meta name="theme-color" content="#000000">
+    <title>Algemene verhuur- en verkoopvoorwaarden | VanEngelandt.NET</title>
+    <meta name="description" content="Algemene verhuur- en verkoopvoorwaarden van VanEngelandt.NET. General terms of rental and sale. Conditions générales de location et de vente.">
+    <meta name="theme-color" content="#050505">
     <link rel="icon" type="image/png" href="images/logo-mark-128.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="css/site.css">
+    <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
     <style>
-        :root {
-            --bg: #000000;
-            --bg-2: #0a0a0a;
-            --surface: rgba(255, 255, 255, 0.04);
-            --surface-hover: rgba(255, 255, 255, 0.07);
-            --border: rgba(255, 255, 255, 0.09);
-            --text: #f2f2f2;
-            --muted: #a6a6a6;
-            --body: #cfcfcf;
-            --blue: #9a9aff;
-            --purple: #b77fd6;
-            --red: #ff8f8f;
-            --grad: linear-gradient(100deg, var(--red), var(--purple) 50%, var(--blue));
-            --radius: 18px;
-            --max: 1140px;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; }
-        html { scroll-behavior: smooth; scroll-padding-top: 88px; }
-        body {
-            margin: 0;
-            font-family: 'Inter', system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-        a { color: inherit; }
-        svg { display: block; }
-
-        .container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 16px; }
-        @media (min-width: 640px) { .container { padding: 0 28px; } }
-
-        .gradient-text {
-            background: var(--grad);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: hue-flow 8s linear infinite;
-        }
-        @keyframes hue-flow { to { background-position: 200% center; } }
-
-        .eyebrow {
-            display: inline-flex; align-items: center; gap: 8px;
-            font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-            color: var(--blue);
-        }
-        .eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--grad); border-radius: 2px; }
-
-        .btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 10px 20px; border-radius: 999px;
-            font-weight: 600; font-size: 0.95rem; text-decoration: none;
-            transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-        }
-        .btn-primary { background: var(--grad); color: #000; box-shadow: 0 10px 30px -10px rgba(183, 127, 214, .7); }
-        .btn-primary:hover { transform: translateY(-2px); }
-        .btn-ghost { border: 1px solid var(--border); background: var(--surface); color: var(--text); }
-        .btn-ghost:hover { background: var(--surface-hover); }
-        .btn svg { width: 16px; height: 16px; }
-
-        /* ---------- Header ---------- */
-        .site-header {
-            position: sticky; top: 0; z-index: 50;
-            background: rgba(0, 0, 0, 0.72);
-            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border);
-        }
-        .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 12px; }
-        .logo {
-            font-family: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif; font-size: clamp(1.5rem, 6vw, 2rem); white-space: nowrap;
-            letter-spacing: 0.04em; text-decoration: none; display: flex; align-items: center; gap: 10px; line-height: 1;
-        }
-        .logo-mark { width: 40px; height: auto; flex: none; }
-        .nav .btn { flex: none; }
-        .nav .btn span { display: none; }
-        @media (max-width: 479px) { .nav .btn { padding: 0; width: 44px; height: 44px; justify-content: center; } }
-        @media (min-width: 480px) { .nav .btn span.short { display: inline; } }
-        @media (min-width: 640px) { .nav .btn span.long { display: inline; } .nav .btn span.short { display: none; } }
-
-        /* ---------- Hero ---------- */
-        .hero {
-            position: relative; overflow: hidden; isolation: isolate;
-            padding: 72px 0 64px;
+        .page-hero {
+            position: relative; overflow: hidden; padding: 180px 0 80px; border-bottom: 1px solid var(--line);
             background:
-                radial-gradient(ellipse 70% 60% at 50% 0%, rgba(183, 127, 214, .22), transparent 70%),
-                linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-            border-bottom: 1px solid var(--border);
+                radial-gradient(ellipse 50% 80% at 85% 0%, rgba(201, 164, 92, .16), transparent 70%),
+                radial-gradient(ellipse 40% 60% at 5% 100%, rgba(138, 106, 44, .14), transparent 70%),
+                var(--black);
         }
-        .beams { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-        .beam {
-            position: absolute; top: -10%; width: 34vw; max-width: 460px; height: 140%;
-            transform-origin: 50% 0;
-            clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%);
-            filter: blur(8px); mix-blend-mode: screen; opacity: .28;
+        .page-hero::before {
+            content: ""; position: absolute; top: -20%; right: 12%; width: 22vw; max-width: 320px; height: 150%;
+            background: linear-gradient(180deg, rgba(236, 217, 166, .22), transparent 80%);
+            clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%); transform: rotate(18deg); transform-origin: 50% 0;
+            filter: blur(6px); pointer-events: none;
         }
-        .beam.b1 { left: 2%; background: linear-gradient(180deg, rgba(154, 154, 255, .9), transparent 80%); animation: sweep-a 12s ease-in-out infinite alternate; }
-        .beam.b2 { right: 2%; background: linear-gradient(180deg, rgba(255, 143, 143, .85), transparent 80%); animation: sweep-b 14s ease-in-out infinite alternate; }
-        @keyframes sweep-a { from { transform: rotate(-18deg); } to { transform: rotate(10deg); } }
-        @keyframes sweep-b { from { transform: rotate(16deg); } to { transform: rotate(-12deg); } }
+        .page-hero h1 { font-size: clamp(1.3rem, 5.2vw, 3.4rem); margin: 22px 0 36px; max-width: 1100px; }
+        .company { display: flex; flex-wrap: wrap; gap: 12px; }
+        .company div { padding: 12px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(201, 164, 92, .03); color: var(--ivory); font-size: .92rem; }
+        .company small { display: block; color: var(--gold); font-size: .64rem; letter-spacing: .24em; text-transform: uppercase; line-height: 1.6; }
+        .notice { margin-top: 26px; max-width: 760px; padding: 14px 18px; border-left: 2px solid var(--gold); background: rgba(201, 164, 92, .06); color: var(--text); font-size: .9rem; }
 
-        .hero h1 {
-            font-size: clamp(1.9rem, 5vw, 3.2rem); font-weight: 700; letter-spacing: -0.02em;
-            line-height: 1.12; margin: 14px 0 28px; max-width: 820px;
-        }
-        .company {
-            display: flex; flex-wrap: wrap; gap: 10px;
-        }
-        .company div {
-            padding: 8px 14px; border-radius: 10px; font-size: .9rem;
-            background: var(--surface); border: 1px solid var(--border); color: var(--text);
-        }
-        .company small { display: block; color: var(--muted); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; line-height: 1.3; }
-
-        /* ---------- Layout ---------- */
-        .layout { display: grid; gap: 32px; padding-top: 48px; padding-bottom: 96px; }
-        @media (min-width: 1000px) { .layout { grid-template-columns: 290px 1fr; gap: 48px; align-items: start; } }
-
-        /* Table of contents */
-        .toc {
-            border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border);
-        }
-        @media (min-width: 1000px) {
-            .toc { position: sticky; top: 92px; max-height: calc(100vh - 116px); overflow-y: auto; }
-        }
+        .layout { display: grid; gap: 34px; padding-top: 64px; padding-bottom: 120px; }
+        @media (min-width: 1040px) { .layout:not([hidden]) { grid-template-columns: 300px 1fr; gap: 56px; align-items: start; } }
+        .toc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+        @media (min-width: 1040px) { .toc { position: sticky; top: 104px; max-height: calc(100vh - 130px); overflow-y: auto; } }
         .toc summary {
-            list-style: none; cursor: pointer; padding: 16px 20px;
-            display: flex; align-items: center; justify-content: space-between;
-            font-weight: 600; font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+            list-style: none; cursor: pointer; padding: 18px 22px; display: flex; align-items: center; justify-content: space-between;
+            font-size: .7rem; font-weight: 700; font-stretch: var(--wide); letter-spacing: .24em; text-transform: uppercase; color: var(--gold);
         }
         .toc summary::-webkit-details-marker { display: none; }
-        .toc summary svg { width: 18px; height: 18px; transition: transform .2s; }
+        .toc summary svg { width: 18px; height: 18px; transition: transform .25s; }
         .toc[open] summary svg { transform: rotate(180deg); }
-        @media (min-width: 1000px) { .toc summary { cursor: default; pointer-events: none; } .toc summary svg { display: none; } }
-        .toc ol { list-style: none; margin: 0; padding: 0 10px 12px; }
-        .toc a {
-            display: flex; gap: 10px; align-items: baseline;
-            padding: 7px 10px; border-radius: 10px; text-decoration: none;
-            color: var(--muted); font-size: .9rem; line-height: 1.4;
-            transition: background .2s, color .2s;
-        }
-        .toc a:hover { background: var(--surface-hover); color: var(--text); }
-        .toc a.active { background: rgba(183, 127, 214, .14); color: var(--text); }
-        .toc .n { flex: none; width: 22px; font-variant-numeric: tabular-nums; color: var(--purple); font-weight: 600; }
+        @media (min-width: 1040px) { .toc summary { pointer-events: none; } .toc summary svg { display: none; } }
+        .toc ol { list-style: none; margin: 0; padding: 0 10px 14px; }
+        .toc a { display: flex; gap: 12px; padding: 8px 12px; border-radius: var(--radius); color: var(--muted); text-decoration: none; font-size: .88rem; line-height: 1.45; transition: color .2s, background .2s; }
+        .toc a:hover { color: var(--ivory); background: rgba(201, 164, 92, .06); }
+        .toc a.active { color: var(--gold-light); background: rgba(201, 164, 92, .1); }
+        .toc .n { flex: none; width: 22px; color: var(--gold); font-variant-numeric: tabular-nums; }
 
-        /* Terms */
-        .terms { display: grid; gap: 18px; min-width: 0; }
-        .term {
-            position: relative; padding: 28px 24px; border-radius: var(--radius);
-            background: var(--surface); border: 1px solid var(--border);
-        }
-        @media (min-width: 640px) { .term { padding: 34px 36px; } }
-        .term h2 {
-            display: flex; gap: 14px; align-items: center;
-            font-size: clamp(1.15rem, 2.4vw, 1.4rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.3;
-            margin: 0 0 18px;
-        }
-        .num {
-            flex: none; width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center;
-            background: var(--grad); color: #000; font-size: .95rem; font-weight: 700;
-        }
-        .term p { margin: 0 0 14px; color: var(--body); font-size: .98rem; overflow-wrap: break-word; }
+        .terms { display: grid; gap: 20px; min-width: 0; }
+        .term { padding: 36px 26px; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); position: relative; }
+        .term::before { content: ""; position: absolute; left: 0; top: 36px; width: 2px; height: 40px; background: var(--gold-grad); }
+        @media (min-width: 640px) { .term { padding: 44px 48px; } }
+        .term h2 { display: flex; gap: 18px; align-items: baseline; font-size: clamp(1.02rem, 2.2vw, 1.35rem); line-height: 1.2; margin-bottom: 22px; }
+        .term .num { flex: none; font-size: 1rem; letter-spacing: .12em; color: var(--gold); font-family: var(--sans); font-weight: 600; }
+        .term p { margin: 0 0 16px; color: var(--text); font-weight: 300; font-size: .97rem; overflow-wrap: break-word; }
         .term p:last-child { margin-bottom: 0; }
-        .term p strong {
-            display: inline-block; min-width: 34px; margin-right: 6px;
-            color: var(--blue); font-weight: 600; font-variant-numeric: tabular-nums;
-        }
+        .term p strong { display: inline-block; min-width: 38px; margin-right: 6px; color: var(--gold-light); font-weight: 500; font-variant-numeric: tabular-nums; }
 
-        /* Footer */
-        footer { border-top: 1px solid var(--border); padding: 36px 0; color: var(--muted); font-size: .9rem; }
-        .footer-inner { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
-        footer p { margin: 0; }
-        footer a { color: var(--muted); text-decoration: none; }
-        footer a:hover { color: var(--text); }
-        .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
-
-        /* Back to top */
         .back-to-top {
-            position: fixed; right: 20px; bottom: 20px; z-index: 40;
-            width: 48px; height: 48px; border-radius: 50%; border: 0; cursor: pointer;
-            background: var(--grad); color: #000; display: grid; place-items: center;
-            box-shadow: 0 10px 30px -8px rgba(183, 127, 214, .8);
-            opacity: 0; transform: translateY(12px); pointer-events: none;
-            transition: opacity .3s, transform .3s;
+            position: fixed; right: 22px; bottom: 22px; z-index: 40; width: 50px; height: 50px; border-radius: 50%; border: 1px solid var(--gold);
+            background: rgba(5, 5, 5, .8); color: var(--gold-light); display: grid; place-items: center; cursor: pointer;
+            opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .3s, transform .3s, background .3s;
         }
+        .back-to-top:hover { background: rgba(201, 164, 92, .15); }
         .back-to-top.show { opacity: 1; transform: none; pointer-events: auto; }
-        .back-to-top svg { width: 22px; height: 22px; }
-
-        .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
-        .reveal.visible { opacity: 1; transform: none; }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { animation: none !important; transition: none !important; }
-            .reveal { opacity: 1; transform: none; }
-            html { scroll-behavior: auto; }
-        }
+        .back-to-top svg { width: 20px; height: 20px; }
+        .nav .btn-line { padding: 12px 16px; }
+        .nav .btn-line .long { display: none; }
+        @media (min-width: 900px) { .nav .btn-line .long { display: inline; } .nav .btn-line .short { display: none; } }
+        @media (max-width: 480px) { .nav .btn-line .short { display: none; } }
 
         @media print {
             body { background: #fff; color: #000; }
-            .site-header, .beams, .toc, .back-to-top, footer .footer-links { display: none !important; }
-            .hero { background: none; padding: 0 0 16px; }
-            .gradient-text { color: #000; background: none; }
-            .term { background: none; border: 0; padding: 12px 0; }
-            .term p { color: #000; }
-            .term p strong { color: #000; }
-            .num { background: none; color: #000; width: auto; }
-            .company div { border: 0; background: none; padding: 0 12px 0 0; }
-            .reveal { opacity: 1; transform: none; }
+            .site-header, .toc, .back-to-top, .site-footer .footer-links, .page-hero::before { display: none !important; }
+            .page-hero { background: none; padding: 0 0 16px; border: 0; }
+            h1, h2, .term p, .company div { color: #000 !important; }
+            h1 em { color: #000; background: none; -webkit-text-fill-color: #000; }
+            .term { background: none; border: 0; padding: 10px 0; }
+            .term::before { display: none; }
+            .term p strong, .term .num, .company small { color: #000; }
+            [data-3d] { opacity: 1 !important; transform: none !important; }
             .layout { display: block; padding: 0; }
         }
     </style>
 </head>
 <body>
 
-    <header class="site-header">
+    <header class="site-header solid">
         <div class="container nav">
-            <a href="index.html" class="logo" aria-label="VanEngelandt.NET home">
-                <img class="logo-mark" src="images/logo-mark-128.png" alt="" width="40" height="38">
-                <span class="gradient-text">VanEngelandt.NET</span>
+            <a href="index.html" class="brand-link" aria-label="VanEngelandt.NET">
+                <img src="images/logo-mark-128.png" alt="" width="42" height="40">
+                <span class="brand-name">VanEngelandt<span>.NET</span></span>
             </a>
-            <a href="index.html" class="btn btn-ghost" aria-label="Terug naar de website">
-                <svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
-                <span class="long">Terug naar de website</span><span class="short">Terug</span>
-            </a>
+            <div class="nav-right">
+                <div class="lang-switch" role="group" data-i18n-aria="nav.lang" aria-label="Kies taal">
+                    <button type="button" data-set-lang="en" lang="en" aria-label="English">EN</button>
+                    <button type="button" data-set-lang="nl" lang="nl" aria-label="Nederlands">NL</button>
+                    <button type="button" data-set-lang="fr" lang="fr" aria-label="Français">FR</button>
+                </div>
+                <a href="index.html" class="btn btn-line" data-i18n-aria="terms.back" aria-label="Terug naar de website">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+                    <span class="long" data-i18n="terms.back">Terug naar de website</span><span class="short" data-i18n="terms.backShort">Terug</span>
+                </a>
+            </div>
         </div>
     </header>
 
-    <section class="hero" id="top">
-        <div class="beams" aria-hidden="true">
-            <div class="beam b1"></div>
-            <div class="beam b2"></div>
-        </div>
-        <div class="container">
-            <span class="eyebrow">Voorwaarden</span>
-            <h1>Algemene verhuur- en <span class="gradient-text">verkoopvoorwaarden</span></h1>
-            <div class="company">
-                <div><small>Bedrijf</small>VanEngelandt.NET</div>
-                <div><small>Zaakvoerder</small>Peter Van Engelandt</div>
-                <div><small>Adres</small>Plaatsweg 17, 8560 Gullegem</div>
-                <div><small>BTW</small>BE0671.817.248</div>
+    <main>
+        <section class="page-hero" id="top">
+            <div class="container depth">
+                <div data-3d="rise">
+                    <span class="eyebrow" data-i18n="terms.eyebrow">Juridisch</span>
+                    <h1 data-i18n="terms.title">Algemene verhuur- en <em>verkoopvoorwaarden</em></h1>
+                    <div class="company">
+                        <div><small data-i18n="label.company">Bedrijf</small>VanEngelandt.NET</div>
+                        <div><small data-i18n="label.owner">Zaakvoerder</small>Peter Van Engelandt</div>
+                        <div><small data-i18n="label.address">Adres</small>Plaatsweg 17, 8560 Gullegem</div>
+                        <div><small data-i18n="label.vat">Btw-nummer</small>BE0671.817.248</div>
+                    </div>
+                    <p class="notice" hidden><span class="notice-text" data-i18n="terms.notice"></span></p>
+                </div>
+            </div>
+        </section>
+
+        <div class="container layout" data-lang-block="nl" lang="nl">
+            <details class="toc" open>
+                <summary><span data-i18n="terms.toc">Inhoudsopgave</span>
+                    <svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                </summary>
+                <nav>
+                    <ol>
+                            <li><a href="#sectie-1"><span class="n">1</span>Tegenstelbaarheid van onderhavige algemene voorwaarden</a></li>
+                            <li><a href="#sectie-2"><span class="n">2</span>Offertes – bestellingen – bestelbons</a></li>
+                            <li><a href="#sectie-3"><span class="n">3</span>Tarieven</a></li>
+                            <li><a href="#sectie-4"><span class="n">4</span>Uitvoering van de overeenkomst</a></li>
+                            <li><a href="#sectie-5"><span class="n">5</span>Levering – verplaatsing – catering</a></li>
+                            <li><a href="#sectie-6"><span class="n">6</span>Overdracht van de risico’s</a></li>
+                            <li><a href="#sectie-7"><span class="n">7</span>Verhuur van materiaal</a></li>
+                            <li><a href="#sectie-8"><span class="n">8</span>Betaling</a></li>
+                            <li><a href="#sectie-9"><span class="n">9</span>Eigendomsvoorbehoud</a></li>
+                            <li><a href="#sectie-10"><span class="n">10</span>Klachten</a></li>
+                            <li><a href="#sectie-11"><span class="n">11</span>Auteursrechten en uiteenlopende vergunningen</a></li>
+                            <li><a href="#sectie-12"><span class="n">12</span>Verzekeringen</a></li>
+                            <li><a href="#sectie-13"><span class="n">13</span>Intellectuele eigendom</a></li>
+                            <li><a href="#sectie-14"><span class="n">14</span>Opzegging van de overeenkomst</a></li>
+                            <li><a href="#sectie-15"><span class="n">15</span>Geschillen</a></li>
+                            <li><a href="#sectie-16"><span class="n">16</span>Slotbepalingen</a></li>
+                    </ol>
+                </nav>
+            </details>
+            <div class="terms">
+                    <div class="depth"><section class="term" id="sectie-1" data-3d="rise">
+                        <h2><span class="num">01</span>Tegenstelbaarheid van onderhavige algemene voorwaarden</h2>
+                        <p><strong>1.1</strong> Door het feit van zijn bestelling wordt de klant geacht onderhavige algemene voorwaarden ter kennis te hebben genomen en deze te aanvaarden, ook al zouden deze in strijd zijn met zijn eigen algemene of bijzondere voorwaarden.</p>
+                        <p><strong>1.2</strong> Onderhavige algemene en bijzondere voorwaarden inzake deze overeenkomst annuleren en vervangen alle voorafgaande voorwaarden en hebben voorrang op de algemene of bijzondere voorwaarden van de klant.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-2" data-3d="rise">
+                        <h2><span class="num">02</span>Offertes – bestellingen – bestelbons</h2>
+                        <p><strong>2.1</strong> Onze offertes worden verstrekt ter informatie en onder voorbehoud van wijzigingen die het gevolg zijn van fouten of weglatingen. Zij binden VANENGELANDT.NET slechts na ontvangst van de door de klant correct ondertekende bestelbon. Ze worden opgesteld op basis van de informatie die de klant ons ter beschikking stelt en elke wijziging aan deze gegevens leidt tot een herziening van de prijs.</p>
+                        <p><strong>2.2</strong> Tenzij er in de offerte of de bestelbon een andersluidende bepaling is opgenomen die door VANENGELANDT.NET uitdrukkelijk is aanvaard, zal de bestelling slechts worden uitgevoerd na betaling van een voorschot dat overeenstemt met 50 % van het totale bedrag van de bestelling inclusief BTW (21 %). Bij annulering van de bestelling door de klant wordt dit voorschot onherroepelijk door VANENGELANDT.NET verworven als forfaitaire schadevergoeding, zonder dat VANENGELANDT.NET enige schade hoeft te rechtvaardigen. Wanneer de klant de bestelling annuleert binnen de tien werkdagen die voorafgaan aan de datum van uitvoering van de overeenkomst, is hiervoor een schadevergoeding verschuldigd die overeenstemt met de gemaakte kosten. Deze schadevergoeding kan nooit lager zijn dan 50% van het totale bedrag van de bestelling inclusief BTW (21 %). Bij annulatie 2 werkdagen en minder voorafgaand aan de datum van uitvoering van de overeenkomst wordt de schadevergoeding beraamd op 100% van het totale bedrag van de bestelling.</p>
+                        <p><strong>2.3</strong> Elke wijziging, toevoeging of schrapping van werken zoals die beschreven staan in de offerte, dient het voorwerp uit te maken van een aanhangsel aan het contract. Bij gebrek daaraan worden deze werken geacht uitgevoerd te zijn overeenkomstig de mondelinge instructies van de klant, die bijgevolg afziet van alle gerechtelijke stappen hieromtrent, inclusief wat de hier op volgende facturatie van deze werken betreft. VANENGELANDT.NET behoudt zich evenwel het recht voor om tijdens de uitvoering van het project wijzigingen of aanpassingen aan te brengen die noodzakelijk zouden zijn omwille van bijzondere omstandigheden of omwille van omstandigheden die in het belang van het project zouden zijn. Eventuele verschillen tussen de gegevens uit de offerte en de geleverde goederen en/of diensten geven de klant noch het – recht om de goederen of diensten te weigeren, noch om de betaling ervan te weigeren, noch om welke schadevergoeding ook te vorderen.</p>
+                        <p><strong>2.4</strong> Indien de klant na opstelling van de offerte en de bestudering hiervan afziet van de bestelling, zijn de gemaakte kosten, voor rekening van de klant.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-3" data-3d="rise">
+                        <h2><span class="num">03</span>Tarieven</h2>
+                        <p><strong>3.1</strong> Bij de tarieven voor de prestaties en/of de verhuur wordt uitgegaan van contante betaling van het nettobedrag zonder korting. Deze tarieven moeten worden vermeerderd met de BTW (21 %). De voorschotten en het saldo moeten worden betaald overeenkomstig de betalingsvoorwaarden die in de offerte of de factuur zijn opgenomen.</p>
+                        <p><strong>3.2</strong> De prijzen die vermeld staan in een offerte die door de klant is aanvaard en die betrekking heeft op werkzaamheden of huur van goederen die binnen een termijn van meer dan drie maanden plaatsvindt, kunnen worden herzien indien de prijzen voor de gebruikte levering en/of ingezette arbeidskrachten met minstens 15 % zijn gestegen.</p>
+                        <p><strong>3.3</strong> De kosten voor levering en/of ophaling zijn altijd ten laste van de klant. Dit geldt ook voor de kosten voor verplaatsingen en voor arbeidskrachten die zijn toegevoegd ten opzichte van de goedgekeurde offerte(s).</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-4" data-3d="rise">
+                        <h2><span class="num">04</span>Uitvoering van de overeenkomst</h2>
+                        <p><strong>4.1</strong> VANENGELANDT.NET zal zich als een goede huisvader wijden aan de verwezenlijking van de projecten die hem door de klant worden toevertrouwd. Hij is, met inbegrip van het naleven van de overeengekomen termijnen, uitsluitend verplicht tot een inspanningsverbintenis.</p>
+                        <p><strong>4.2</strong> Bij verkoop van goederen is VANENGELANDT.NET zijn verplichtingen integraal nagekomen zodra zij de goederen aan de klant heeft geleverd respectievelijk zodra het materiaal door de klant is afgehaald. Het is de klant die alle maatregelen dient te nemen om de veiligheid en de opslag van het materiaal te garanderen.</p>
+                        <p><strong>4.3</strong> VANENGELANDT.NET kan in geen geval aansprakelijk gesteld worden voor de schade van welke aard ook die toevallig is toegebracht aan goederen die eigendom zijn van de klant en die in de opslagplaatsen van VANENGELANDT.NET zouden liggen of door VANENGELANDT.NET getransporteerd of geïnstalleerd zouden worden.</p>
+                        <p><strong>4.4</strong> VANENGELANDT.NET kan in geen geval aansprakelijk gesteld worden voor een aanslag op het imago van de klant en deze laatste kan in geen geval morele schadevergoeding eisen.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-5" data-3d="rise">
+                        <h2><span class="num">05</span>Levering – verplaatsing – catering</h2>
+                        <p><strong>5.1</strong> De leveringstermijnen worden uitsluitend ter informatie meegedeeld. VANENGELANDT.NET is niet aansprakelijk voor een eventuele aanpassing van de leveringstermijnen en een dergelijke aanpassing geeft de klant noch het recht om de overeenkomst te annuleren, noch om enige schadevergoeding of enige andere vergoeding te eisen.</p>
+                        <p><strong>5.2</strong> Het optreden van feiten of gebeurtenissen die het gevolg zijn van overmacht, ontheft VANENGELANDT.NET van elke aansprakelijkheid. Het feit dat goederen schade hebben opgelopen, gebroken zijn of ontbreken, moet door de klant worden vastgesteld bij aankomst van de goederen. Dit feit moet ook schriftelijk aan de vervoerder worden gemeld.</p>
+                        <p><strong>5.3</strong> VANENGELANDT.NET behoudt zich op elk ogenblik het recht om de goederen zonder voorafgaande rechtvaardiging onder rembours te verzenden of om te eisen dat ze op het ogenblik van de bestelling betaald worden.</p>
+                        <p><strong>5.4</strong> Als het om prestaties gaat, zijn de organisatie en de kosten voor de catering alsook voor de onderbrenging (met name hotelkosten) van de op dat moment te werk gestelde arbeidskrachten ten laste van de klant. Dit geldt ook voor de verplaatsingskosten van deze personen, zowel in België als in het buitenland.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-6" data-3d="rise">
+                        <h2><span class="num">06</span>Overdracht van de risico’s</h2>
+                        <p><strong>6.1</strong> De overdracht van de risico’s vindt, onverminderd de clausule inzake eigendomsvoorbehoud die VANENGELANDT.NET geniet, zowel voor de verhuur als voor de verkoop plaats op het ogenblik van de levering.</p>
+                        <p><strong>6.2</strong> Indien het gehuurde of verkochte materiaal een verborgen gebrek zou vertonen, kan er tegen VANENGELANDT.NET geen enkel rechtsmiddel worden aangewend onverminderd een eventueel rechtsmiddel tegen de derde die het materiaal heeft geleverd, geïnstalleerd of geproduceerd.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-7" data-3d="rise">
+                        <h2><span class="num">07</span>Verhuur van materiaal</h2>
+                        <p><strong>7.1</strong> In geval van verhuur van materiaal is de klant integraal en exclusief aansprakelijk voor het correcte gebruik van dit materiaal en wel in alle omstandigheden, ongeacht hij het materiaal zelf gebruikt dan wel of hij het gebruik hiervan toevertrouwt aan technici waarvoor hij al dan niet aansprakelijk is.</p>
+                        <p><strong>7.2</strong> Het is voor de klant formeel verboden om materiaal dat eigendom is van VANENGELANDT.NET, zonder voorafgaande schriftelijke toestemming van VANENGELANDT.NET door te verhuren te deponeren of uit te lenen. Het is voor de klant strikt verboden om zonder de voorafgaande schriftelijke toestemming van VANENGELANDT.NET de structuur van het materiaal te wijzigen of om hieraan wat dan ook te bevestigen, kleven of verwijderen. Indien dit verbod wordt geschonden, zal VANENGELANDT.NET het gewijzigde materiaal aan de normale verkoopprijs factureren aan de klant.</p>
+                        <p><strong>7.3</strong> Indien het verhuurde materiaal op om het even welke wijze beschadigd zou raken, dient de klant over te gaan tot de gebruikelijke vaststellingen en VANENGELANDT.NET hiervan binnen de vierentwintig uur op de hoogte te brengen. Indien dit niet gebeurt, zal aan de klant de integrale vervangingswaarde van het beschadigde materiaal worden gefactureerd.</p>
+                        <p><strong>7.4</strong> Het materiaal wordt geleverd en teruggegeven in de magazijnen van VANENGELANDT.NET of op enige andere plaats die op onze offerte of afleveringsbon vermeld staat.</p>
+                        <p><strong>7.5</strong> Bij elke verhuur van materiaal dient de klant een waarborg te overhandigen in de vorm van contanten met een minimumbedrag van 150,00 EUR, tenzij anders overeengekomen tussen VANENGELANDT.NET en de klant. Het overhandigde bedrag dat als waarborg wordt overhandigd, zal aan de klant worden teruggegeven wanneer het gehuurde materiaal naar onze magazijnen is teruggebracht en wanneer is gecontroleerd dat het materiaal in perfecte staat is en geen schade vertoont.</p>
+                        <p><strong>7.6</strong> Het verhuurde materiaal wordt geacht perfect te functioneren. De inontvangstneming van het materiaal houdt in dat de klant het materiaal op onherroepelijke wijze en zonder enig voorbehoud aanvaardt in de toestand waarin het zich bevindt. De inontvangstneming van het materiaal gebeurt door ondertekening van onze afleverbon of door het gebruik van het materiaal.</p>
+                        <p><strong>7.7</strong> De formaliteiten voor de verplaatsing behoren integraal tot de verantwoordelijkheid van de klant. Deze laatste dient ten bate VANENGELANDT.NET een aangepaste verzekering af te sluiten. In geval van schade of verlies die te wijten zijn aan de transit of aan een eventuele blokkering van het materiaal bij de douane, zijn de kosten die met deze schade verbonden zijn, en de kosten voor de vertraging bij de teruggave ten laste van de klant.</p>
+                        <p><strong>7.8</strong> Bij terugkeer van het materiaal zal er in de magazijnen van VANENGELANDT.NET een tegensprekelijke inventaris worden opgesteld. Eventuele door de huurder toegebrachte schade aan het materiaal zal aan de klant worden gefactureerd, behoudens indien VANENGELANDT.NET gebruik wenst te maken van haar recht om het beschadigde materiaal als verkocht materiaal te factureren aan de klant. Hetzelfde geldt voor alle verdwenen of gestolen voorwerpen of accessoires. Deze voorwerpen zullen op kosten van de klant worden vergoed of vervangen.</p>
+                        <p><strong>7.9</strong> In geval van verlenging van het gebruik van het materiaal door de klant dient deze laatste VANENGELANDT.NET uiterlijk 48 uur vóór het vooropgestelde einde van de verhuurtermijn of de prestatie op de hoogte te brengen. Op de verlenging zijn dezelfde voorwaarden van toepassing als op de aanvankelijke verhuring of terbeschikkingstelling. Voor deze verlenging zal een nieuwe afleverbon worden opgesteld, die door de klant moet worden ondertekend en geretourneerd aan VANENGELANDT.NET. In geval van laattijdige teruggave van het materiaal is de klant de kosten voor de verlenging van de verhuurperiode verschuldigd alsook een vergoeding die bedoeld is als compensatie voor de schade die VANENGELANDT.NET door deze vertraging heeft opgelopen.</p>
+                        <p><strong>7.10</strong> De klant ziet af van elk rechtsmiddel tegen VANENGELANDT.NET op basis van de artikelen 1721 en 1386 van het Burgerlijk Wetboek. Hij zal gedurende de gehele duur van de verhuring alleen de volledige verantwoordelijkheid voor het materiaal dragen, zowel ten opzichte van derden als ten opzichte van VANENGELANDT.NET.</p>
+                        <p><strong>7.11</strong> VANENGELANDT.NET wijst elke verantwoordelijkheid van de hand voor ongevallen, verlies, diefstal of voor om het even welke vorm van beschadiging van een magnetische of optische informatiedrager. Dit zowel voor audio, video en/of databestanden waarvan de inhoud eigendom is van de klant en welke na afloop in het gehuurde materiaal zouden blijven zitten.</p>
+                        <p><strong>7.12</strong> Een klant die de huurovereenkomst afsluit, dient voor het gehuurde materiaal een verzekeringspolis af te sluiten. Deze polis moet diefstal, brand, materiële en lichamelijke schade van interne of externe oorsprong dekken in België en in het buitenland.</p>
+                        <p><strong>7.13</strong> Indien het gehuurde materiaal beschadigd is of indien het materiaal door de huurder niet wordt teruggegeven, wordt de duur van de huur verlengd tot op het ogenblik waarop de klant een officiële verklaring inzake beschadiging of diefstal voorlegt, waarbij de klant verplicht is om gedurende deze periode het bedrag voor de huur te betalen. De huurder is bovendien verplicht de kosten voor het in oorspronkelijke staat brengen of herstellen van het materiaal te betalen.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-8" data-3d="rise">
+                        <h2><span class="num">08</span>Betaling</h2>
+                        <p><strong>8.1</strong> Al onze facturen dienen behoudens uitdrukkelijke schriftelijke afwijking contant, netto en zonder disconto te worden betaald.</p>
+                        <p><strong>8.2</strong> Elke vertraging bij de betaling heeft van rechtswege en zonder ingebrekestelling door het eenvoudige feit van de vervaldag van de factuur en vanaf deze laatste de berekening van een intrest van 12 % op jaarbasis tot gevolg. Bovendien is elke klant wiens factuur geheel of gedeeltelijk onbetaald is een forfaitaire schadevergoeding verschuldigd die gelijk is aan 15 % van het resterende bedrag, met een minimum van 80,00 EUR.</p>
+                        <p><strong>8.3</strong> Het feit dat een factuur op haar vervaldag onbetaald is gebleven, maakt onmiddellijk alle andere bedragen opeisbaar die deze klant nog verschuldigd is, ongeacht de faciliteiten die voor de betaling van deze sommen aan de klant waren toegekend. Bovendien heeft VANENGELANDT.NET het recht om zonder opzegtermijn noch vergoeding alle andere overeenkomsten met de betrokken klant op te zeggen.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-9" data-3d="rise">
+                        <h2><span class="num">09</span>Eigendomsvoorbehoud</h2>
+                        <p><strong>9.1</strong> De verkochte goederen blijven onvervreemdbaar en exclusief eigendom van VANENGELANDT.NET tot op het ogenblik waarop zij volledig door de klant zijn betaald. Wanneer de betaling niet binnen de overeengekomen termijnen gebeurt, heeft VANENGELANDT.NET het recht de goederen zonder voorafgaande ingebrekestelling opnieuw in haar bezit te nemen.</p>
+                        <p><strong>9.2</strong> Het gehuurde materiaal is en blijft eigendom van VANENGELANDT.NET en kan door de klant niet worden afgestaan. Indien dit materiaal door een derde in beslag wordt genomen terwijl het zich bij de klant bevindt, zal deze laatste op eigen kosten de onmiddellijke opheffing van de inbeslagneming moeten bekomen, wetende dat hij de in de overeenkomst vastgelegde huurprijs verschuldigd is tot op het ogenblik van de integrale teruggave van het materiaal aan VANENGELANDT.NET.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-10" data-3d="rise">
+                        <h2><span class="num">10</span>Klachten</h2>
+                        <p><strong>10.1</strong> Elke klacht over de gehuurde of verkochte goederen of over de verrichte diensten moet per aangetekend schrijven worden ingediend binnen de 8 dagen te tellen vanaf de datum van levering van de goederen of diensten. Bij gebrek hieraan worden de goederen en diensten geacht door de klant te zijn aanvaard.</p>
+                        <p><strong>10.2</strong> Indien de klacht door VANENGELANDT.NET als gegrond en ontvankelijk aanvaard wordt, zal deze laatste overgaan tot vervanging of herstelling van de goederen die defect zijn gebleken. Dit met uitzondering van om het even welke andere vergoeding.</p>
+                        <p><strong>10.3</strong> Alle klachten inzake facturatie moeten per aangetekend schrijven aan VANENGELANDT.NET worden gericht binnen de 8 dagen na ontvangst van de factuur. Na afloop van die termijn wordt de factuur geacht integraal te zijn aanvaard.</p>
+                        <p><strong>10.4</strong> Een klacht ontheft de klant niet van zijn verplichting tot betaling binnen de termijn die in onderhavige algemene voorwaarden is vastgelegd.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-11" data-3d="rise">
+                        <h2><span class="num">11</span>Auteursrechten en uiteenlopende vergunningen</h2>
+                        <p><strong>11.1</strong> Een klant die leveringen en/of diensten bestelt, wordt geacht te beschikken over de rechten op deze leveringen en/of diensten en hij ontheft VANENGELANDT.NET ter zake van alle aansprakelijkheid. Bovendien verbindt de klant zich ertoe om alle schade te vergoeden die zou kunnen ontstaan door het niet-bestaan van deze rechten.</p>
+                        <p><strong>11.2</strong> De auteursrechten die door SABAM, een ander organisme of een privépersoon geïnd worden in het raam van een actie die gerealiseerd wordt voor de klant, zijn ten laste van de klant.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-12" data-3d="rise">
+                        <h2><span class="num">12</span>Verzekeringen</h2>
+                        <p><strong>12.1</strong> In het raam van de operaties die VANENGELANDT.NET voor de klant uitvoert, dient deze laatste op eigen kosten alle verzekeringen af te sluiten die vereist zijn met het oog op het georganiseerde evenement. Deze verzekeringen dienen in elk geval diefstal, beschadigingen aan het materiaal, beschadigingen veroorzaakt door het materiaal alsook burgerlijke aansprakelijkheid van VANENGELANDT.NET te omvatten.</p>
+                        <p><strong>12.2</strong> Voor prestaties buiten de Europese Unie dient de klant op eigen kosten een verzekering af te sluiten die hem indekt tegen inbeslagneming van het materiaal, vernietiging van het materiaal, schade voor personen in geval van oproer, politieke feiten of natuurrampen alsook tegen de winstderving die hieruit zou kunnen resulteren.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-13" data-3d="rise">
+                        <h2><span class="num">13</span>Intellectuele eigendom</h2>
+                        <p><strong>13.1</strong> De projecten, studies, plannen en offertes die op vraag van de klant worden opgesteld, blijven eigendom van VANENGELANDT.NET en mogen op generlei wijze worden gereproduceerd, uitgevoerd of meegedeeld zonder voorafgaande schriftelijke toestemming van VANENGELANDT.NET.</p>
+                        <p><strong>13.2</strong> Indien de klant een door VANENGELANDT.NET uitgewerkt project uitvoert of door een derde laat uitvoeren, is hij aan VANENGELANDT.NET als forfaitaire en niet te reduceren vergoeding en onder voorbehoud van alle bijkomstige schadevergoedingen het totale bedrag verschuldigd voor de offerte die voor dit project is opgesteld.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-14" data-3d="rise">
+                        <h2><span class="num">14</span>Opzegging van de overeenkomst</h2>
+                        <p><strong>14.1</strong> Indien de klant zijn verplichtingen uit de onderhavige algemene voorwaarden niet nakomt of indien de klant aan VANENGELANDT.NET foutieve informatie heeft verstrekt, behoudt deze laatste zich het recht voor om de overeenkomst zonder opzegtermijn en zonder voorafgaande ingebrekestelling op te zeggen.</p>
+                        <p><strong>14.2</strong> In geval van gedwongen verkoop, reductie van de waarborg, gerechtelijk akkoord, faillissement, overdracht van handelsfondsen of in geval van enige gebeurtenis die gevolgen heeft voor de zaken of de solvabiliteit van de klant, kan VANENGELANDT.NET de overeenkomst van rechtswege en zonder voorafgaande ingebrekestelling opzeggen zonder opzegtermijn of vergoeding.</p>
+                        <p><strong>14.3</strong> In geval van opzegging van de overeenkomst is de klant, ongeacht het motief voor de opzegging, verplicht het gehuurd materiaal onverwijld terug te bezorgen, onverminderd alle schadevergoedingen die aan VANENGELANDT.NET verschuldigd zouden kunnen zijn.</p>
+                        <p><strong>14.4</strong> In geval van opzegging van de overeenkomst door de klant verbindt deze laatste zich ertoe om aan VANENGELANDT.NET alle gemaakte uitgaven, alle kosten voor reeds uitgevoerde werkzaamheden en de winstderving voor de nog uit te voeren werkzaamheden te vergoeden. Deze winstderving wordt bij afspraak bepaald op 50 % van het bedrag van de geannuleerde werkzaamheden. Als er een voorschot is betaald, blijft dit eveneens verworven door VANENGELANDT.NET. Bij opzegging van de overeenkomst 2 werkdagen en minder voorafgaand aan de datum van uitvoering van de overeenkomst wordt de schadevergoeding beraamd op 100% van het totale bedrag van de bestelling.</p>
+                        <p><strong>14.5</strong> In geval van opzegging van een huurovereenkomst door de klant verbindt deze laatste zich ertoe om aan VANENGELANDT.NET alle gemaakte uitgaven, alle kosten voor reeds uitgevoerde werkzaamheden en een derving voor de nog uit te voeren werkzaamheden te vergoeden. Deze derving wordt bij afspraak bepaald op 50 % van het bedrag van de geannuleerde werkzaamheden bij annulatie minder dan 10 werkdagen voor start contract en 100% bij annulatie minder dan 2 werkdagen voor start contract. De start contract is het startuur van opbouw of afhaling. Als er een voorschot is betaald, blijft dit eveneens verworven door VANENGELANDT.NET.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-15" data-3d="rise">
+                        <h2><span class="num">15</span>Geschillen</h2>
+                        <p><strong>15.1</strong> Op onderhavige overeenkomst is het Belgisch recht van toepassing. Voor alle geschillen tussen VANENGELANDT.NET en de klant zijn uitsluitend de rechtbanken uit het gerechtelijke arrondissement Kortrijk bevoegd, waarbij alleen het Belgisch recht van toepassing is, uitgezonderd het recht van VANENGELANDT.NET om de klant te dagvaarden voor de rechtbank van zijn woonplaats. De rechtsprocedure zal in het Nederlands verlopen behoudens andersluidende wettelijke bepalingen inzake het gebruik der talen in gerechtszaken.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="sectie-16" data-3d="rise">
+                        <h2><span class="num">16</span>Slotbepalingen</h2>
+                        <p><strong>16.1</strong> De vertegenwoordigers of afgevaardigden van VANENGELANDT.NET zijn behoudens een speciale afwijking niet gemachtigd om VANENGELANDT.NET te binden noch om de betaling van voorschotten of facturen in ontvangst te nemen.</p>
+                        <p><strong>16.2</strong> De nietigheid of wijziging van één van de clausules uit onderhavige algemene voorwaarden heeft geen gevolgen voor de geldigheid van de andere clausules. Deze blijven dan ook hun volle rechtsgeldigheid behouden.</p>
+                        <p><strong>16.3</strong> Indien de klant een tussenpersoon is die in naam van een derde handelt, is de klant verplicht om onderhavige algemene voorwaarden aan deze derde mee te delen en deze door hem te laten ondertekenen. In geval van insolvabiliteit van de klant heeft VANENGELANDT.NET het recht om zich rechtstreeks tot de uiteindelijke klant te wenden.</p>
+                    </section></div>
             </div>
         </div>
-    </section>
 
-    <div class="container layout">
-        <details class="toc" id="toc" open>
-            <summary>
-                Inhoudsopgave
-                <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
-            </summary>
-            <nav aria-label="Inhoudsopgave">
-                <ol>
-                    <li><a href="#sectie-1"><span class="n">1</span>Tegenstelbaarheid van onderhavige algemene voorwaarden</a></li>
-                    <li><a href="#sectie-2"><span class="n">2</span>Offertes – bestellingen – bestelbons</a></li>
-                    <li><a href="#sectie-3"><span class="n">3</span>Tarieven</a></li>
-                    <li><a href="#sectie-4"><span class="n">4</span>Uitvoering van de overeenkomst</a></li>
-                    <li><a href="#sectie-5"><span class="n">5</span>Levering – verplaatsing – catering</a></li>
-                    <li><a href="#sectie-6"><span class="n">6</span>Overdracht van de risico’s</a></li>
-                    <li><a href="#sectie-7"><span class="n">7</span>Verhuur van materiaal</a></li>
-                    <li><a href="#sectie-8"><span class="n">8</span>Betaling</a></li>
-                    <li><a href="#sectie-9"><span class="n">9</span>Eigendomsvoorbehoud</a></li>
-                    <li><a href="#sectie-10"><span class="n">10</span>Klachten</a></li>
-                    <li><a href="#sectie-11"><span class="n">11</span>Auteursrechten en uiteenlopende vergunningen</a></li>
-                    <li><a href="#sectie-12"><span class="n">12</span>Verzekeringen</a></li>
-                    <li><a href="#sectie-13"><span class="n">13</span>Intellectuele eigendom</a></li>
-                    <li><a href="#sectie-14"><span class="n">14</span>Opzegging van de overeenkomst</a></li>
-                    <li><a href="#sectie-15"><span class="n">15</span>Geschillen</a></li>
-                    <li><a href="#sectie-16"><span class="n">16</span>Slotbepalingen</a></li>
-                </ol>
-            </nav>
-        </details>
+        <div class="container layout" data-lang-block="en" lang="en" hidden>
+            <details class="toc" open>
+                <summary><span data-i18n="terms.toc">Inhoudsopgave</span>
+                    <svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                </summary>
+                <nav>
+                    <ol>
+                            <li><a href="#en-section-1"><span class="n">1</span>Enforceability of these general terms and conditions</a></li>
+                            <li><a href="#en-section-2"><span class="n">2</span>Quotations – orders – order forms</a></li>
+                            <li><a href="#en-section-3"><span class="n">3</span>Rates</a></li>
+                            <li><a href="#en-section-4"><span class="n">4</span>Performance of the agreement</a></li>
+                            <li><a href="#en-section-5"><span class="n">5</span>Delivery – travel – catering</a></li>
+                            <li><a href="#en-section-6"><span class="n">6</span>Transfer of risk</a></li>
+                            <li><a href="#en-section-7"><span class="n">7</span>Equipment rental</a></li>
+                            <li><a href="#en-section-8"><span class="n">8</span>Payment</a></li>
+                            <li><a href="#en-section-9"><span class="n">9</span>Retention of title</a></li>
+                            <li><a href="#en-section-10"><span class="n">10</span>Complaints</a></li>
+                            <li><a href="#en-section-11"><span class="n">11</span>Copyright and miscellaneous licences</a></li>
+                            <li><a href="#en-section-12"><span class="n">12</span>Insurance</a></li>
+                            <li><a href="#en-section-13"><span class="n">13</span>Intellectual property</a></li>
+                            <li><a href="#en-section-14"><span class="n">14</span>Termination of the agreement</a></li>
+                            <li><a href="#en-section-15"><span class="n">15</span>Disputes</a></li>
+                            <li><a href="#en-section-16"><span class="n">16</span>Final provisions</a></li>
+                    </ol>
+                </nav>
+            </details>
+            <div class="terms">
+                    <div class="depth"><section class="term" id="en-section-1" data-3d="rise">
+                        <h2><span class="num">01</span>Enforceability of these general terms and conditions</h2>
+                        <p><strong>1.1</strong> By the mere fact of placing an order, the customer shall be deemed to have taken note of and accepted these general terms and conditions, even where they conflict with the customer’s own general or special terms and conditions.</p>
+                        <p><strong>1.2</strong> These general and special terms and conditions relating to this agreement cancel and supersede all prior terms and conditions and shall prevail over the general or special terms and conditions of the customer.</p>
+                    </section></div>
 
-        <main class="terms">
-            <section class="term reveal" id="sectie-1">
-                <h2><span class="num">1</span>Tegenstelbaarheid van onderhavige algemene voorwaarden</h2>
-                <p><strong>1.1</strong> Door het feit van zijn bestelling wordt de klant geacht onderhavige algemene voorwaarden ter kennis te hebben genomen en deze te aanvaarden, ook al zouden deze in strijd zijn met zijn eigen algemene of bijzondere voorwaarden.</p>
-                <p><strong>1.2</strong> Onderhavige algemene en bijzondere voorwaarden inzake deze overeenkomst annuleren en vervangen alle voorafgaande voorwaarden en hebben voorrang op de algemene of bijzondere voorwaarden van de klant.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-2" data-3d="rise">
+                        <h2><span class="num">02</span>Quotations – orders – order forms</h2>
+                        <p><strong>2.1</strong> Our quotations are provided for information purposes only and are subject to amendments resulting from errors or omissions. They shall bind VANENGELANDT.NET only upon receipt of the order form duly signed by the customer. They are drawn up on the basis of the information made available to us by the customer, and any change to that information shall result in a revision of the price.</p>
+                        <p><strong>2.2</strong> Unless the quotation or the order form contains a provision to the contrary that has been expressly accepted by VANENGELANDT.NET, the order shall be performed only after payment of a deposit equal to 50 % of the total amount of the order including VAT (21 %). If the order is cancelled by the customer, this deposit shall be irrevocably retained by VANENGELANDT.NET as liquidated damages, without VANENGELANDT.NET being required to substantiate any loss. Where the customer cancels the order within the ten working days preceding the date of performance of the agreement, compensation equal to the costs incurred shall be payable. Such compensation shall never be less than 50% of the total amount of the order including VAT (21 %). In the event of cancellation 2 working days or less before the date of performance of the agreement, the compensation shall be assessed at 100% of the total amount of the order.</p>
+                        <p><strong>2.3</strong> Any modification, addition or deletion of works as described in the quotation must be the subject of an addendum to the contract. Failing this, such works shall be deemed to have been carried out in accordance with the customer’s verbal instructions, and the customer consequently waives all legal action in that regard, including with respect to the subsequent invoicing of such works. VANENGELANDT.NET nevertheless reserves the right, during the performance of the project, to make any modifications or adjustments that may be necessary owing to special circumstances or to circumstances that would be in the interest of the project. Any discrepancies between the particulars in the quotation and the goods and/or services supplied shall not entitle the customer to refuse the goods or services, to refuse payment for them, or to claim any compensation whatsoever.</p>
+                        <p><strong>2.4</strong> If, after the quotation has been drawn up and studied, the customer decides not to proceed with the order, the costs incurred shall be borne by the customer.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-2">
-                <h2><span class="num">2</span>Offertes – bestellingen – bestelbons</h2>
-                <p><strong>2.1</strong> Onze offertes worden verstrekt ter informatie en onder voorbehoud van wijzigingen die het gevolg zijn van fouten of weglatingen. Zij binden VANENGELANDT.NET slechts na ontvangst van de door de klant correct ondertekende bestelbon. Ze worden opgesteld op basis van de informatie die de klant ons ter beschikking stelt en elke wijziging aan deze gegevens leidt tot een herziening van de prijs.</p>
-                <p><strong>2.2</strong> Tenzij er in de offerte of de bestelbon een andersluidende bepaling is opgenomen die door VANENGELANDT.NET uitdrukkelijk is aanvaard, zal de bestelling slechts worden uitgevoerd na betaling van een voorschot dat overeenstemt met 50 % van het totale bedrag van de bestelling inclusief BTW (21 %). Bij annulering van de bestelling door de klant wordt dit voorschot onherroepelijk door VANENGELANDT.NET verworven als forfaitaire schadevergoeding, zonder dat VANENGELANDT.NET enige schade hoeft te rechtvaardigen. Wanneer de klant de bestelling annuleert binnen de tien werkdagen die voorafgaan aan de datum van uitvoering van de overeenkomst, is hiervoor een schadevergoeding verschuldigd die overeenstemt met de gemaakte kosten. Deze schadevergoeding kan nooit lager zijn dan 50% van het totale bedrag van de bestelling inclusief BTW (21 %). Bij annulatie 2 werkdagen en minder voorafgaand aan de datum van uitvoering van de overeenkomst wordt de schadevergoeding beraamd op 100% van het totale bedrag van de bestelling.</p>
-                <p><strong>2.3</strong> Elke wijziging, toevoeging of schrapping van werken zoals die beschreven staan in de offerte, dient het voorwerp uit te maken van een aanhangsel aan het contract. Bij gebrek daaraan worden deze werken geacht uitgevoerd te zijn overeenkomstig de mondelinge instructies van de klant, die bijgevolg afziet van alle gerechtelijke stappen hieromtrent, inclusief wat de hier op volgende facturatie van deze werken betreft. VANENGELANDT.NET behoudt zich evenwel het recht voor om tijdens de uitvoering van het project wijzigingen of aanpassingen aan te brengen die noodzakelijk zouden zijn omwille van bijzondere omstandigheden of omwille van omstandigheden die in het belang van het project zouden zijn. Eventuele verschillen tussen de gegevens uit de offerte en de geleverde goederen en/of diensten geven de klant noch het – recht om de goederen of diensten te weigeren, noch om de betaling ervan te weigeren, noch om welke schadevergoeding ook te vorderen.</p>
-                <p><strong>2.4</strong> Indien de klant na opstelling van de offerte en de bestudering hiervan afziet van de bestelling, zijn de gemaakte kosten, voor rekening van de klant.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-3" data-3d="rise">
+                        <h2><span class="num">03</span>Rates</h2>
+                        <p><strong>3.1</strong> The rates for services and/or rental are based on cash payment of the net amount without discount. VAT (21 %) must be added to these rates. Deposits and the balance must be paid in accordance with the payment terms set out in the quotation or the invoice.</p>
+                        <p><strong>3.2</strong> The prices stated in a quotation accepted by the customer relating to works or the rental of goods taking place more than three months later may be revised if the prices of the supplies used and/or the labour deployed have increased by at least 15 %.</p>
+                        <p><strong>3.3</strong> The costs of delivery and/or collection shall always be borne by the customer. The same applies to travel costs and to the costs of any labour added in relation to the approved quotation(s).</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-3">
-                <h2><span class="num">3</span>Tarieven</h2>
-                <p><strong>3.1</strong> Bij de tarieven voor de prestaties en/of de verhuur wordt uitgegaan van contante betaling van het nettobedrag zonder korting. Deze tarieven moeten worden vermeerderd met de BTW (21 %). De voorschotten en het saldo moeten worden betaald overeenkomstig de betalingsvoorwaarden die in de offerte of de factuur zijn opgenomen.</p>
-                <p><strong>3.2</strong> De prijzen die vermeld staan in een offerte die door de klant is aanvaard en die betrekking heeft op werkzaamheden of huur van goederen die binnen een termijn van meer dan drie maanden plaatsvindt, kunnen worden herzien indien de prijzen voor de gebruikte levering en/of ingezette arbeidskrachten met minstens 15 % zijn gestegen.</p>
-                <p><strong>3.3</strong> De kosten voor levering en/of ophaling zijn altijd ten laste van de klant. Dit geldt ook voor de kosten voor verplaatsingen en voor arbeidskrachten die zijn toegevoegd ten opzichte van de goedgekeurde offerte(s).</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-4" data-3d="rise">
+                        <h2><span class="num">04</span>Performance of the agreement</h2>
+                        <p><strong>4.1</strong> VANENGELANDT.NET shall devote itself, as a prudent and reasonable person, to the realisation of the projects entrusted to it by the customer. It is bound solely by an obligation of means (best-endeavours obligation), including with respect to compliance with the agreed time limits.</p>
+                        <p><strong>4.2</strong> In the case of a sale of goods, VANENGELANDT.NET shall have fully discharged its obligations as soon as it has delivered the goods to the customer or, as the case may be, as soon as the equipment has been collected by the customer. It is for the customer to take all measures necessary to ensure the security and storage of the equipment.</p>
+                        <p><strong>4.3</strong> VANENGELANDT.NET may under no circumstances be held liable for damage of any kind accidentally caused to goods owned by the customer that are held in the warehouses of VANENGELANDT.NET or are transported or installed by VANENGELANDT.NET.</p>
+                        <p><strong>4.4</strong> VANENGELANDT.NET may under no circumstances be held liable for any harm to the customer’s image, and the customer may under no circumstances claim damages for non-pecuniary loss.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-4">
-                <h2><span class="num">4</span>Uitvoering van de overeenkomst</h2>
-                <p><strong>4.1</strong> VANENGELANDT.NET zal zich als een goede huisvader wijden aan de verwezenlijking van de projecten die hem door de klant worden toevertrouwd. Hij is, met inbegrip van het naleven van de overeengekomen termijnen, uitsluitend verplicht tot een inspanningsverbintenis.</p>
-                <p><strong>4.2</strong> Bij verkoop van goederen is VANENGELANDT.NET zijn verplichtingen integraal nagekomen zodra zij de goederen aan de klant heeft geleverd respectievelijk zodra het materiaal door de klant is afgehaald. Het is de klant die alle maatregelen dient te nemen om de veiligheid en de opslag van het materiaal te garanderen.</p>
-                <p><strong>4.3</strong> VANENGELANDT.NET kan in geen geval aansprakelijk gesteld worden voor de schade van welke aard ook die toevallig is toegebracht aan goederen die eigendom zijn van de klant en die in de opslagplaatsen van VANENGELANDT.NET zouden liggen of door VANENGELANDT.NET getransporteerd of geïnstalleerd zouden worden.</p>
-                <p><strong>4.4</strong> VANENGELANDT.NET kan in geen geval aansprakelijk gesteld worden voor een aanslag op het imago van de klant en deze laatste kan in geen geval morele schadevergoeding eisen.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-5" data-3d="rise">
+                        <h2><span class="num">05</span>Delivery – travel – catering</h2>
+                        <p><strong>5.1</strong> Delivery times are given for information purposes only. VANENGELANDT.NET shall not be liable for any change to the delivery times, and such a change shall not entitle the customer to cancel the agreement or to claim any damages or other compensation whatsoever.</p>
+                        <p><strong>5.2</strong> The occurrence of facts or events resulting from force majeure shall release VANENGELANDT.NET from all liability. The fact that goods have been damaged, are broken or are missing must be established by the customer upon arrival of the goods. This must also be notified to the carrier in writing.</p>
+                        <p><strong>5.3</strong> VANENGELANDT.NET reserves the right at any time, without prior justification, to dispatch the goods cash on delivery or to require that they be paid for at the time of ordering.</p>
+                        <p><strong>5.4</strong> In the case of services, the organisation and the cost of catering and of accommodation (in particular hotel costs) for the staff deployed at that time shall be borne by the customer. The same applies to the travel costs of such persons, both in Belgium and abroad.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-5">
-                <h2><span class="num">5</span>Levering – verplaatsing – catering</h2>
-                <p><strong>5.1</strong> De leveringstermijnen worden uitsluitend ter informatie meegedeeld. VANENGELANDT.NET is niet aansprakelijk voor een eventuele aanpassing van de leveringstermijnen en een dergelijke aanpassing geeft de klant noch het recht om de overeenkomst te annuleren, noch om enige schadevergoeding of enige andere vergoeding te eisen.</p>
-                <p><strong>5.2</strong> Het optreden van feiten of gebeurtenissen die het gevolg zijn van overmacht, ontheft VANENGELANDT.NET van elke aansprakelijkheid. Het feit dat goederen schade hebben opgelopen, gebroken zijn of ontbreken, moet door de klant worden vastgesteld bij aankomst van de goederen. Dit feit moet ook schriftelijk aan de vervoerder worden gemeld.</p>
-                <p><strong>5.3</strong> VANENGELANDT.NET behoudt zich op elk ogenblik het recht om de goederen zonder voorafgaande rechtvaardiging onder rembours te verzenden of om te eisen dat ze op het ogenblik van de bestelling betaald worden.</p>
-                <p><strong>5.4</strong> Als het om prestaties gaat, zijn de organisatie en de kosten voor de catering alsook voor de onderbrenging (met name hotelkosten) van de op dat moment te werk gestelde arbeidskrachten ten laste van de klant. Dit geldt ook voor de verplaatsingskosten van deze personen, zowel in België als in het buitenland.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-6" data-3d="rise">
+                        <h2><span class="num">06</span>Transfer of risk</h2>
+                        <p><strong>6.1</strong> Without prejudice to the retention of title clause in favour of VANENGELANDT.NET, risk shall pass, for both rental and sale, at the time of delivery.</p>
+                        <p><strong>6.2</strong> Should the rented or sold equipment have a latent defect, no remedy whatsoever may be pursued against VANENGELANDT.NET, without prejudice to any remedy against the third party that supplied, installed or manufactured the equipment.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-6">
-                <h2><span class="num">6</span>Overdracht van de risico’s</h2>
-                <p><strong>6.1</strong> De overdracht van de risico’s vindt, onverminderd de clausule inzake eigendomsvoorbehoud die VANENGELANDT.NET geniet, zowel voor de verhuur als voor de verkoop plaats op het ogenblik van de levering.</p>
-                <p><strong>6.2</strong> Indien het gehuurde of verkochte materiaal een verborgen gebrek zou vertonen, kan er tegen VANENGELANDT.NET geen enkel rechtsmiddel worden aangewend onverminderd een eventueel rechtsmiddel tegen de derde die het materiaal heeft geleverd, geïnstalleerd of geproduceerd.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-7" data-3d="rise">
+                        <h2><span class="num">07</span>Equipment rental</h2>
+                        <p><strong>7.1</strong> In the case of equipment rental, the customer shall be fully and exclusively liable for the proper use of that equipment in all circumstances, whether the customer uses the equipment itself or entrusts its use to technicians for whom it may or may not be responsible.</p>
+                        <p><strong>7.2</strong> The customer is expressly prohibited from sub-letting, depositing or lending equipment owned by VANENGELANDT.NET without the prior written consent of VANENGELANDT.NET. The customer is strictly prohibited from altering the structure of the equipment or from attaching, affixing or removing anything whatsoever to or from it without the prior written consent of VANENGELANDT.NET. If this prohibition is breached, VANENGELANDT.NET shall invoice the altered equipment to the customer at the normal selling price.</p>
+                        <p><strong>7.3</strong> Should the rented equipment be damaged in any way whatsoever, the customer must carry out the customary findings and notify VANENGELANDT.NET thereof within twenty-four hours. Failing this, the full replacement value of the damaged equipment shall be invoiced to the customer.</p>
+                        <p><strong>7.4</strong> The equipment shall be delivered and returned at the warehouses of VANENGELANDT.NET or at any other place stated on our quotation or delivery note.</p>
+                        <p><strong>7.5</strong> For each equipment rental, the customer must provide a security deposit in cash of a minimum amount of EUR 150.00, unless otherwise agreed between VANENGELANDT.NET and the customer. The amount provided as a security deposit shall be returned to the customer once the rented equipment has been returned to our warehouses and it has been verified that the equipment is in perfect condition and shows no damage.</p>
+                        <p><strong>7.6</strong> The rented equipment is deemed to be in perfect working order. Taking receipt of the equipment implies that the customer irrevocably and unreservedly accepts the equipment in the condition in which it is found. Receipt of the equipment is effected by signing our delivery note or by using the equipment.</p>
+                        <p><strong>7.7</strong> The formalities relating to transport shall be entirely the responsibility of the customer. The customer must take out appropriate insurance for the benefit of VANENGELANDT.NET. In the event of damage or loss attributable to transit or to any detention of the equipment by customs, the costs associated with such damage and the costs of the delay in return shall be borne by the customer.</p>
+                        <p><strong>7.8</strong> Upon return of the equipment, an inventory shall be drawn up in the presence of both parties at the warehouses of VANENGELANDT.NET. Any damage caused to the equipment by the hirer shall be invoiced to the customer, unless VANENGELANDT.NET wishes to exercise its right to invoice the damaged equipment to the customer as sold equipment. The same applies to all missing or stolen items or accessories. Such items shall be compensated for or replaced at the customer’s expense.</p>
+                        <p><strong>7.9</strong> Should the customer extend the use of the equipment, the customer must notify VANENGELANDT.NET no later than 48 hours before the scheduled end of the rental period or of the service. The extension shall be subject to the same terms and conditions as the original rental or provision. A new delivery note shall be drawn up for this extension, which must be signed by the customer and returned to VANENGELANDT.NET. In the event of late return of the equipment, the customer shall owe the costs of extending the rental period together with compensation intended to make good the loss suffered by VANENGELANDT.NET as a result of such delay.</p>
+                        <p><strong>7.10</strong> The customer waives any remedy against VANENGELANDT.NET on the basis of articles 1721 and 1386 of the Civil Code. Throughout the entire rental period, the customer alone shall bear full responsibility for the equipment, both towards third parties and towards VANENGELANDT.NET.</p>
+                        <p><strong>7.11</strong> VANENGELANDT.NET disclaims all responsibility for accidents, loss, theft or any form of damage whatsoever to any magnetic or optical data carrier. This applies to audio, video and/or data files whose content is owned by the customer and which remain in the rented equipment after the end of the rental.</p>
+                        <p><strong>7.12</strong> A customer entering into the rental agreement must take out an insurance policy for the rented equipment. This policy must cover theft, fire, and material damage and personal injury of internal or external origin, in Belgium and abroad.</p>
+                        <p><strong>7.13</strong> If the rented equipment is damaged or is not returned by the hirer, the rental period shall be extended until such time as the customer produces an official statement of damage or theft, and the customer shall be obliged to pay the rent for that period. The hirer shall furthermore be obliged to pay the costs of restoring the equipment to its original condition or of repairing it.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-7">
-                <h2><span class="num">7</span>Verhuur van materiaal</h2>
-                <p><strong>7.1</strong> In geval van verhuur van materiaal is de klant integraal en exclusief aansprakelijk voor het correcte gebruik van dit materiaal en wel in alle omstandigheden, ongeacht hij het materiaal zelf gebruikt dan wel of hij het gebruik hiervan toevertrouwt aan technici waarvoor hij al dan niet aansprakelijk is.</p>
-                <p><strong>7.2</strong> Het is voor de klant formeel verboden om materiaal dat eigendom is van VANENGELANDT.NET, zonder voorafgaande schriftelijke toestemming van VANENGELANDT.NET door te verhuren te deponeren of uit te lenen. Het is voor de klant strikt verboden om zonder de voorafgaande schriftelijke toestemming van VANENGELANDT.NET de structuur van het materiaal te wijzigen of om hieraan wat dan ook te bevestigen, kleven of verwijderen. Indien dit verbod wordt geschonden, zal VANENGELANDT.NET het gewijzigde materiaal aan de normale verkoopprijs factureren aan de klant.</p>
-                <p><strong>7.3</strong> Indien het verhuurde materiaal op om het even welke wijze beschadigd zou raken, dient de klant over te gaan tot de gebruikelijke vaststellingen en VANENGELANDT.NET hiervan binnen de vierentwintig uur op de hoogte te brengen. Indien dit niet gebeurt, zal aan de klant de integrale vervangingswaarde van het beschadigde materiaal worden gefactureerd.</p>
-                <p><strong>7.4</strong> Het materiaal wordt geleverd en teruggegeven in de magazijnen van VANENGELANDT.NET of op enige andere plaats die op onze offerte of afleveringsbon vermeld staat.</p>
-                <p><strong>7.5</strong> Bij elke verhuur van materiaal dient de klant een waarborg te overhandigen in de vorm van contanten met een minimumbedrag van 150,00 EUR, tenzij anders overeengekomen tussen VANENGELANDT.NET en de klant. Het overhandigde bedrag dat als waarborg wordt overhandigd, zal aan de klant worden teruggegeven wanneer het gehuurde materiaal naar onze magazijnen is teruggebracht en wanneer is gecontroleerd dat het materiaal in perfecte staat is en geen schade vertoont.</p>
-                <p><strong>7.6</strong> Het verhuurde materiaal wordt geacht perfect te functioneren. De inontvangstneming van het materiaal houdt in dat de klant het materiaal op onherroepelijke wijze en zonder enig voorbehoud aanvaardt in de toestand waarin het zich bevindt. De inontvangstneming van het materiaal gebeurt door ondertekening van onze afleverbon of door het gebruik van het materiaal.</p>
-                <p><strong>7.7</strong> De formaliteiten voor de verplaatsing behoren integraal tot de verantwoordelijkheid van de klant. Deze laatste dient ten bate VANENGELANDT.NET een aangepaste verzekering af te sluiten. In geval van schade of verlies die te wijten zijn aan de transit of aan een eventuele blokkering van het materiaal bij de douane, zijn de kosten die met deze schade verbonden zijn, en de kosten voor de vertraging bij de teruggave ten laste van de klant.</p>
-                <p><strong>7.8</strong> Bij terugkeer van het materiaal zal er in de magazijnen van VANENGELANDT.NET een tegensprekelijke inventaris worden opgesteld. Eventuele door de huurder toegebrachte schade aan het materiaal zal aan de klant worden gefactureerd, behoudens indien VANENGELANDT.NET gebruik wenst te maken van haar recht om het beschadigde materiaal als verkocht materiaal te factureren aan de klant. Hetzelfde geldt voor alle verdwenen of gestolen voorwerpen of accessoires. Deze voorwerpen zullen op kosten van de klant worden vergoed of vervangen.</p>
-                <p><strong>7.9</strong> In geval van verlenging van het gebruik van het materiaal door de klant dient deze laatste VANENGELANDT.NET uiterlijk 48 uur vóór het vooropgestelde einde van de verhuurtermijn of de prestatie op de hoogte te brengen. Op de verlenging zijn dezelfde voorwaarden van toepassing als op de aanvankelijke verhuring of terbeschikkingstelling. Voor deze verlenging zal een nieuwe afleverbon worden opgesteld, die door de klant moet worden ondertekend en geretourneerd aan VANENGELANDT.NET. In geval van laattijdige teruggave van het materiaal is de klant de kosten voor de verlenging van de verhuurperiode verschuldigd alsook een vergoeding die bedoeld is als compensatie voor de schade die VANENGELANDT.NET door deze vertraging heeft opgelopen.</p>
-                <p><strong>7.10</strong> De klant ziet af van elk rechtsmiddel tegen VANENGELANDT.NET op basis van de artikelen 1721 en 1386 van het Burgerlijk Wetboek. Hij zal gedurende de gehele duur van de verhuring alleen de volledige verantwoordelijkheid voor het materiaal dragen, zowel ten opzichte van derden als ten opzichte van VANENGELANDT.NET.</p>
-                <p><strong>7.11</strong> VANENGELANDT.NET wijst elke verantwoordelijkheid van de hand voor ongevallen, verlies, diefstal of voor om het even welke vorm van beschadiging van een magnetische of optische informatiedrager. Dit zowel voor audio, video en/of databestanden waarvan de inhoud eigendom is van de klant en welke na afloop in het gehuurde materiaal zouden blijven zitten.</p>
-                <p><strong>7.12</strong> Een klant die de huurovereenkomst afsluit, dient voor het gehuurde materiaal een verzekeringspolis af te sluiten. Deze polis moet diefstal, brand, materiële en lichamelijke schade van interne of externe oorsprong dekken in België en in het buitenland.</p>
-                <p><strong>7.13</strong> Indien het gehuurde materiaal beschadigd is of indien het materiaal door de huurder niet wordt teruggegeven, wordt de duur van de huur verlengd tot op het ogenblik waarop de klant een officiële verklaring inzake beschadiging of diefstal voorlegt, waarbij de klant verplicht is om gedurende deze periode het bedrag voor de huur te betalen. De huurder is bovendien verplicht de kosten voor het in oorspronkelijke staat brengen of herstellen van het materiaal te betalen.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-8" data-3d="rise">
+                        <h2><span class="num">08</span>Payment</h2>
+                        <p><strong>8.1</strong> Save for express written derogation, all our invoices are payable in cash, net and without discount.</p>
+                        <p><strong>8.2</strong> Any late payment shall, automatically and without notice of default, by the mere fact of the invoice falling due and from its due date, give rise to interest at the rate of 12 % per annum. In addition, any customer whose invoice remains wholly or partly unpaid shall owe liquidated damages equal to 15 % of the outstanding amount, with a minimum of EUR 80.00.</p>
+                        <p><strong>8.3</strong> The fact that an invoice remains unpaid on its due date shall render immediately payable all other amounts still owed by that customer, irrespective of any payment facilities granted to the customer in respect of those sums. In addition, VANENGELANDT.NET shall be entitled to terminate all other agreements with the customer concerned without notice or compensation.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-8">
-                <h2><span class="num">8</span>Betaling</h2>
-                <p><strong>8.1</strong> Al onze facturen dienen behoudens uitdrukkelijke schriftelijke afwijking contant, netto en zonder disconto te worden betaald.</p>
-                <p><strong>8.2</strong> Elke vertraging bij de betaling heeft van rechtswege en zonder ingebrekestelling door het eenvoudige feit van de vervaldag van de factuur en vanaf deze laatste de berekening van een intrest van 12 % op jaarbasis tot gevolg. Bovendien is elke klant wiens factuur geheel of gedeeltelijk onbetaald is een forfaitaire schadevergoeding verschuldigd die gelijk is aan 15 % van het resterende bedrag, met een minimum van 80,00 EUR.</p>
-                <p><strong>8.3</strong> Het feit dat een factuur op haar vervaldag onbetaald is gebleven, maakt onmiddellijk alle andere bedragen opeisbaar die deze klant nog verschuldigd is, ongeacht de faciliteiten die voor de betaling van deze sommen aan de klant waren toegekend. Bovendien heeft VANENGELANDT.NET het recht om zonder opzegtermijn noch vergoeding alle andere overeenkomsten met de betrokken klant op te zeggen.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-9" data-3d="rise">
+                        <h2><span class="num">09</span>Retention of title</h2>
+                        <p><strong>9.1</strong> The goods sold shall remain the inalienable and exclusive property of VANENGELANDT.NET until they have been paid for in full by the customer. If payment is not made within the agreed time limits, VANENGELANDT.NET shall be entitled to repossess the goods without prior notice of default.</p>
+                        <p><strong>9.2</strong> The rented equipment is and shall remain the property of VANENGELANDT.NET and may not be transferred by the customer. If this equipment is seized by a third party while in the customer’s possession, the customer must, at its own expense, obtain the immediate release of the seizure, it being understood that the customer shall owe the rent stipulated in the agreement until the equipment has been returned in full to VANENGELANDT.NET.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-9">
-                <h2><span class="num">9</span>Eigendomsvoorbehoud</h2>
-                <p><strong>9.1</strong> De verkochte goederen blijven onvervreemdbaar en exclusief eigendom van VANENGELANDT.NET tot op het ogenblik waarop zij volledig door de klant zijn betaald. Wanneer de betaling niet binnen de overeengekomen termijnen gebeurt, heeft VANENGELANDT.NET het recht de goederen zonder voorafgaande ingebrekestelling opnieuw in haar bezit te nemen.</p>
-                <p><strong>9.2</strong> Het gehuurde materiaal is en blijft eigendom van VANENGELANDT.NET en kan door de klant niet worden afgestaan. Indien dit materiaal door een derde in beslag wordt genomen terwijl het zich bij de klant bevindt, zal deze laatste op eigen kosten de onmiddellijke opheffing van de inbeslagneming moeten bekomen, wetende dat hij de in de overeenkomst vastgelegde huurprijs verschuldigd is tot op het ogenblik van de integrale teruggave van het materiaal aan VANENGELANDT.NET.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-10" data-3d="rise">
+                        <h2><span class="num">10</span>Complaints</h2>
+                        <p><strong>10.1</strong> Any complaint concerning the rented or sold goods or the services performed must be submitted by registered letter within 8 days from the date of delivery of the goods or services. Failing this, the goods and services shall be deemed to have been accepted by the customer.</p>
+                        <p><strong>10.2</strong> If the complaint is accepted by VANENGELANDT.NET as well-founded and admissible, VANENGELANDT.NET shall replace or repair the goods found to be defective, to the exclusion of any other compensation whatsoever.</p>
+                        <p><strong>10.3</strong> All complaints concerning invoicing must be addressed to VANENGELANDT.NET by registered letter within 8 days of receipt of the invoice. Upon expiry of that period, the invoice shall be deemed to have been accepted in full.</p>
+                        <p><strong>10.4</strong> A complaint shall not release the customer from its obligation to pay within the time limit laid down in these general terms and conditions.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-10">
-                <h2><span class="num">10</span>Klachten</h2>
-                <p><strong>10.1</strong> Elke klacht over de gehuurde of verkochte goederen of over de verrichte diensten moet per aangetekend schrijven worden ingediend binnen de 8 dagen te tellen vanaf de datum van levering van de goederen of diensten. Bij gebrek hieraan worden de goederen en diensten geacht door de klant te zijn aanvaard.</p>
-                <p><strong>10.2</strong> Indien de klacht door VANENGELANDT.NET als gegrond en ontvankelijk aanvaard wordt, zal deze laatste overgaan tot vervanging of herstelling van de goederen die defect zijn gebleken. Dit met uitzondering van om het even welke andere vergoeding.</p>
-                <p><strong>10.3</strong> Alle klachten inzake facturatie moeten per aangetekend schrijven aan VANENGELANDT.NET worden gericht binnen de 8 dagen na ontvangst van de factuur. Na afloop van die termijn wordt de factuur geacht integraal te zijn aanvaard.</p>
-                <p><strong>10.4</strong> Een klacht ontheft de klant niet van zijn verplichting tot betaling binnen de termijn die in onderhavige algemene voorwaarden is vastgelegd.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-11" data-3d="rise">
+                        <h2><span class="num">11</span>Copyright and miscellaneous licences</h2>
+                        <p><strong>11.1</strong> A customer ordering supplies and/or services is deemed to hold the rights to those supplies and/or services and releases VANENGELANDT.NET from all liability in that respect. In addition, the customer undertakes to compensate any damage that may arise from the non-existence of such rights.</p>
+                        <p><strong>11.2</strong> Copyright fees collected by SABAM, any other body or a private individual in connection with an event carried out for the customer shall be borne by the customer.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-11">
-                <h2><span class="num">11</span>Auteursrechten en uiteenlopende vergunningen</h2>
-                <p><strong>11.1</strong> Een klant die leveringen en/of diensten bestelt, wordt geacht te beschikken over de rechten op deze leveringen en/of diensten en hij ontheft VANENGELANDT.NET ter zake van alle aansprakelijkheid. Bovendien verbindt de klant zich ertoe om alle schade te vergoeden die zou kunnen ontstaan door het niet-bestaan van deze rechten.</p>
-                <p><strong>11.2</strong> De auteursrechten die door SABAM, een ander organisme of een privépersoon geïnd worden in het raam van een actie die gerealiseerd wordt voor de klant, zijn ten laste van de klant.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-12" data-3d="rise">
+                        <h2><span class="num">12</span>Insurance</h2>
+                        <p><strong>12.1</strong> In connection with the operations carried out by VANENGELANDT.NET for the customer, the customer must, at its own expense, take out all insurance required for the event organised. Such insurance must in any event cover theft, damage to the equipment, damage caused by the equipment and the civil liability of VANENGELANDT.NET.</p>
+                        <p><strong>12.2</strong> For services outside the European Union, the customer must, at its own expense, take out insurance covering it against seizure of the equipment, destruction of the equipment, injury to persons in the event of riots, political events or natural disasters, as well as against any resulting loss of profit.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-12">
-                <h2><span class="num">12</span>Verzekeringen</h2>
-                <p><strong>12.1</strong> In het raam van de operaties die VANENGELANDT.NET voor de klant uitvoert, dient deze laatste op eigen kosten alle verzekeringen af te sluiten die vereist zijn met het oog op het georganiseerde evenement. Deze verzekeringen dienen in elk geval diefstal, beschadigingen aan het materiaal, beschadigingen veroorzaakt door het materiaal alsook burgerlijke aansprakelijkheid van VANENGELANDT.NET te omvatten.</p>
-                <p><strong>12.2</strong> Voor prestaties buiten de Europese Unie dient de klant op eigen kosten een verzekering af te sluiten die hem indekt tegen inbeslagneming van het materiaal, vernietiging van het materiaal, schade voor personen in geval van oproer, politieke feiten of natuurrampen alsook tegen de winstderving die hieruit zou kunnen resulteren.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-13" data-3d="rise">
+                        <h2><span class="num">13</span>Intellectual property</h2>
+                        <p><strong>13.1</strong> The projects, studies, plans and quotations drawn up at the customer’s request shall remain the property of VANENGELANDT.NET and may not be reproduced, executed or communicated in any manner whatsoever without the prior written consent of VANENGELANDT.NET.</p>
+                        <p><strong>13.2</strong> If the customer executes a project developed by VANENGELANDT.NET, or has it executed by a third party, the customer shall owe VANENGELANDT.NET, as fixed and non-reducible compensation and without prejudice to any additional damages, the total amount of the quotation drawn up for that project.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-13">
-                <h2><span class="num">13</span>Intellectuele eigendom</h2>
-                <p><strong>13.1</strong> De projecten, studies, plannen en offertes die op vraag van de klant worden opgesteld, blijven eigendom van VANENGELANDT.NET en mogen op generlei wijze worden gereproduceerd, uitgevoerd of meegedeeld zonder voorafgaande schriftelijke toestemming van VANENGELANDT.NET.</p>
-                <p><strong>13.2</strong> Indien de klant een door VANENGELANDT.NET uitgewerkt project uitvoert of door een derde laat uitvoeren, is hij aan VANENGELANDT.NET als forfaitaire en niet te reduceren vergoeding en onder voorbehoud van alle bijkomstige schadevergoedingen het totale bedrag verschuldigd voor de offerte die voor dit project is opgesteld.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-14" data-3d="rise">
+                        <h2><span class="num">14</span>Termination of the agreement</h2>
+                        <p><strong>14.1</strong> If the customer fails to comply with its obligations under these general terms and conditions or has provided incorrect information to VANENGELANDT.NET, VANENGELANDT.NET reserves the right to terminate the agreement without notice and without prior notice of default.</p>
+                        <p><strong>14.2</strong> In the event of a forced sale, reduction of security, judicial composition, bankruptcy, transfer of the business (goodwill) or any event affecting the business or solvency of the customer, VANENGELANDT.NET may terminate the agreement automatically and without prior notice of default, without notice period or compensation.</p>
+                        <p><strong>14.3</strong> In the event of termination of the agreement, whatever the reason for termination, the customer shall be obliged to return the rented equipment without delay, without prejudice to any damages that may be owed to VANENGELANDT.NET.</p>
+                        <p><strong>14.4</strong> In the event of termination of the agreement by the customer, the customer undertakes to reimburse VANENGELANDT.NET for all expenses incurred, all costs of works already carried out and the loss of profit on the works still to be carried out. This loss of profit is set by agreement at 50 % of the amount of the cancelled works. If a deposit has been paid, it shall likewise be retained by VANENGELANDT.NET. In the event of termination of the agreement 2 working days or less before the date of performance of the agreement, the compensation shall be assessed at 100% of the total amount of the order.</p>
+                        <p><strong>14.5</strong> In the event of termination of a rental agreement by the customer, the customer undertakes to reimburse VANENGELANDT.NET for all expenses incurred, all costs of works already carried out and a loss on the works still to be carried out. This loss is set by agreement at 50 % of the amount of the cancelled works in the event of cancellation less than 10 working days before the start of the contract, and at 100% in the event of cancellation less than 2 working days before the start of the contract. The start of the contract is the starting time of set-up or collection. If a deposit has been paid, it shall likewise be retained by VANENGELANDT.NET.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-14">
-                <h2><span class="num">14</span>Opzegging van de overeenkomst</h2>
-                <p><strong>14.1</strong> Indien de klant zijn verplichtingen uit de onderhavige algemene voorwaarden niet nakomt of indien de klant aan VANENGELANDT.NET foutieve informatie heeft verstrekt, behoudt deze laatste zich het recht voor om de overeenkomst zonder opzegtermijn en zonder voorafgaande ingebrekestelling op te zeggen.</p>
-                <p><strong>14.2</strong> In geval van gedwongen verkoop, reductie van de waarborg, gerechtelijk akkoord, faillissement, overdracht van handelsfondsen of in geval van enige gebeurtenis die gevolgen heeft voor de zaken of de solvabiliteit van de klant, kan VANENGELANDT.NET de overeenkomst van rechtswege en zonder voorafgaande ingebrekestelling opzeggen zonder opzegtermijn of vergoeding.</p>
-                <p><strong>14.3</strong> In geval van opzegging van de overeenkomst is de klant, ongeacht het motief voor de opzegging, verplicht het gehuurd materiaal onverwijld terug te bezorgen, onverminderd alle schadevergoedingen die aan VANENGELANDT.NET verschuldigd zouden kunnen zijn.</p>
-                <p><strong>14.4</strong> In geval van opzegging van de overeenkomst door de klant verbindt deze laatste zich ertoe om aan VANENGELANDT.NET alle gemaakte uitgaven, alle kosten voor reeds uitgevoerde werkzaamheden en de winstderving voor de nog uit te voeren werkzaamheden te vergoeden. Deze winstderving wordt bij afspraak bepaald op 50 % van het bedrag van de geannuleerde werkzaamheden. Als er een voorschot is betaald, blijft dit eveneens verworven door VANENGELANDT.NET. Bij opzegging van de overeenkomst 2 werkdagen en minder voorafgaand aan de datum van uitvoering van de overeenkomst wordt de schadevergoeding beraamd op 100% van het totale bedrag van de bestelling.</p>
-                <p><strong>14.5</strong> In geval van opzegging van een huurovereenkomst door de klant verbindt deze laatste zich ertoe om aan VANENGELANDT.NET alle gemaakte uitgaven, alle kosten voor reeds uitgevoerde werkzaamheden en een derving voor de nog uit te voeren werkzaamheden te vergoeden. Deze derving wordt bij afspraak bepaald op 50 % van het bedrag van de geannuleerde werkzaamheden bij annulatie minder dan 10 werkdagen voor start contract en 100% bij annulatie minder dan 2 werkdagen voor start contract. De start contract is het startuur van opbouw of afhaling. Als er een voorschot is betaald, blijft dit eveneens verworven door VANENGELANDT.NET.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-15" data-3d="rise">
+                        <h2><span class="num">15</span>Disputes</h2>
+                        <p><strong>15.1</strong> This agreement is governed by Belgian law. The courts of the judicial district of Kortrijk shall have exclusive jurisdiction over all disputes between VANENGELANDT.NET and the customer, with Belgian law alone being applicable, without prejudice to the right of VANENGELANDT.NET to summon the customer before the court of the customer’s place of domicile. The legal proceedings shall be conducted in Dutch, save where statutory provisions on the use of languages in judicial matters provide otherwise.</p>
+                    </section></div>
 
-            <section class="term reveal" id="sectie-15">
-                <h2><span class="num">15</span>Geschillen</h2>
-                <p><strong>15.1</strong> Op onderhavige overeenkomst is het Belgisch recht van toepassing. Voor alle geschillen tussen VANENGELANDT.NET en de klant zijn uitsluitend de rechtbanken uit het gerechtelijke arrondissement Kortrijk bevoegd, waarbij alleen het Belgisch recht van toepassing is, uitgezonderd het recht van VANENGELANDT.NET om de klant te dagvaarden voor de rechtbank van zijn woonplaats. De rechtsprocedure zal in het Nederlands verlopen behoudens andersluidende wettelijke bepalingen inzake het gebruik der talen in gerechtszaken.</p>
-            </section>
+                    <div class="depth"><section class="term" id="en-section-16" data-3d="rise">
+                        <h2><span class="num">16</span>Final provisions</h2>
+                        <p><strong>16.1</strong> Save by special derogation, the representatives or agents of VANENGELANDT.NET are not authorised to bind VANENGELANDT.NET or to accept payment of deposits or invoices.</p>
+                        <p><strong>16.2</strong> The nullity or amendment of any of the clauses of these general terms and conditions shall not affect the validity of the other clauses, which shall accordingly remain in full force and effect.</p>
+                        <p><strong>16.3</strong> If the customer is an intermediary acting on behalf of a third party, the customer must communicate these general terms and conditions to that third party and have them signed by that third party. In the event of the customer’s insolvency, VANENGELANDT.NET shall be entitled to claim directly against the end customer.</p>
+                    </section></div>
+            </div>
+        </div>
 
-            <section class="term reveal" id="sectie-16">
-                <h2><span class="num">16</span>Slotbepalingen</h2>
-                <p><strong>16.1</strong> De vertegenwoordigers of afgevaardigden van VANENGELANDT.NET zijn behoudens een speciale afwijking niet gemachtigd om VANENGELANDT.NET te binden noch om de betaling van voorschotten of facturen in ontvangst te nemen.</p>
-                <p><strong>16.2</strong> De nietigheid of wijziging van één van de clausules uit onderhavige algemene voorwaarden heeft geen gevolgen voor de geldigheid van de andere clausules. Deze blijven dan ook hun volle rechtsgeldigheid behouden.</p>
-                <p><strong>16.3</strong> Indien de klant een tussenpersoon is die in naam van een derde handelt, is de klant verplicht om onderhavige algemene voorwaarden aan deze derde mee te delen en deze door hem te laten ondertekenen. In geval van insolvabiliteit van de klant heeft VANENGELANDT.NET het recht om zich rechtstreeks tot de uiteindelijke klant te wenden.</p>
-            </section>
-        </main>
-    </div>
+        <div class="container layout" data-lang-block="fr" lang="fr" hidden>
+            <details class="toc" open>
+                <summary><span data-i18n="terms.toc">Inhoudsopgave</span>
+                    <svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+                </summary>
+                <nav>
+                    <ol>
+                            <li><a href="#fr-article-1"><span class="n">1</span>Opposabilité des présentes conditions générales</a></li>
+                            <li><a href="#fr-article-2"><span class="n">2</span>Offres – commandes – bons de commande</a></li>
+                            <li><a href="#fr-article-3"><span class="n">3</span>Tarifs</a></li>
+                            <li><a href="#fr-article-4"><span class="n">4</span>Exécution du contrat</a></li>
+                            <li><a href="#fr-article-5"><span class="n">5</span>Livraison – déplacement – restauration</a></li>
+                            <li><a href="#fr-article-6"><span class="n">6</span>Transfert des risques</a></li>
+                            <li><a href="#fr-article-7"><span class="n">7</span>Location de matériel</a></li>
+                            <li><a href="#fr-article-8"><span class="n">8</span>Paiement</a></li>
+                            <li><a href="#fr-article-9"><span class="n">9</span>Réserve de propriété</a></li>
+                            <li><a href="#fr-article-10"><span class="n">10</span>Réclamations</a></li>
+                            <li><a href="#fr-article-11"><span class="n">11</span>Droits d’auteur et autorisations diverses</a></li>
+                            <li><a href="#fr-article-12"><span class="n">12</span>Assurances</a></li>
+                            <li><a href="#fr-article-13"><span class="n">13</span>Propriété intellectuelle</a></li>
+                            <li><a href="#fr-article-14"><span class="n">14</span>Résiliation du contrat</a></li>
+                            <li><a href="#fr-article-15"><span class="n">15</span>Litiges</a></li>
+                            <li><a href="#fr-article-16"><span class="n">16</span>Dispositions finales</a></li>
+                    </ol>
+                </nav>
+            </details>
+            <div class="terms">
+                    <div class="depth"><section class="term" id="fr-article-1" data-3d="rise">
+                        <h2><span class="num">01</span>Opposabilité des présentes conditions générales</h2>
+                        <p><strong>1.1</strong> Du seul fait de sa commande, le client est réputé avoir pris connaissance des présentes conditions générales et les accepter, même si celles-ci devaient être contraires à ses propres conditions générales ou particulières.</p>
+                        <p><strong>1.2</strong> Les présentes conditions générales et particulières relatives au présent contrat annulent et remplacent toutes les conditions antérieures et priment sur les conditions générales ou particulières du client.</p>
+                    </section></div>
 
-    <footer>
+                    <div class="depth"><section class="term" id="fr-article-2" data-3d="rise">
+                        <h2><span class="num">02</span>Offres – commandes – bons de commande</h2>
+                        <p><strong>2.1</strong> Nos offres sont fournies à titre informatif et sous réserve des modifications résultant d’erreurs ou d’omissions. Elles n’engagent VANENGELANDT.NET qu’après réception du bon de commande dûment signé par le client. Elles sont établies sur la base des informations que le client met à notre disposition et toute modification de ces données entraîne une révision du prix.</p>
+                        <p><strong>2.2</strong> Sauf disposition contraire figurant dans l’offre ou le bon de commande et expressément acceptée par VANENGELANDT.NET, la commande ne sera exécutée qu’après paiement d’un acompte correspondant à 50 % du montant total de la commande, TVA (21 %) comprise. En cas d’annulation de la commande par le client, cet acompte est irrévocablement acquis à VANENGELANDT.NET à titre d’indemnité forfaitaire, sans que VANENGELANDT.NET doive justifier d’un quelconque dommage. Lorsque le client annule la commande dans les dix jours ouvrables précédant la date d’exécution du contrat, il est redevable d’une indemnité correspondant aux frais exposés. Cette indemnité ne peut jamais être inférieure à 50% du montant total de la commande, TVA (21 %) comprise. En cas d’annulation 2 jours ouvrables ou moins avant la date d’exécution du contrat, l’indemnité est fixée à 100% du montant total de la commande.</p>
+                        <p><strong>2.3</strong> Toute modification, tout ajout ou toute suppression de travaux tels que décrits dans l’offre doit faire l’objet d’un avenant au contrat. À défaut, ces travaux sont réputés avoir été exécutés conformément aux instructions verbales du client, qui renonce dès lors à toute action en justice à cet égard, y compris en ce qui concerne la facturation subséquente de ces travaux. VANENGELANDT.NET se réserve toutefois le droit d’apporter, au cours de l’exécution du projet, les modifications ou adaptations qui s’avéreraient nécessaires en raison de circonstances particulières ou de circonstances qui seraient dans l’intérêt du projet. D’éventuelles différences entre les données de l’offre et les biens et/ou services fournis ne donnent au client ni le droit de refuser les biens ou services, ni celui d’en refuser le paiement, ni celui de réclamer une quelconque indemnité.</p>
+                        <p><strong>2.4</strong> Si, après l’établissement de l’offre et l’étude de celle-ci, le client renonce à la commande, les frais exposés sont à la charge du client.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-3" data-3d="rise">
+                        <h2><span class="num">03</span>Tarifs</h2>
+                        <p><strong>3.1</strong> Les tarifs des prestations et/ou de la location s’entendent pour un paiement au comptant du montant net, sans escompte. Ces tarifs doivent être majorés de la TVA (21 %). Les acomptes et le solde doivent être payés conformément aux conditions de paiement mentionnées dans l’offre ou la facture.</p>
+                        <p><strong>3.2</strong> Les prix mentionnés dans une offre acceptée par le client et portant sur des travaux ou une location de biens ayant lieu dans un délai de plus de trois mois peuvent être révisés si les prix des fournitures utilisées et/ou de la main-d’œuvre mise en œuvre ont augmenté d’au moins 15 %.</p>
+                        <p><strong>3.3</strong> Les frais de livraison et/ou d’enlèvement sont toujours à la charge du client. Il en va de même des frais de déplacement et de la main-d’œuvre ajoutée par rapport à la ou aux offre(s) approuvée(s).</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-4" data-3d="rise">
+                        <h2><span class="num">04</span>Exécution du contrat</h2>
+                        <p><strong>4.1</strong> VANENGELANDT.NET se consacrera en bon père de famille à la réalisation des projets qui lui sont confiés par le client. Il n’est tenu, y compris en ce qui concerne le respect des délais convenus, que d’une obligation de moyens.</p>
+                        <p><strong>4.2</strong> En cas de vente de biens, VANENGELANDT.NET a intégralement exécuté ses obligations dès qu’elle a livré les biens au client ou, selon le cas, dès que le matériel a été enlevé par le client. Il appartient au client de prendre toutes les mesures nécessaires pour garantir la sécurité et le stockage du matériel.</p>
+                        <p><strong>4.3</strong> VANENGELANDT.NET ne peut en aucun cas être tenue responsable des dommages, de quelque nature que ce soit, causés fortuitement aux biens appartenant au client qui se trouveraient dans les entrepôts de VANENGELANDT.NET ou qui seraient transportés ou installés par VANENGELANDT.NET.</p>
+                        <p><strong>4.4</strong> VANENGELANDT.NET ne peut en aucun cas être tenue responsable d’une atteinte à l’image du client, et ce dernier ne peut en aucun cas réclamer de dommages et intérêts pour préjudice moral.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-5" data-3d="rise">
+                        <h2><span class="num">05</span>Livraison – déplacement – restauration</h2>
+                        <p><strong>5.1</strong> Les délais de livraison sont communiqués à titre purement indicatif. VANENGELANDT.NET n’est pas responsable d’une éventuelle adaptation des délais de livraison, et une telle adaptation ne donne au client ni le droit d’annuler le contrat, ni celui de réclamer des dommages et intérêts ou une quelconque autre indemnité.</p>
+                        <p><strong>5.2</strong> La survenance de faits ou d’événements résultant d’un cas de force majeure exonère VANENGELANDT.NET de toute responsabilité. Le fait que des biens aient subi des dommages, soient cassés ou manquants doit être constaté par le client à l’arrivée des biens. Ce fait doit également être signalé par écrit au transporteur.</p>
+                        <p><strong>5.3</strong> VANENGELANDT.NET se réserve à tout moment le droit d’expédier les biens contre remboursement sans justification préalable, ou d’exiger qu’ils soient payés au moment de la commande.</p>
+                        <p><strong>5.4</strong> S’agissant de prestations, l’organisation et les frais de restauration ainsi que d’hébergement (notamment les frais d’hôtel) de la main-d’œuvre occupée à ce moment sont à la charge du client. Il en va de même des frais de déplacement de ces personnes, tant en Belgique qu’à l’étranger.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-6" data-3d="rise">
+                        <h2><span class="num">06</span>Transfert des risques</h2>
+                        <p><strong>6.1</strong> Sans préjudice de la clause de réserve de propriété dont bénéficie VANENGELANDT.NET, le transfert des risques a lieu, tant pour la location que pour la vente, au moment de la livraison.</p>
+                        <p><strong>6.2</strong> Si le matériel loué ou vendu devait présenter un vice caché, aucun recours ne pourra être exercé contre VANENGELANDT.NET, sans préjudice d’un éventuel recours contre le tiers qui a fourni, installé ou produit le matériel.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-7" data-3d="rise">
+                        <h2><span class="num">07</span>Location de matériel</h2>
+                        <p><strong>7.1</strong> En cas de location de matériel, le client est intégralement et exclusivement responsable de l’utilisation correcte de ce matériel, et ce en toutes circonstances, qu’il utilise lui-même le matériel ou qu’il en confie l’utilisation à des techniciens dont il est ou non responsable.</p>
+                        <p><strong>7.2</strong> Il est formellement interdit au client de sous-louer, de déposer ou de prêter du matériel appartenant à VANENGELANDT.NET sans l’autorisation écrite préalable de VANENGELANDT.NET. Il est strictement interdit au client, sans l’autorisation écrite préalable de VANENGELANDT.NET, de modifier la structure du matériel ou d’y fixer, coller ou retirer quoi que ce soit. En cas de violation de cette interdiction, VANENGELANDT.NET facturera au client le matériel modifié au prix de vente normal.</p>
+                        <p><strong>7.3</strong> Si le matériel loué devait être endommagé de quelque manière que ce soit, le client doit procéder aux constatations d’usage et en informer VANENGELANDT.NET dans les vingt-quatre heures. À défaut, la valeur de remplacement intégrale du matériel endommagé sera facturée au client.</p>
+                        <p><strong>7.4</strong> Le matériel est livré et restitué dans les entrepôts de VANENGELANDT.NET ou en tout autre lieu mentionné sur notre offre ou notre bon de livraison.</p>
+                        <p><strong>7.5</strong> Pour toute location de matériel, le client doit remettre une garantie en espèces d’un montant minimum de 150,00 EUR, sauf convention contraire entre VANENGELANDT.NET et le client. Le montant remis à titre de garantie sera restitué au client lorsque le matériel loué aura été ramené dans nos entrepôts et qu’il aura été vérifié que le matériel est en parfait état et ne présente aucun dommage.</p>
+                        <p><strong>7.6</strong> Le matériel loué est réputé fonctionner parfaitement. La réception du matériel implique que le client accepte le matériel de manière irrévocable et sans aucune réserve dans l’état où il se trouve. La réception du matériel s’opère par la signature de notre bon de livraison ou par l’utilisation du matériel.</p>
+                        <p><strong>7.7</strong> Les formalités relatives au déplacement relèvent intégralement de la responsabilité du client. Ce dernier doit souscrire une assurance adaptée au profit de VANENGELANDT.NET. En cas de dommage ou de perte dus au transit ou à un éventuel blocage du matériel en douane, les frais liés à ces dommages ainsi que les frais résultant du retard de restitution sont à la charge du client.</p>
+                        <p><strong>7.8</strong> Au retour du matériel, un inventaire contradictoire sera établi dans les entrepôts de VANENGELANDT.NET. Les éventuels dommages causés au matériel par le locataire seront facturés au client, sauf si VANENGELANDT.NET souhaite faire usage de son droit de facturer au client le matériel endommagé comme matériel vendu. Il en va de même pour tous les objets ou accessoires disparus ou volés. Ces objets seront indemnisés ou remplacés aux frais du client.</p>
+                        <p><strong>7.9</strong> En cas de prolongation de l’utilisation du matériel par le client, ce dernier doit en informer VANENGELANDT.NET au plus tard 48 heures avant la fin prévue de la période de location ou de la prestation. La prolongation est soumise aux mêmes conditions que la location ou la mise à disposition initiale. Pour cette prolongation, un nouveau bon de livraison sera établi, qui doit être signé par le client et retourné à VANENGELANDT.NET. En cas de restitution tardive du matériel, le client est redevable des frais de prolongation de la période de location ainsi que d’une indemnité destinée à compenser le préjudice subi par VANENGELANDT.NET du fait de ce retard.</p>
+                        <p><strong>7.10</strong> Le client renonce à tout recours contre VANENGELANDT.NET sur la base des articles 1721 et 1386 du Code civil. Il assumera seul, pendant toute la durée de la location, l’entière responsabilité du matériel, tant à l’égard des tiers qu’à l’égard de VANENGELANDT.NET.</p>
+                        <p><strong>7.11</strong> VANENGELANDT.NET décline toute responsabilité pour les accidents, pertes, vols ou toute forme d’endommagement d’un support d’information magnétique ou optique. Ceci vaut tant pour les fichiers audio, vidéo et/ou de données dont le contenu est la propriété du client et qui resteraient dans le matériel loué à l’issue de la location.</p>
+                        <p><strong>7.12</strong> Le client qui conclut le contrat de location doit souscrire une police d’assurance pour le matériel loué. Cette police doit couvrir le vol, l’incendie, les dommages matériels et corporels d’origine interne ou externe, en Belgique et à l’étranger.</p>
+                        <p><strong>7.13</strong> Si le matériel loué est endommagé ou s’il n’est pas restitué par le locataire, la durée de la location est prolongée jusqu’au moment où le client produit une déclaration officielle de dommage ou de vol, le client étant tenu de payer le montant de la location pendant cette période. Le locataire est en outre tenu de payer les frais de remise en état d’origine ou de réparation du matériel.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-8" data-3d="rise">
+                        <h2><span class="num">08</span>Paiement</h2>
+                        <p><strong>8.1</strong> Sauf dérogation écrite expresse, toutes nos factures sont payables au comptant, net et sans escompte.</p>
+                        <p><strong>8.2</strong> Tout retard de paiement entraîne de plein droit et sans mise en demeure, du seul fait de l’échéance de la facture et à compter de celle-ci, la débition d’un intérêt de 12 % l’an. En outre, tout client dont la facture reste impayée en tout ou en partie est redevable d’une indemnité forfaitaire égale à 15 % du montant restant dû, avec un minimum de 80,00 EUR.</p>
+                        <p><strong>8.3</strong> Le fait qu’une facture soit restée impayée à son échéance rend immédiatement exigibles toutes les autres sommes encore dues par ce client, quelles que soient les facilités de paiement qui lui avaient été accordées pour ces sommes. En outre, VANENGELANDT.NET a le droit de résilier, sans préavis ni indemnité, tous les autres contrats conclus avec le client concerné.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-9" data-3d="rise">
+                        <h2><span class="num">09</span>Réserve de propriété</h2>
+                        <p><strong>9.1</strong> Les biens vendus demeurent la propriété inaliénable et exclusive de VANENGELANDT.NET jusqu’à leur complet paiement par le client. Si le paiement n’intervient pas dans les délais convenus, VANENGELANDT.NET a le droit de reprendre possession des biens sans mise en demeure préalable.</p>
+                        <p><strong>9.2</strong> Le matériel loué est et demeure la propriété de VANENGELANDT.NET et ne peut être cédé par le client. Si ce matériel est saisi par un tiers alors qu’il se trouve chez le client, ce dernier devra obtenir à ses frais la mainlevée immédiate de la saisie, étant entendu qu’il reste redevable du loyer fixé dans le contrat jusqu’à la restitution intégrale du matériel à VANENGELANDT.NET.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-10" data-3d="rise">
+                        <h2><span class="num">10</span>Réclamations</h2>
+                        <p><strong>10.1</strong> Toute réclamation relative aux biens loués ou vendus ou aux services prestés doit être introduite par lettre recommandée dans les 8 jours à compter de la date de livraison des biens ou des services. À défaut, les biens et services sont réputés acceptés par le client.</p>
+                        <p><strong>10.2</strong> Si la réclamation est reconnue fondée et recevable par VANENGELANDT.NET, cette dernière procédera au remplacement ou à la réparation des biens qui se sont révélés défectueux, à l’exclusion de toute autre indemnité.</p>
+                        <p><strong>10.3</strong> Toute réclamation relative à la facturation doit être adressée à VANENGELANDT.NET par lettre recommandée dans les 8 jours de la réception de la facture. À l’expiration de ce délai, la facture est réputée intégralement acceptée.</p>
+                        <p><strong>10.4</strong> Une réclamation ne dispense pas le client de son obligation de paiement dans le délai fixé par les présentes conditions générales.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-11" data-3d="rise">
+                        <h2><span class="num">11</span>Droits d’auteur et autorisations diverses</h2>
+                        <p><strong>11.1</strong> Le client qui commande des fournitures et/ou des services est réputé disposer des droits sur ces fournitures et/ou services et il dégage VANENGELANDT.NET de toute responsabilité à cet égard. En outre, le client s’engage à indemniser tout dommage qui pourrait résulter de l’inexistence de ces droits.</p>
+                        <p><strong>11.2</strong> Les droits d’auteur perçus par la SABAM, par un autre organisme ou par une personne privée dans le cadre d’une action réalisée pour le client sont à la charge du client.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-12" data-3d="rise">
+                        <h2><span class="num">12</span>Assurances</h2>
+                        <p><strong>12.1</strong> Dans le cadre des opérations que VANENGELANDT.NET effectue pour le client, ce dernier doit souscrire à ses frais toutes les assurances requises en vue de l’événement organisé. Ces assurances doivent en tout cas couvrir le vol, les dommages au matériel, les dommages causés par le matériel ainsi que la responsabilité civile de VANENGELANDT.NET.</p>
+                        <p><strong>12.2</strong> Pour les prestations en dehors de l’Union européenne, le client doit souscrire à ses frais une assurance le couvrant contre la saisie du matériel, la destruction du matériel, les dommages aux personnes en cas d’émeutes, d’événements politiques ou de catastrophes naturelles, ainsi que contre le manque à gagner qui pourrait en résulter.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-13" data-3d="rise">
+                        <h2><span class="num">13</span>Propriété intellectuelle</h2>
+                        <p><strong>13.1</strong> Les projets, études, plans et offres établis à la demande du client restent la propriété de VANENGELANDT.NET et ne peuvent en aucune manière être reproduits, exécutés ou communiqués sans l’autorisation écrite préalable de VANENGELANDT.NET.</p>
+                        <p><strong>13.2</strong> Si le client exécute ou fait exécuter par un tiers un projet élaboré par VANENGELANDT.NET, il est redevable envers VANENGELANDT.NET, à titre d’indemnité forfaitaire et irréductible et sous réserve de tous dommages et intérêts complémentaires, du montant total de l’offre établie pour ce projet.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-14" data-3d="rise">
+                        <h2><span class="num">14</span>Résiliation du contrat</h2>
+                        <p><strong>14.1</strong> Si le client ne respecte pas ses obligations découlant des présentes conditions générales ou si le client a fourni des informations erronées à VANENGELANDT.NET, cette dernière se réserve le droit de résilier le contrat sans préavis et sans mise en demeure préalable.</p>
+                        <p><strong>14.2</strong> En cas de vente forcée, de réduction de la garantie, de concordat judiciaire, de faillite, de cession de fonds de commerce ou en cas de tout événement ayant des conséquences sur les affaires ou la solvabilité du client, VANENGELANDT.NET peut résilier le contrat de plein droit et sans mise en demeure préalable, sans préavis ni indemnité.</p>
+                        <p><strong>14.3</strong> En cas de résiliation du contrat, quel qu’en soit le motif, le client est tenu de restituer sans délai le matériel loué, sans préjudice de tous dommages et intérêts qui pourraient être dus à VANENGELANDT.NET.</p>
+                        <p><strong>14.4</strong> En cas de résiliation du contrat par le client, ce dernier s’engage à indemniser VANENGELANDT.NET de toutes les dépenses exposées, de tous les frais relatifs aux travaux déjà exécutés et du manque à gagner sur les travaux restant à exécuter. Ce manque à gagner est fixé de commun accord à 50 % du montant des travaux annulés. Si un acompte a été payé, celui-ci reste également acquis à VANENGELANDT.NET. En cas de résiliation du contrat 2 jours ouvrables ou moins avant la date d’exécution du contrat, l’indemnité est fixée à 100% du montant total de la commande.</p>
+                        <p><strong>14.5</strong> En cas de résiliation d’un contrat de location par le client, ce dernier s’engage à indemniser VANENGELANDT.NET de toutes les dépenses exposées, de tous les frais relatifs aux travaux déjà exécutés et d’un manque à gagner sur les travaux restant à exécuter. Ce manque à gagner est fixé de commun accord à 50 % du montant des travaux annulés en cas d’annulation moins de 10 jours ouvrables avant le début du contrat, et à 100% en cas d’annulation moins de 2 jours ouvrables avant le début du contrat. Le début du contrat correspond à l’heure de début du montage ou de l’enlèvement. Si un acompte a été payé, celui-ci reste également acquis à VANENGELANDT.NET.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-15" data-3d="rise">
+                        <h2><span class="num">15</span>Litiges</h2>
+                        <p><strong>15.1</strong> Le présent contrat est régi par le droit belge. Tous les litiges entre VANENGELANDT.NET et le client relèvent de la compétence exclusive des tribunaux de l’arrondissement judiciaire de Courtrai, seul le droit belge étant applicable, sans préjudice du droit de VANENGELANDT.NET de citer le client devant le tribunal de son domicile. La procédure se déroulera en néerlandais, sauf dispositions légales contraires relatives à l’emploi des langues en matière judiciaire.</p>
+                    </section></div>
+
+                    <div class="depth"><section class="term" id="fr-article-16" data-3d="rise">
+                        <h2><span class="num">16</span>Dispositions finales</h2>
+                        <p><strong>16.1</strong> Sauf dérogation spéciale, les représentants ou délégués de VANENGELANDT.NET ne sont pas habilités à engager VANENGELANDT.NET ni à percevoir le paiement d’acomptes ou de factures.</p>
+                        <p><strong>16.2</strong> La nullité ou la modification de l’une des clauses des présentes conditions générales n’affecte pas la validité des autres clauses. Celles-ci conservent dès lors leur pleine validité juridique.</p>
+                        <p><strong>16.3</strong> Si le client est un intermédiaire agissant au nom d’un tiers, le client est tenu de communiquer les présentes conditions générales à ce tiers et de les lui faire signer. En cas d’insolvabilité du client, VANENGELANDT.NET a le droit de s’adresser directement au client final.</p>
+                    </section></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
         <div class="container footer-inner">
-            <p>&copy; <span id="year">2025</span> VanEngelandt.NET. Alle rechten voorbehouden.</p>
+            <p>&copy; <span id="year">2026</span> VanEngelandt.NET. <span data-i18n="footer.rights">Alle rechten voorbehouden.</span></p>
             <div class="footer-links">
-                <a href="index.html">Home</a>
-                <a href="index.html#services">Services</a>
-                <a href="index.html#contact">Contact</a>
-                <a href="#top">Naar boven</a>
+                <a href="index.html#services" data-i18n="nav.services">Diensten</a>
+                <a href="index.html#about" data-i18n="nav.about">Over mij</a>
+                <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+                <a href="#top" data-i18n="footer.top">Naar boven</a>
             </div>
         </div>
     </footer>
 
-    <button id="backToTopBtn" class="back-to-top" aria-label="Terug naar boven">
-        <svg fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    <button id="backToTopBtn" class="back-to-top" data-i18n-aria="footer.top" aria-label="Naar boven">
+        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
     </button>
 
     <script>
-        const toc = document.getElementById('toc');
-        const mobile = window.matchMedia('(max-width: 999px)');
-        // Collapse the table of contents on phones, keep it open on wide screens
-        const syncToc = () => { toc.open = !mobile.matches; };
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Table of contents: open beside the text on wide screens, folded on phones
+        const narrow = matchMedia('(max-width: 1039px)');
+        const tocs = [...document.querySelectorAll('.toc')];
+        const syncToc = () => tocs.forEach(t => { t.open = !narrow.matches; });
         syncToc();
-        mobile.addEventListener('change', syncToc);
-        toc.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (mobile.matches) toc.open = false; }));
+        narrow.addEventListener('change', syncToc);
+        tocs.forEach(t => t.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (narrow.matches) t.open = false; })));
 
-        // Highlight the section currently in view
+        // Highlight the article currently being read
         const links = {};
-        toc.querySelectorAll('a').forEach(a => { links[a.getAttribute('href').slice(1)] = a; });
-        const reveals = document.querySelectorAll('.reveal');
+        document.querySelectorAll('.toc a').forEach(a => { links[a.getAttribute('href').slice(1)] = a; });
         if ('IntersectionObserver' in window) {
-            const spy = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        Object.values(links).forEach(l => l.classList.remove('active'));
-                        links[e.target.id]?.classList.add('active');
-                    }
-                });
-            }, { rootMargin: '-30% 0px -60% 0px' });
+            const spy = new IntersectionObserver(entries => entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                const a = links[e.target.id];
+                if (!a) return;
+                a.closest('ol').querySelectorAll('a').forEach(l => l.classList.remove('active'));
+                a.classList.add('active');
+            }), { rootMargin: '-30% 0px -60% 0px' });
             document.querySelectorAll('.term').forEach(s => spy.observe(s));
-
-            const io = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-                });
-            }, { threshold: 0.05 });
-            reveals.forEach(el => io.observe(el));
-        } else {
-            reveals.forEach(el => el.classList.add('visible'));
         }
 
-        // Back to top
         const topBtn = document.getElementById('backToTopBtn');
-        window.addEventListener('scroll', () => topBtn.classList.toggle('show', window.scrollY > 400), { passive: true });
-        topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-        document.getElementById('year').textContent = new Date().getFullYear();
+        addEventListener('scroll', () => topBtn.classList.toggle('show', scrollY > 500), { passive: true });
+        topBtn.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+        document.addEventListener('langchange', () => dispatchEvent(new Event('scroll')));
     </script>
+    <script src="js/i18n.js"></script>
+    <script src="js/scroll3d.js"></script>
 </body>
 </html>
