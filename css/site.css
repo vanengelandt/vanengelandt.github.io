@@ -14,6 +14,19 @@
     src: url(../fonts/archivo-latin-wdth-normal.woff2) format('woff2');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+@font-face {
+    font-family: 'Archivo'; font-style: normal; font-display: swap;
+    font-weight: 100 900; font-stretch: 62% 125%;
+    src: url(../fonts/archivo-vietnamese-wdth-normal.woff2) format('woff2');
+    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* Thai has no Archivo glyphs: Noto Sans Thai matches its proportions and also has a width axis */
+@font-face {
+    font-family: 'Noto Sans Thai'; font-style: normal; font-display: swap;
+    font-weight: 100 900; font-stretch: 62.5% 100%;
+    src: url(../fonts/noto-sans-thai-thai-wdth-normal.woff2) format('woff2');
+    unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC;
+}
 :root {
     --black: #050505;
     --ink: #0c0b09;
@@ -29,7 +42,7 @@
     --gold-grad: linear-gradient(120deg, #8a6a2c 0%, #e8cf8f 32%, #c9a45c 52%, #f3e3b3 70%, #9b7835 100%);
     --radius: 4px;
     --max: 1180px;
-    --font: 'Archivo', 'Helvetica Neue', Arial, system-ui, sans-serif;
+    --font: 'Archivo', 'Noto Sans Thai', 'Helvetica Neue', Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', 'Noto Sans CJK SC', system-ui, sans-serif;
     --display: var(--font);
     --sans: var(--font);
     --wide: 125%;
@@ -124,15 +137,32 @@ h1 em, h2 em { background: var(--gold-grad); background-size: 220% auto; -webkit
 /* Room is tight while the full menu shows: keep the logo mark, drop the wordmark */
 @media (min-width: 1100px) and (max-width: 1379px) { .brand-name { display: none; } }
 
-/* Language switch */
-.lang-switch { display: inline-flex; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
-.lang-switch button {
-    background: transparent; border: 0; color: var(--muted); cursor: pointer;
-    font: 700 0.7rem/1 var(--sans); font-stretch: var(--wide); letter-spacing: 0.1em; padding: 10px 11px; transition: color .25s, background .25s;
+/* Language picker: the current code in the header, the six languages in a drop-down */
+.lang-pick { position: relative; }
+.lang-current {
+    display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 12px 0 14px; cursor: pointer;
+    background: transparent; border: 1px solid var(--line); border-radius: var(--radius); color: var(--gold-light);
+    font: 700 0.72rem/1 var(--sans); font-stretch: var(--wide); letter-spacing: 0.12em; transition: border-color .25s, color .25s;
 }
-.lang-switch button + button { border-left: 1px solid var(--line); }
-.lang-switch button:hover { color: var(--gold-light); }
-.lang-switch button.active { color: #120d04; background: var(--gold-grad); background-size: 200% auto; }
+.lang-current svg { width: 14px; height: 14px; transition: transform .25s; }
+.lang-current:hover, .lang-current[aria-expanded="true"] { border-color: var(--gold); color: var(--ivory); }
+.lang-current[aria-expanded="true"] svg { transform: rotate(180deg); }
+.lang-menu {
+    position: absolute; right: 0; top: calc(100% + 8px); z-index: 60; min-width: 196px; padding: 6px;
+    display: grid; background: rgba(8, 7, 5, 0.97); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, .9), 0 0 0 1px rgba(201, 164, 92, .06);
+    animation: lang-drop .2s ease-out;
+}
+@keyframes lang-drop { from { opacity: 0; transform: translateY(-6px); } }
+.lang-menu button {
+    display: flex; align-items: center; gap: 14px; width: 100%; padding: 11px 12px; text-align: left; cursor: pointer;
+    background: transparent; border: 0; border-radius: 2px; color: var(--text); font: 500 0.92rem/1.2 var(--sans); white-space: nowrap;
+}
+.lang-menu .code { width: 22px; font-size: 0.66rem; font-weight: 700; font-stretch: var(--wide); letter-spacing: 0.1em; color: var(--muted); }
+.lang-menu button:hover, .lang-menu button:focus-visible { background: rgba(201, 164, 92, .1); color: var(--ivory); outline: 0; }
+.lang-menu button.active { color: var(--gold-light); }
+.lang-menu button.active .code { color: var(--gold); }
+.lang-menu button.active::after { content: ''; margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px var(--gold); }
 
 .menu-btn {
     width: 44px; height: 44px; display: grid; place-items: center; border-radius: var(--radius);
@@ -151,7 +181,7 @@ h1 em, h2 em { background: var(--gold-grad); background-size: 220% auto; -webkit
 @media (max-width: 420px) {
     .brand-name { font-size: 1.15rem; }
     .brand-link img { width: 34px; }
-    .lang-switch button { padding: 9px 8px; }
+    .lang-current { padding: 0 9px 0 11px; }
     .nav-right { gap: 8px; }
 }
 @media (max-width: 459px) { .brand-name { display: none; } }
@@ -216,3 +246,12 @@ main, .site-footer, .nav-links, .mobile-menu, .nav .btn-line { transition: opaci
     [data-3d] { opacity: 1 !important; transform: none !important; }
     .ghost { transform: none; }
 }
+
+/* ---------- Scripts beyond Latin ---------- */
+html:lang(vi) h1, html:lang(vi) h2 { line-height: 1.12; }
+/* Tracking pulls Thai vowel and tone marks away from their letters */
+html:lang(th) body * { letter-spacing: 0 !important; }
+html:lang(th) h1, html:lang(th) h2, html:lang(th) h3 { line-height: 1.4; }
+html:lang(th) body { line-height: 1.85; }
+html:lang(zh) h1, html:lang(zh) h2, html:lang(zh) h3 { line-height: 1.2; letter-spacing: 0.04em; }
+html:lang(zh) body { letter-spacing: 0.02em; }
