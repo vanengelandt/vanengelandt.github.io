@@ -170,6 +170,10 @@ h1 em, h2 em { background: var(--gold-grad); background-size: 220% auto; -webkit
 .footer-links a { color: var(--muted); text-decoration: none; font-weight: 600; font-stretch: var(--wide); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem; white-space: nowrap; }
 .footer-links a:hover { color: var(--gold-light); }
 
+/* ---------- Language switch crossfade (js/i18n.js toggles .lang-out) ---------- */
+main, .site-footer, .nav-links, .mobile-menu, .nav .btn-line { transition: opacity .32s ease, filter .32s ease; }
+.lang-out main, .lang-out .site-footer, .lang-out .nav-links, .lang-out .mobile-menu, .lang-out .nav .btn-line { opacity: 0; filter: blur(6px); }
+
 /* ---------- 3D scroll engine (js/scroll3d.js sets --p from 0 to 1) ---------- */
 .depth { perspective: 1400px; perspective-origin: 50% 40%; }
 [data-3d] { --p: 1; will-change: transform, opacity; transform-style: preserve-3d; }
