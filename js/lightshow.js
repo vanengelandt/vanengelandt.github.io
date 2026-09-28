@@ -1,4 +1,4 @@
-// Hero light show: moving heads aimed at the logo,
+// Hero light show: moving heads in haze lighting up the logo,
 // and gold lasers fanning out from behind it.
 (() => {
     const hero = document.getElementById('home');
@@ -81,6 +81,42 @@
         sctx.fillStyle = hot; sctx.fillRect(x0 - logo.w, y0 - logo.w, logo.w * 2, logo.w * 2);
     }
 
+    // ---------- Haze ----------
+    // Tileable smoke texture; beams are multiplied by it so they break up like real haze
+    const HAZE = 128;
+    const hazeTex = document.createElement('canvas');
+    hazeTex.width = hazeTex.height = HAZE;
+    (() => {
+        const hctx = hazeTex.getContext('2d'), img = hctx.createImageData(HAZE, HAZE);
+        const field = new Float32Array(HAZE * HAZE);
+        for (const [cells, amp] of [[4, 0.55], [8, 0.28], [16, 0.17]]) {
+            const grid = Array.from({ length: cells * cells }, Math.random);
+            const at = (x, y) => grid[(y % cells) * cells + (x % cells)];
+            const step = HAZE / cells, sm = v => v * v * (3 - 2 * v);
+            for (let y = 0; y < HAZE; y++) for (let x = 0; x < HAZE; x++) {
+                const gx = Math.floor(x / step), gy = Math.floor(y / step);
+                const fx = sm(x / step - gx), fy = sm(y / step - gy);
+                const top = at(gx, gy) * (1 - fx) + at(gx + 1, gy) * fx;
+                const bot = at(gx, gy + 1) * (1 - fx) + at(gx + 1, gy + 1) * fx;
+                field[y * HAZE + x] += amp * (top * (1 - fy) + bot * fy);
+            }
+        }
+        for (let i = 0; i < field.length; i++) {
+            img.data[i * 4] = img.data[i * 4 + 1] = img.data[i * 4 + 2] = 255;
+            img.data[i * 4 + 3] = Math.round(255 * Math.min(1, 0.3 + field[i] * 0.95));
+        }
+        hctx.putImageData(img, 0, 0);
+    })();
+    // Beams render at half resolution into their own layer; they are soft anyway
+    const beamCv = document.createElement('canvas');
+    const bctx = beamCv.getContext('2d');
+    const hazePat = bctx.createPattern(hazeTex, 'repeat');
+
+    // Light falling on the logo: a brighter copy of the logo, revealed where the beams land
+    const lit = document.getElementById('logo-light');
+    const lctx = lit && lit.getContext('2d');
+    const logoImg = document.querySelector('.brand-logo');
+
     // ---------- Moving heads ----------
     function targetOf(h, t) {
         // Where each beam lands on the logo, as a fraction of its box (-0.5..0.5)
@@ -89,8 +125,31 @@
             v: 0.28 * Math.sin(t * h.sp * 1.37 + h.ph * 0.7) - 0.02,
         };
     }
+    // Many thin nested cones sum to a smooth, Gaussian-like cross-section without visible steps
+    const BEAM_PROFILE = Array.from({ length: 12 }, (_, i) => [1.3 - i * 0.105, 0.032 + i * 0.005]);
+    const beamCol = (hue, a) => `hsla(${hue}, 70%, 86%, ${a})`;
+
+    function drawBeam(lx, ly, sx, sy, spotR, hue, level) {
+        const ang = Math.atan2(sy - ly, sx - lx), px = -Math.sin(ang), py = Math.cos(ang);
+        // Gaussian-like cross-section: nested cones, brightest in the middle, soft at the edges
+        for (const [w, a] of BEAM_PROFILE) {
+            const g = bctx.createLinearGradient(lx, ly, sx, sy);
+            g.addColorStop(0, beamCol(hue, a * 2.2 * level));
+            g.addColorStop(0.18, beamCol(hue, a * 1.25 * level));
+            g.addColorStop(1, beamCol(hue, a * 0.75 * level));
+            bctx.fillStyle = g;
+            const r0 = 3 + 4 * w, r1 = spotR * w;
+            bctx.beginPath();
+            bctx.moveTo(lx + px * r0, ly + py * r0);
+            bctx.lineTo(sx + px * r1, sy + py * r1);
+            bctx.lineTo(sx - px * r1, sy - py * r1);
+            bctx.lineTo(lx - px * r0, ly - py * r0);
+            bctx.closePath(); bctx.fill();
+        }
+    }
+
     function drawHeads(t) {
-        const trussY = window.innerWidth < 1100 ? 96 : 104, spotR = logo.w * 0.2;
+        const trussY = window.innerWidth < 1100 ? 96 : 104, spotR = logo.w * 0.19;
         // Truss
         sctx.globalCompositeOperation = 'source-over';
         sctx.globalAlpha = 1;
@@ -100,43 +159,96 @@
         for (let x = 0; x < W; x += 16) { sctx.moveTo(x, trussY - 4); sctx.lineTo(x + 8, trussY - 16); sctx.lineTo(x + 16, trussY - 4); }
         sctx.stroke();
 
+        const bw = Math.max(1, Math.round(W / 2)), bh = Math.max(1, Math.round(H / 2));
+        if (beamCv.width !== bw || beamCv.height !== bh) { beamCv.width = bw; beamCv.height = bh; }
+        bctx.setTransform(0.5, 0, 0, 0.5, 0, 0);
+        bctx.globalCompositeOperation = 'source-over';
+        bctx.clearRect(0, 0, W, H);
+        bctx.globalCompositeOperation = 'lighter';
+
+        const spots = [];
         for (const h of heads) {
-            const hue = 38 + 8 * Math.sin(t * 0.4 + h.ph);
+            const hue = 40 + 5 * Math.sin(t * 0.3 + h.ph);
+            const level = 0.9 + 0.1 * Math.sin(t * 0.5 + h.ph * 2);
             const fx = h.fx * W, fy = trussY + 14;
             const tg = targetOf(h, t);
             const sx = logo.x + tg.u * logo.w, sy = logo.y + tg.v * logo.h;
             const ang = Math.atan2(sy - fy, sx - fx);
             const lx = fx + Math.cos(ang) * 16, ly = fy + Math.sin(ang) * 16;
+            h.ang = ang; h.hue = hue; h.lx = lx; h.ly = ly;
+            spots.push({ u: tg.u, v: tg.v, ang, hue, level });
 
-            // Beam through the haze
-            sctx.globalCompositeOperation = 'lighter';
-            const px = -Math.sin(ang), py = Math.cos(ang);
-            for (const [wMul, a0, a1] of [[1.35, 0.10, 0.03], [1, 0.26, 0.09]]) {
-                const g = sctx.createLinearGradient(lx, ly, sx, sy);
-                g.addColorStop(0, `hsla(${hue}, 80%, 78%, ${a0})`);
-                g.addColorStop(1, `hsla(${hue}, 80%, 68%, ${a1})`);
-                sctx.fillStyle = g;
-                sctx.beginPath();
-                sctx.moveTo(lx + px * 5, ly + py * 5);
-                sctx.lineTo(sx + px * spotR * wMul, sy + py * spotR * wMul);
-                sctx.lineTo(sx - px * spotR * wMul, sy - py * spotR * wMul);
-                sctx.lineTo(lx - px * 5, ly - py * 5);
-                sctx.closePath(); sctx.fill();
-            }
+            drawBeam(lx, ly, sx, sy, spotR, hue, level);
+            // Light scattering in the haze where the beam meets the logo
+            const sc = bctx.createRadialGradient(sx, sy, 0, sx, sy, spotR * 1.9);
+            sc.addColorStop(0, beamCol(hue, 0.2 * level)); sc.addColorStop(1, beamCol(hue, 0));
+            bctx.fillStyle = sc; bctx.fillRect(sx - spotR * 2, sy - spotR * 2, spotR * 4, spotR * 4);
+        }
 
-            // Fixture: yoke on the truss, head aimed at its target
+        // Drifting smoke breaks the beams up, then the layer is added onto the scene
+        bctx.globalCompositeOperation = 'destination-in';
+        hazePat.setTransform(new DOMMatrix().translate(-t * 14, -t * 6).scale(3.2));
+        bctx.fillStyle = hazePat; bctx.fillRect(0, 0, W, H);
+        sctx.globalCompositeOperation = 'lighter';
+        sctx.drawImage(beamCv, 0, 0, W, H);
+
+        // Fixtures: yoke on the truss, head aimed at its target, lens glowing
+        for (const h of heads) {
+            const fx = h.fx * W, fy = trussY + 14;
             sctx.globalCompositeOperation = 'source-over';
             sctx.fillStyle = '#1b1b1b'; sctx.strokeStyle = '#555'; sctx.lineWidth = 1.5;
             sctx.beginPath(); sctx.roundRect(fx - 9, trussY - 4, 18, 8, 2); sctx.fill(); sctx.stroke();
             sctx.beginPath(); sctx.moveTo(fx - 12, fy - 10); sctx.lineTo(fx - 12, fy); sctx.moveTo(fx + 12, fy - 10); sctx.lineTo(fx + 12, fy); sctx.stroke();
             sctx.save();
-            sctx.translate(fx, fy); sctx.rotate(ang - Math.PI / 2);
+            sctx.translate(fx, fy); sctx.rotate(h.ang - Math.PI / 2);
             sctx.beginPath(); sctx.roundRect(-10, -8, 20, 24, 5); sctx.fill(); sctx.stroke();
-            sctx.fillStyle = `hsl(${hue}, 90%, 82%)`;
-            sctx.shadowColor = `hsl(${hue}, 90%, 60%)`; sctx.shadowBlur = 14;
+            sctx.fillStyle = '#fffaf0';
+            sctx.shadowColor = `hsl(${h.hue}, 90%, 70%)`; sctx.shadowBlur = 18;
             sctx.beginPath(); sctx.ellipse(0, 16, 7, 3, 0, 0, Math.PI * 2); sctx.fill();
             sctx.restore();
+            // Glare around the lens
+            sctx.globalCompositeOperation = 'lighter';
+            const gl = sctx.createRadialGradient(h.lx, h.ly, 0, h.lx, h.ly, 46);
+            gl.addColorStop(0, beamCol(h.hue, 0.55)); gl.addColorStop(0.25, beamCol(h.hue, 0.12)); gl.addColorStop(1, beamCol(h.hue, 0));
+            sctx.fillStyle = gl; sctx.fillRect(h.lx - 46, h.ly - 46, 92, 92);
         }
+        lightLogo(spots, spotR);
+    }
+
+    function lightLogo(spots, spotR) {
+        if (!lctx || !logoImg.complete || !logoImg.naturalWidth) return;
+        const w = lit.clientWidth, h = lit.clientHeight;
+        if (!w || !h) return;
+        if (lit.width !== Math.round(w * dpr) || lit.height !== Math.round(h * dpr)) { lit.width = Math.round(w * dpr); lit.height = Math.round(h * dpr); }
+        lctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        lctx.globalCompositeOperation = 'source-over';
+        lctx.clearRect(0, 0, w, h);
+        // 1. Pools of light, stretched along the beam because it hits at an angle
+        lctx.globalCompositeOperation = 'lighter';
+        const r = spotR * (w / logo.w);
+        for (const s of spots) {
+            lctx.save();
+            lctx.translate((0.5 + s.u) * w, (0.5 + s.v) * h);
+            lctx.rotate(s.ang); lctx.scale(1.22, 1);
+            const g = lctx.createRadialGradient(0, 0, 0, 0, 0, r);
+            g.addColorStop(0, `rgba(255,255,255,${s.level})`);
+            g.addColorStop(0.62, `rgba(255,255,255,${0.85 * s.level})`);
+            g.addColorStop(0.88, `rgba(255,255,255,${0.3 * s.level})`);
+            g.addColorStop(1, 'rgba(255,255,255,0)');
+            lctx.fillStyle = g;
+            lctx.beginPath(); lctx.arc(0, 0, r, 0, Math.PI * 2); lctx.fill();
+            lctx.restore();
+        }
+        // 2. Keep only the logo under those pools, brightened like a lit surface
+        lctx.globalCompositeOperation = 'source-in';
+        lctx.filter = 'brightness(1.55) saturate(1.2)';
+        lctx.drawImage(logoImg, 0, 0, w, h);
+        lctx.filter = 'none';
+        // 3. Warm colour of the lamps on top, only where the logo is already lit
+        lctx.globalCompositeOperation = 'source-atop';
+        lctx.fillStyle = `hsla(${spots[0] ? spots[0].hue : 40}, 80%, 70%, 0.1)`;
+        lctx.fillRect(0, 0, w, h);
+        lctx.globalCompositeOperation = 'source-over';
     }
 
     function frame(ms) {
