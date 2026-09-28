@@ -24,33 +24,29 @@
         x.beginPath(); x.arc(s / 2, s / 2, s / 2, 0, Math.PI * 2); x.fill();
         x.globalCompositeOperation = 'destination-out';
         x.translate(s / 2, s / 2);
+        // Smiley faces cut out of the metal disc, like a custom gobo
+        const eye = (ex, ey, rx, ry) => { x.beginPath(); x.ellipse(ex, ey, rx, ry, 0, 0, Math.PI * 2); x.fill(); };
+        x.lineCap = 'round';
         if (kind === 0) {
-            // "Flower": six petals cut from the disc, with a solid centre
-            for (let i = 0; i < 6; i++) {
-                x.save(); x.rotate(i * Math.PI / 3);
-                x.beginPath(); x.ellipse(0, -s * 0.27, s * 0.07, s * 0.17, 0, 0, Math.PI * 2); x.fill();
-                x.restore();
-            }
-            x.beginPath(); x.arc(0, 0, s * 0.06, 0, Math.PI * 2); x.fill();
+            // Classic smile
+            eye(-s * 0.15, -s * 0.1, s * 0.05, s * 0.08);
+            eye(s * 0.15, -s * 0.1, s * 0.05, s * 0.08);
+            x.lineWidth = s * 0.055;
+            x.beginPath(); x.arc(0, s * 0.02, s * 0.24, Math.PI * 0.18, Math.PI * 0.82); x.stroke();
         } else if (kind === 1) {
-            // "Dots": two rings of holes
-            for (const [r, n, d] of [[0.34, 12, 0.055], [0.18, 6, 0.05]]) {
-                for (let i = 0; i < n; i++) {
-                    const a = i * Math.PI * 2 / n;
-                    x.beginPath(); x.arc(Math.cos(a) * s * r, Math.sin(a) * s * r, s * d, 0, Math.PI * 2); x.fill();
-                }
-            }
+            // Wink
+            eye(-s * 0.15, -s * 0.1, s * 0.05, s * 0.08);
+            x.lineWidth = s * 0.045;
+            x.beginPath(); x.arc(s * 0.15, -s * 0.06, s * 0.07, Math.PI * 1.1, Math.PI * 1.9); x.stroke();
+            x.lineWidth = s * 0.055;
+            x.beginPath(); x.arc(0, s * 0.02, s * 0.24, Math.PI * 0.15, Math.PI * 0.85); x.stroke();
         } else {
-            // "Spiral": curved blades
-            for (let i = 0; i < 5; i++) {
-                x.save(); x.rotate(i * Math.PI * 2 / 5);
-                x.beginPath();
-                x.moveTo(0, -s * 0.08);
-                x.quadraticCurveTo(s * 0.22, -s * 0.2, s * 0.12, -s * 0.44);
-                x.quadraticCurveTo(s * 0.05, -s * 0.26, 0, -s * 0.08);
-                x.lineWidth = s * 0.05; x.stroke(); x.fill();
-                x.restore();
-            }
+            // Big grin with happy closed eyes
+            x.lineWidth = s * 0.045;
+            x.beginPath(); x.arc(-s * 0.15, -s * 0.06, s * 0.07, Math.PI * 1.1, Math.PI * 1.9); x.stroke();
+            x.beginPath(); x.arc(s * 0.15, -s * 0.06, s * 0.07, Math.PI * 1.1, Math.PI * 1.9); x.stroke();
+            x.beginPath(); x.moveTo(-s * 0.24, s * 0.06); x.lineTo(s * 0.24, s * 0.06);
+            x.arc(0, s * 0.06, s * 0.24, 0, Math.PI); x.closePath(); x.fill();
         }
         return c;
     }
@@ -77,7 +73,7 @@
         { fx: 0.10, gobo: 0, hue: 0,   sp: 0.50, ph: 0.0 },
         { fx: 0.32, gobo: 1, hue: 240, sp: 0.62, ph: 1.7 },
         { fx: 0.68, gobo: 2, hue: 120, sp: 0.57, ph: 3.1 },
-        { fx: 0.90, gobo: 0, hue: 300, sp: 0.46, ph: 4.4 },
+        { fx: 0.90, gobo: 1, hue: 300, sp: 0.46, ph: 4.4 },
     ];
 
     function measure() {
@@ -214,7 +210,7 @@
             const cx = GW / 2 + tg.u * GW, cy = GH / 2 + tg.v * GH;
             gctx.save();
             gctx.translate(cx, cy);
-            gctx.rotate(t * (h.gobo === 1 ? -0.8 : 0.6) + h.ph);
+            gctx.rotate(Math.sin(t * 0.9 + h.ph) * 0.35); // a happy wobble, faces stay upright
             gctx.globalAlpha = 0.6;
             gctx.drawImage(tinted(h.gobo, hue), -r, -r, r * 2, r * 2);
             gctx.restore();
