@@ -2,7 +2,7 @@
 // and gold lasers fanning out from behind it.
 (() => {
     const hero = document.getElementById('home');
-    const stage = document.querySelector('.logo-3d');   // the beams aim at the symbol
+    const stage = document.querySelector('.logo-symbol');   // the beams aim at the symbol
     const sky = document.getElementById('show-canvas');   // behind the logo: lasers, fixtures, beams
     if (!hero || !stage || !sky) return;
 
