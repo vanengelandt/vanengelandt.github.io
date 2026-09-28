@@ -29,7 +29,8 @@
             background: linear-gradient(0deg, var(--black), transparent);
         }
         .hero .depth { width: 100%; }
-        .hero-inner { text-align: center; max-width: 920px; margin: 0 auto; transform-origin: 50% 0%; }
+        .hero-inner { text-align: center; max-width: 920px; margin: 0 auto; transform-style: preserve-3d; }
+        .hero-inner > * { transform-origin: 50% 0%; }
         .hero h1 { font-size: clamp(2rem, 6.2vw, 5.2rem); margin: 20px 0 28px; line-height: .98; }
         .hero .lead { max-width: 660px; margin: 0 auto 44px; font-size: clamp(1rem, 2vw, 1.15rem); }
         .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
@@ -203,7 +204,8 @@
             <a href="#services" class="scroll-cue" aria-hidden="true" tabindex="-1"><span data-i18n="hero.scroll">Scroll</span><span></span></a>
         </section>
 
-        <section id="services" class="section services">
+        <section id="services" class="section services ghost-host">
+            <div class="ghost" aria-hidden="true" data-ghost data-i18n="nav.services">Services</div>
             <div class="container">
                 <div class="depth">
                     <div class="section-head" data-3d="rise">
@@ -253,7 +255,8 @@
             </div>
         </section>
 
-        <section id="approach" class="section">
+        <section id="approach" class="section ghost-host">
+            <div class="ghost" aria-hidden="true" data-ghost="-1" data-i18n="nav.approach">Approach</div>
             <div class="container">
                 <div class="depth">
                     <div class="section-head" data-3d="rise">
@@ -360,7 +363,8 @@
             </div>
         </section>
 
-        <section id="contact" class="section contact">
+        <section id="contact" class="section contact ghost-host">
+            <div class="ghost" aria-hidden="true" data-ghost data-i18n="nav.contact">Contact</div>
             <div class="container">
                 <div class="depth">
                     <div class="section-head" data-3d="rise">

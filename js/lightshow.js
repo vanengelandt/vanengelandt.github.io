@@ -20,7 +20,8 @@
     ];
 
     function measure() {
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        // Soft light needs no retina sharpness; a lower canvas resolution keeps scrolling smooth
+        dpr = Math.min(window.devicePixelRatio || 1, 1.5);
         const hr = hero.getBoundingClientRect();
         W = hr.width; H = hr.height;
         if (sky.width !== Math.round(W * dpr) || sky.height !== Math.round(H * dpr)) { sky.width = Math.round(W * dpr); sky.height = Math.round(H * dpr); }
@@ -116,6 +117,21 @@
     const lit = document.getElementById('logo-light');
     const lctx = lit && lit.getContext('2d');
     const logoImg = document.querySelector('.brand-logo');
+    let brightLogo = null;
+    function bakeBrightLogo(w, h) {
+        if (brightLogo && brightLogo.width === Math.round(w * dpr)) return brightLogo;
+        const cv = document.createElement('canvas');
+        cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+        const c = cv.getContext('2d');
+        c.filter = 'brightness(1.55) saturate(1.2)';
+        c.drawImage(logoImg, 0, 0, cv.width, cv.height);
+        if (c.filter === 'none' || c.filter === undefined) {
+            // No canvas filters (older Safari): brighten by adding the logo onto itself
+            c.globalCompositeOperation = 'lighter'; c.globalAlpha = 0.55;
+            c.drawImage(logoImg, 0, 0, cv.width, cv.height);
+        }
+        return (brightLogo = cv);
+    }
 
     // ---------- Moving heads ----------
     function targetOf(h, t) {
@@ -125,27 +141,50 @@
             v: 0.28 * Math.sin(t * h.sp * 1.37 + h.ph * 0.7) - 0.02,
         };
     }
-    // Many thin nested cones sum to a smooth, Gaussian-like cross-section without visible steps
-    const BEAM_PROFILE = Array.from({ length: 12 }, (_, i) => [1.3 - i * 0.105, 0.032 + i * 0.005]);
+    // One beam is rendered once into a sprite (soft Gaussian-like cross-section, brightest at
+    // the lens) and then stretched and rotated per fixture each frame, which is far cheaper
+    const BEAM_W = 96, BEAM_L = 256;
+    const beamSprite = document.createElement('canvas');
+    beamSprite.width = BEAM_W; beamSprite.height = BEAM_L;
+    (() => {
+        const c = beamSprite.getContext('2d'), img = c.createImageData(BEAM_W, BEAM_L);
+        for (let y = 0; y < BEAM_L; y++) {
+            const v = y / (BEAM_L - 1);                          // 0 at the lens, 1 at the logo
+            const half = 0.06 + 0.94 * v;                        // cone widens towards the logo
+            const along = 0.55 + 1.6 * Math.pow(1 - v, 3);       // hot near the lens
+            for (let x = 0; x < BEAM_W; x++) {
+                const u = Math.abs((x + 0.5) / BEAM_W * 2 - 1) / half;  // 0 centre, 1 edge
+                const across = u >= 1.15 ? 0 : Math.exp(-u * u * 2.2) * Math.min(1, (1.15 - u) * 4);
+                const i = (y * BEAM_W + x) * 4;
+                img.data[i] = img.data[i + 1] = img.data[i + 2] = 255;
+                img.data[i + 3] = Math.round(255 * Math.min(1, 0.42 * along * across));
+            }
+        }
+        c.putImageData(img, 0, 0);
+    })();
+    // Tinted copies of the sprite, cached per hue step
+    const tinted = new Map();
+    function beamFor(hue) {
+        const key = Math.round(hue);
+        if (!tinted.has(key)) {
+            const cv = document.createElement('canvas'); cv.width = BEAM_W; cv.height = BEAM_L;
+            const c = cv.getContext('2d');
+            c.drawImage(beamSprite, 0, 0);
+            c.globalCompositeOperation = 'source-in';
+            c.fillStyle = `hsl(${key}, 70%, 86%)`; c.fillRect(0, 0, BEAM_W, BEAM_L);
+            tinted.set(key, cv);
+        }
+        return tinted.get(key);
+    }
     const beamCol = (hue, a) => `hsla(${hue}, 70%, 86%, ${a})`;
 
     function drawBeam(lx, ly, sx, sy, spotR, hue, level) {
-        const ang = Math.atan2(sy - ly, sx - lx), px = -Math.sin(ang), py = Math.cos(ang);
-        // Gaussian-like cross-section: nested cones, brightest in the middle, soft at the edges
-        for (const [w, a] of BEAM_PROFILE) {
-            const g = bctx.createLinearGradient(lx, ly, sx, sy);
-            g.addColorStop(0, beamCol(hue, a * 2.2 * level));
-            g.addColorStop(0.18, beamCol(hue, a * 1.25 * level));
-            g.addColorStop(1, beamCol(hue, a * 0.75 * level));
-            bctx.fillStyle = g;
-            const r0 = 3 + 4 * w, r1 = spotR * w;
-            bctx.beginPath();
-            bctx.moveTo(lx + px * r0, ly + py * r0);
-            bctx.lineTo(sx + px * r1, sy + py * r1);
-            bctx.lineTo(sx - px * r1, sy - py * r1);
-            bctx.lineTo(lx - px * r0, ly - py * r0);
-            bctx.closePath(); bctx.fill();
-        }
+        const len = Math.hypot(sx - lx, sy - ly), ang = Math.atan2(sy - ly, sx - lx);
+        bctx.save();
+        bctx.translate(lx, ly); bctx.rotate(ang - Math.PI / 2);
+        bctx.globalAlpha = level;
+        bctx.drawImage(beamFor(hue), -spotR * 1.3, 0, spotR * 2.6, len);
+        bctx.restore();
     }
 
     function drawHeads(t) {
@@ -241,9 +280,7 @@
         }
         // 2. Keep only the logo under those pools, brightened like a lit surface
         lctx.globalCompositeOperation = 'source-in';
-        lctx.filter = 'brightness(1.55) saturate(1.2)';
-        lctx.drawImage(logoImg, 0, 0, w, h);
-        lctx.filter = 'none';
+        lctx.drawImage(bakeBrightLogo(w, h), 0, 0, w, h);
         // 3. Warm colour of the lamps on top, only where the logo is already lit
         lctx.globalCompositeOperation = 'source-atop';
         lctx.fillStyle = `hsla(${spots[0] ? spots[0].hue : 40}, 80%, 70%, 0.1)`;
@@ -261,7 +298,18 @@
     }
 
     let running = false, visible = true, raf = 0;
-    function loop(ms) { frame(ms); raf = running ? requestAnimationFrame(loop) : 0; }
+    // Once the hero has mostly faded out while scrolling, stop drawing so the scroll effects get the frame budget
+    // and while the page is actively scrolling the show redraws every other frame
+    let idle = false, scrolling = 0, tick = 0;
+    window.addEventListener('scroll', () => { scrolling = performance.now(); }, { passive: true });
+    function loop(ms) {
+        const faded = window.scrollY > hero.offsetHeight * 0.7;
+        const busy = ms - scrolling < 180;
+        if (!faded && (!busy || (tick++ & 1))) frame(ms);
+        else if (!idle) { sctx.setTransform(1, 0, 0, 1, 0, 0); sctx.clearRect(0, 0, sky.width, sky.height); }
+        idle = faded;
+        raf = running ? requestAnimationFrame(loop) : 0;
+    }
     function setRunning(on) {
         if (reduceMotion) return;
         if (on && !running) { running = true; raf = requestAnimationFrame(loop); }
