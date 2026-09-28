@@ -1,636 +1,458 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="home">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VanEngelandt.NET - Event Lighting & Technical Solutions</title>
-    <meta name="description" content="Freelance lighting, laser and video technician from Wevelgem, Belgium. Lighting design, pre-visualisation and live operation for events and organisations.">
-    <meta name="theme-color" content="#000000">
+    <title>VanEngelandt.NET | Lighting, Laser &amp; Video Design for Live Events</title>
+    <meta name="description" content="Independent lighting designer and show technician in Wevelgem, Belgium. Lighting, laser and video design, previsualisation in Unreal Engine 5 and live show operation.">
+    <meta name="theme-color" content="#050505">
     <link rel="icon" type="image/png" href="images/logo-mark-128.png">
+    <link rel="alternate" hreflang="en" href="https://vanengelandt.github.io/?lang=en">
+    <link rel="alternate" hreflang="nl" href="https://vanengelandt.github.io/?lang=nl">
+    <link rel="alternate" hreflang="fr" href="https://vanengelandt.github.io/?lang=fr">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/site.css">
+    <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
     <style>
-        :root {
-            --bg: #000000;
-            --bg-2: #0a0a0a;
-            --surface: rgba(255, 255, 255, 0.04);
-            --surface-hover: rgba(255, 255, 255, 0.07);
-            --border: rgba(255, 255, 255, 0.09);
-            --text: #f2f2f2;
-            --muted: #a6a6a6;
-            --blue: #9a9aff;
-            --purple: #b77fd6;
-            --red: #ff8f8f;
-            --green: #8cf5a0;
-            --grad: linear-gradient(100deg, var(--red), var(--purple) 50%, var(--blue));
-            --radius: 18px;
-            --max: 1140px;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-
-        body {
-            margin: 0;
-            font-family: 'Inter', system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.65;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-        }
-
-        a { color: inherit; }
-        img, svg { display: block; max-width: 100%; }
-
-        .container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 16px; }
-        @media (min-width: 640px) { .container { padding: 0 28px; } }
-
-        .gradient-text {
-            background: var(--grad);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: hue-flow 8s linear infinite;
-        }
-        @keyframes hue-flow { to { background-position: 200% center; } }
-
-        .eyebrow {
-            display: inline-flex; align-items: center; gap: 8px;
-            font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
-            color: var(--blue);
-        }
-        .eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--grad); border-radius: 2px; }
-
-        h1, h2, h3 { line-height: 1.15; margin: 0; }
-        h2 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; letter-spacing: -0.02em; margin: 12px 0 16px; }
-
-        .btn {
-            display: inline-flex; align-items: center; gap: 10px;
-            padding: 14px 26px; border-radius: 999px;
-            font-weight: 600; font-size: 0.98rem; text-decoration: none;
-            transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-        }
-        .btn-primary {
-            background: var(--grad); color: #000;
-            box-shadow: 0 10px 30px -10px rgba(183, 127, 214, .7);
-        }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px -10px rgba(154, 154, 255, .7); }
-        .btn-ghost { border: 1px solid var(--border); background: var(--surface); color: var(--text); }
-        .btn-ghost:hover { background: var(--surface-hover); transform: translateY(-2px); }
-        .btn svg { width: 18px; height: 18px; }
-
-        /* ---------- Header ---------- */
-        .site-header {
-            position: sticky; top: 0; z-index: 50;
-            background: rgba(0, 0, 0, 0.72);
-            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border);
-        }
-        .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-        .logo {
-            font-family: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif; font-size: clamp(1.5rem, 6vw, 2rem); white-space: nowrap; letter-spacing: 0.04em;
-            text-decoration: none; display: flex; align-items: center; gap: 10px; line-height: 1;
-        }
-        .logo-mark { width: 40px; height: auto; flex: none; }
-        .nav-links { display: none; gap: 30px; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: 0.95rem; transition: color .2s; }
-        .nav-links a:hover { color: var(--text); }
-        .nav-links .btn { padding: 10px 20px; color: #000; }
-
-        .menu-btn {
-            background: var(--surface); border: 1px solid var(--border); color: var(--text);
-            width: 44px; height: 44px; border-radius: 12px; cursor: pointer;
-            display: grid; place-items: center;
-        }
-        .menu-btn svg { width: 22px; height: 22px; }
-        @media (min-width: 900px) { .nav-links { display: flex; } .menu-btn { display: none; } }
-        .mobile-menu { display: none; border-top: 1px solid var(--border); padding: 8px 16px 18px; }
-        .mobile-menu.open { display: block; }
-        .mobile-menu a {
-            display: block; padding: 12px 8px; text-decoration: none; color: var(--text);
-            border-bottom: 1px solid var(--border); font-weight: 500;
-        }
-        .mobile-menu a:last-child { border-bottom: 0; }
-        @media (min-width: 900px) { .mobile-menu, .mobile-menu.open { display: none; } }
-
         /* ---------- Hero ---------- */
         .hero {
-            position: relative; overflow: hidden; isolation: isolate;
-            padding: 96px 0 120px;
+            position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; isolation: isolate;
+            display: flex; align-items: center; padding: 150px 0 110px;
             background:
-                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(183, 127, 214, .22), transparent 70%),
-                linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+                radial-gradient(ellipse 60% 45% at 50% 38%, rgba(201, 164, 92, .13), transparent 70%),
+                radial-gradient(ellipse 120% 60% at 50% 110%, rgba(138, 106, 44, .18), transparent 60%),
+                var(--black);
         }
-        @media (min-width: 900px) { .hero { padding: 140px 0 170px; } }
-
-        /* Light show canvas (moving heads + lasers), drawn by js/lightshow.js */
         .show-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .hero::after {
+            content: ""; position: absolute; inset: auto 0 0 0; height: 220px; z-index: -1;
+            background: linear-gradient(0deg, var(--black), transparent);
+        }
+        .hero .depth { width: 100%; }
+        .hero-inner { text-align: center; max-width: 920px; margin: 0 auto; transform-origin: 50% 0%; }
+        .hero h1 { font-size: clamp(2.8rem, 8vw, 6.2rem); margin: 18px 0 26px; line-height: 1; }
+        .hero .lead { max-width: 660px; margin: 0 auto 44px; font-size: clamp(1rem, 2vw, 1.15rem); }
+        .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+        .scroll-cue {
+            position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            color: var(--muted); font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; text-decoration: none;
+        }
+        .scroll-cue span:last-child { width: 1px; height: 46px; background: linear-gradient(var(--gold), transparent); animation: drip 2.4s ease-in-out infinite; transform-origin: top; }
+        @keyframes drip { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
 
-        .haze {
-            position: absolute; inset: auto 0 0 0; height: 55%; z-index: -1;
-            background: linear-gradient(0deg, var(--bg-2), transparent);
-        }
-        .stage-floor {
-            position: absolute; left: 0; right: 0; bottom: 0; height: 120px; z-index: -1;
-            background:
-                repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 60px),
-                linear-gradient(0deg, rgba(183, 127, 214, .15), transparent);
-            transform: perspective(400px) rotateX(60deg); transform-origin: bottom;
-            mask-image: linear-gradient(0deg, #000, transparent);
-            -webkit-mask-image: linear-gradient(0deg, #000, transparent);
-        }
-
-        .hero-inner { text-align: center; max-width: 860px; margin: 0 auto; }
-        /* Animated 3D logo: colour shift + gentle float, tilts towards the pointer */
-        .logo-stage { width: min(440px, 82vw); margin: 26px auto 18px; perspective: 1100px; }
-        .logo-tilt {
-            transform-style: preserve-3d;
-            transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-            transition: transform .25s ease-out;
-        }
-        .logo-3d {
-            position: relative; transform-style: preserve-3d;
-            animation: logo-float 10s ease-in-out infinite alternate;
-        }
-        .logo-3d img { display: block; width: 100%; height: auto; will-change: filter; }
-        .brand {
-            position: relative; transform: translateZ(24px);
-            animation: colour-shift 12s linear infinite;
-        }
-        .logo-3d .depth {
-            position: absolute; inset: 0; pointer-events: none;
-            transform: translateZ(calc(24px - var(--d) * 5px));
-            animation: colour-shift-depth 12s linear infinite;
-        }
-        /* Gobo projections, masked to the logo so the light only lands on it */
+        /* 3D logo with gobo projections */
+        .logo-stage { width: min(360px, 70vw); margin: 0 auto 8px; perspective: 1100px; }
+        .logo-tilt { transform-style: preserve-3d; transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .3s ease-out; }
+        .logo-3d { position: relative; transform-style: preserve-3d; animation: logo-float 11s ease-in-out infinite alternate; }
+        .logo-3d img { display: block; width: 100%; height: auto; }
+        .logo-3d .brand-logo { position: relative; transform: translateZ(24px); filter: drop-shadow(0 0 40px rgba(201, 164, 92, .28)); }
+        .logo-3d .layer { position: absolute; inset: 0; pointer-events: none; transform: translateZ(calc(24px - var(--d) * 5px)); filter: brightness(.22) sepia(1) saturate(2.2) hue-rotate(-12deg); }
         .logo-3d .gobo {
-            position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none;
-            transform: translateZ(25px);
+            position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; transform: translateZ(25px);
             -webkit-mask-image: url(images/logo-dark-600.png); mask-image: url(images/logo-dark-600.png);
             -webkit-mask-size: 100% 100%; mask-size: 100% 100%;
         }
-        @keyframes colour-shift {
-            from { filter: hue-rotate(0deg) saturate(1.25) drop-shadow(0 0 28px rgba(183, 127, 214, .45)); }
-            to   { filter: hue-rotate(360deg) saturate(1.25) drop-shadow(0 0 28px rgba(183, 127, 214, .45)); }
-        }
-        @keyframes colour-shift-depth {
-            from { filter: hue-rotate(0deg) brightness(.32); }
-            to   { filter: hue-rotate(360deg) brightness(.32); }
-        }
         @keyframes logo-float {
-            0%   { transform: rotateY(-24deg) rotateX(10deg) translateY(0); }
-            50%  { transform: rotateY(0deg) rotateX(-6deg) translateY(-12px); }
-            100% { transform: rotateY(24deg) rotateX(10deg) translateY(0); }
+            0%   { transform: rotateY(-20deg) rotateX(8deg) translateY(0); }
+            50%  { transform: rotateY(0deg) rotateX(-5deg) translateY(-10px); }
+            100% { transform: rotateY(20deg) rotateX(8deg) translateY(0); }
         }
-        .logo-mark { animation: mark-shift 12s linear infinite; }
-        @keyframes mark-shift { to { filter: hue-rotate(360deg); } }
-        .tagline { font-size: clamp(1rem, 2.4vw, 1.3rem); color: var(--muted); font-weight: 500; margin: 0 0 30px; }
-        .hero h1 { font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 18px; }
-        .hero p.lead { color: var(--muted); font-size: 1.1rem; max-width: 640px; margin: 0 auto 36px; }
-        .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
 
-        .chip {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 7px 14px; border-radius: 999px;
-            border: 1px solid var(--border); background: var(--surface);
-            font-size: .82rem; color: var(--muted);
-        }
-        .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
-
-        /* ---------- Sections ---------- */
-        section { position: relative; }
-        .section { padding: 96px 0; }
-        .section-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
-        .section-head p { color: var(--muted); margin: 0; }
-
-        /* Services */
-        .grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
-        @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 1000px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-
+        /* ---------- Services ---------- */
+        .services { background: linear-gradient(180deg, var(--black), var(--ink) 60%, var(--black)); }
+        .grid { display: grid; gap: 22px; grid-template-columns: 1fr; }
+        @media (min-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1040px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        .card-wrap { perspective: 1200px; }
         .card {
-            position: relative; padding: 30px 28px; border-radius: var(--radius);
-            background: var(--surface); border: 1px solid var(--border);
-            transition: transform .3s ease, background .3s ease, border-color .3s ease;
-            overflow: hidden;
+            --tx: 0deg; --ty: 0deg; --mx: 50%; --my: 0%;
+            position: relative; height: 100%; padding: 44px 36px 40px; border-radius: var(--radius);
+            background: linear-gradient(160deg, rgba(255, 255, 255, .035), rgba(255, 255, 255, .01)), var(--panel);
+            border: 1px solid var(--line-soft); overflow: hidden;
+            transition: border-color .4s ease;
+            transform-style: preserve-3d;
         }
+        .card-inner { transform: rotateY(var(--tx)) rotateX(var(--ty)); transition: transform .4s ease; transform-style: preserve-3d; }
         .card::before {
-            content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
-            background: var(--grad);
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude;
-            opacity: 0; transition: opacity .3s ease;
+            content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s ease;
+            background: radial-gradient(circle at var(--mx) var(--my), rgba(236, 217, 166, .14), transparent 55%);
         }
-        .card::after {
-            content: ""; position: absolute; width: 220px; height: 220px; top: -110px; right: -110px;
-            background: radial-gradient(circle, var(--glow, rgba(154, 154, 255, .25)), transparent 70%);
-            pointer-events: none;
-        }
-        .card:hover { transform: translateY(-6px); background: var(--surface-hover); }
+        .card::after { content: ""; position: absolute; left: 36px; right: 36px; top: 0; height: 1px; background: var(--gold-grad); opacity: .6; }
+        .card:hover { border-color: var(--line); }
         .card:hover::before { opacity: 1; }
-        .card h3 { font-size: 1.2rem; font-weight: 600; margin: 20px 0 10px; }
-        .card p { color: var(--muted); margin: 0; font-size: .97rem; }
-        .icon {
-            width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center;
-            background: var(--icon-bg, rgba(154, 154, 255, .12)); color: var(--icon, var(--blue));
-            border: 1px solid var(--border);
-        }
-        .icon svg { width: 28px; height: 28px; }
-        .c-blue   { --icon: var(--blue);   --icon-bg: rgba(154, 154, 255, .12);  --glow: rgba(154, 154, 255, .22); }
-        .c-purple { --icon: var(--purple); --icon-bg: rgba(183, 127, 214, .14);  --glow: rgba(183, 127, 214, .25); }
-        .c-red   { --icon: var(--red);   --icon-bg: rgba(255, 143, 143, .13); --glow: rgba(255, 143, 143, .22); }
-        .c-green  { --icon: var(--green);  --icon-bg: rgba(140, 245, 160, .12);  --glow: rgba(140, 245, 160, .2); }
+        .card .num { font-family: var(--serif); font-size: 1rem; color: var(--gold); letter-spacing: .1em; }
+        .card .icon { width: 46px; height: 46px; color: var(--gold-light); margin: 26px 0 22px; transform: translateZ(30px); }
+        .card .icon svg { width: 100%; height: 100%; }
+        .card h3 { font-size: 1.65rem; margin-bottom: 14px; transform: translateZ(20px); }
+        .card p { margin: 0; color: var(--muted); font-size: .95rem; font-weight: 300; }
 
-        /* About */
-        .about { background: linear-gradient(180deg, var(--bg), var(--bg-2)); }
-        .about-grid { display: grid; gap: 48px; align-items: center; }
-        @media (min-width: 900px) { .about-grid { grid-template-columns: 1fr 1.1fr; gap: 64px; } }
-        .about-visual {
-            border-radius: 24px; overflow: hidden; border: 1px solid var(--border);
-            background: radial-gradient(ellipse at 50% 0%, #161616, var(--bg) 75%);
-            box-shadow: 0 30px 80px -30px rgba(183, 127, 214, .45);
-        }
+        /* ---------- Approach ---------- */
+        .steps { position: relative; display: grid; gap: 22px; grid-template-columns: 1fr; }
+        @media (min-width: 900px) { .steps { grid-template-columns: repeat(4, 1fr); } }
+        .step-wrap { perspective: 1000px; }
+        .step { position: relative; padding: 34px 28px; border-left: 1px solid var(--line); background: linear-gradient(90deg, rgba(201, 164, 92, .05), transparent 70%); height: 100%; }
+        .step .n { font-family: var(--serif); font-size: 4rem; line-height: 1; font-weight: 500; }
+        .step h3 { font-size: 1.45rem; margin: 18px 0 12px; }
+        .step p { margin: 0; color: var(--muted); font-size: .93rem; font-weight: 300; }
+
+        /* ---------- About ---------- */
+        .about { background: var(--ink); overflow: hidden; }
+        .about-grid { display: grid; gap: 64px; align-items: center; }
+        @media (min-width: 960px) { .about-grid { grid-template-columns: 1fr 1.1fr; gap: 90px; } }
+        .about-visual { position: relative; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #070605; box-shadow: 0 50px 100px -40px rgba(201, 164, 92, .35); }
+        .about-visual::after { content: ""; position: absolute; inset: 14px; border: 1px solid rgba(201, 164, 92, .22); pointer-events: none; }
         .about-visual svg { width: 100%; height: auto; }
-        .about p { color: var(--muted); margin: 0 0 16px; }
-        .about strong { color: var(--text); font-weight: 600; }
+        .about h2 { margin: 22px 0 28px; }
+        .about p { color: var(--muted); font-weight: 300; margin: 0 0 18px; }
+        .about strong { color: var(--ivory); font-weight: 500; }
+        .tools { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+        .tool { padding: 9px 16px; border: 1px solid var(--line); border-radius: var(--radius); font-size: .82rem; color: var(--text); background: rgba(201, 164, 92, .03); }
+        .tool span { color: var(--gold); margin-left: 8px; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; }
 
-        .tools { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
-        .tool {
-            padding: 8px 14px; border-radius: 10px; font-size: .86rem; font-weight: 500;
-            background: var(--surface); border: 1px solid var(--border); color: var(--text);
+        /* ---------- CTA ---------- */
+        .cta { padding: 60px 0 130px; }
+        .cta-panel {
+            position: relative; overflow: hidden; text-align: center; padding: 90px 28px;
+            border: 1px solid var(--line); border-radius: var(--radius);
+            background: radial-gradient(ellipse 70% 90% at 50% 0%, rgba(201, 164, 92, .16), transparent 70%), var(--panel);
         }
-        .tool span { color: var(--muted); font-weight: 400; margin-left: 6px; font-size: .78rem; }
+        .cta-panel::before, .cta-panel::after { content: ""; position: absolute; width: 90px; height: 90px; border: 1px solid var(--gold); opacity: .55; }
+        .cta-panel::before { top: 18px; left: 18px; border-right: 0; border-bottom: 0; }
+        .cta-panel::after { bottom: 18px; right: 18px; border-left: 0; border-top: 0; }
+        .cta-panel h2 { max-width: 760px; margin: 0 auto 20px; }
+        .cta-panel p { color: var(--muted); max-width: 540px; margin: 0 auto 40px; font-weight: 300; }
 
-        /* CTA */
-        .cta-band {
-            position: relative; overflow: hidden; border-radius: 28px; padding: 64px 28px; text-align: center;
-            background:
-                radial-gradient(circle at 15% 20%, rgba(154, 154, 255, .35), transparent 45%),
-                radial-gradient(circle at 85% 80%, rgba(255, 143, 143, .35), transparent 45%),
-                linear-gradient(135deg, #141414, #0a0a0a);
-            border: 1px solid var(--border);
-        }
-        .cta-band h2 { margin-top: 0; }
-        .cta-band p { color: var(--muted); max-width: 580px; margin: 0 auto 30px; font-size: 1.08rem; }
-
-        /* Contact */
-        .contact-grid { display: grid; gap: 20px; }
-        @media (min-width: 800px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
-        .contact-card { padding: 30px 28px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); }
-        .contact-card h3 { font-size: 1.05rem; margin-bottom: 18px; color: var(--muted); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-        .contact-row { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); }
-        .contact-row:last-child { border-bottom: 0; }
-        .contact-row .ci { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: rgba(183, 127, 214, .12); color: var(--purple); }
-        .contact-row .ci svg { width: 19px; height: 19px; }
-        .contact-row small { display: block; color: var(--muted); font-size: .78rem; letter-spacing: .04em; }
-        .contact-row a, .contact-row span { color: var(--text); text-decoration: none; font-weight: 500; overflow-wrap: anywhere; }
-        .contact-row a:hover { color: var(--blue); }
-
-        /* Footer */
-        footer { border-top: 1px solid var(--border); padding: 36px 0; color: var(--muted); font-size: .9rem; }
-        .footer-inner { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
-        footer a { color: var(--muted); text-decoration: none; }
-        footer a:hover { color: var(--text); }
-        .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
-
-        /* Reveal on scroll */
-        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
-        .reveal.visible { opacity: 1; transform: none; }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { animation: none !important; transition: none !important; }
-            .reveal { opacity: 1; transform: none; }
-            html { scroll-behavior: auto; }
-        }
+        /* ---------- Contact ---------- */
+        .contact { padding-top: 40px; }
+        .contact-grid { display: grid; gap: 22px; }
+        @media (min-width: 860px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+        .contact-card { padding: 38px 34px; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); height: 100%; }
+        .contact-card h3 { font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+        .row { display: flex; gap: 16px; align-items: flex-start; padding: 15px 0; border-bottom: 1px solid var(--line-soft); }
+        .row:last-child { border-bottom: 0; }
+        .row .ci { flex: none; width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--gold-light); }
+        .row .ci svg { width: 16px; height: 16px; }
+        .row small { display: block; color: var(--muted); font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; }
+        .row a, .row span { color: var(--ivory); text-decoration: none; overflow-wrap: anywhere; }
+        .row a:hover { color: var(--gold-light); }
     </style>
 </head>
 <body>
 
     <header class="site-header">
         <div class="container nav">
-            <a href="#home" class="logo" aria-label="VanEngelandt.NET home">
-                <img class="logo-mark" src="images/logo-mark-128.png" alt="" width="40" height="38">
-                <span class="gradient-text">VanEngelandt.NET</span>
+            <a href="#home" class="brand-link" aria-label="VanEngelandt.NET">
+                <img src="images/logo-mark-128.png" alt="" width="42" height="40">
+                <span class="brand-name">VanEngelandt<span>.NET</span></span>
             </a>
             <nav class="nav-links" aria-label="Main">
-                <a href="#services">Services</a>
-                <a href="#about">About Me</a>
-                <a href="verkoopsvoorwaarden.html" target="_blank" rel="noopener noreferrer">General Terms of Sale</a>
-                <a href="#contact" class="btn btn-primary">Contact</a>
+                <a href="#services" data-i18n="nav.services">Services</a>
+                <a href="#approach" data-i18n="nav.approach">Approach</a>
+                <a href="#about" data-i18n="nav.about">About</a>
+                <a href="verkoopsvoorwaarden.html" data-i18n="nav.terms">Terms of Sale</a>
+                <a href="#contact" class="btn btn-gold" data-i18n="nav.quote">Request a quote</a>
             </nav>
-            <button id="mobile-menu-button" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
-                <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-            </button>
+            <div class="nav-right">
+                <div class="lang-switch" role="group" data-i18n-aria="nav.lang" aria-label="Choose language">
+                    <button type="button" data-set-lang="en" lang="en" aria-label="English">EN</button>
+                    <button type="button" data-set-lang="nl" lang="nl" aria-label="Nederlands">NL</button>
+                    <button type="button" data-set-lang="fr" lang="fr" aria-label="Français">FR</button>
+                </div>
+                <button id="mobile-menu-button" class="menu-btn" data-i18n-aria="nav.menu" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                </button>
+            </div>
         </div>
         <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile">
-            <a href="#home">Home</a>
-            <a href="#services">Services</a>
-            <a href="#about">About Me</a>
-            <a href="verkoopsvoorwaarden.html" target="_blank" rel="noopener noreferrer">General Terms of Sale</a>
-            <a href="#contact">Contact</a>
+            <a href="#services" data-i18n="nav.services">Services</a>
+            <a href="#approach" data-i18n="nav.approach">Approach</a>
+            <a href="#about" data-i18n="nav.about">About</a>
+            <a href="verkoopsvoorwaarden.html" data-i18n="nav.terms">Terms of Sale</a>
+            <a href="#contact" data-i18n="nav.contact">Contact</a>
         </nav>
     </header>
 
-    <section id="home" class="hero">
-        <canvas id="show-canvas" class="show-canvas" aria-hidden="true"></canvas>
-        <div class="haze" aria-hidden="true"></div>
-        <div class="stage-floor" aria-hidden="true"></div>
-
-        <div class="container hero-inner">
-            <span class="chip"><span class="dot"></span> Freelance &middot; Wevelgem, Belgium</span>
-            <div class="logo-stage">
-                <div class="logo-tilt" id="logo-tilt">
-                    <div class="logo-3d">
-                        <img class="depth" src="images/logo-dark-600.png" alt="" aria-hidden="true" style="--d: 6">
-                        <img class="depth" src="images/logo-dark-600.png" alt="" aria-hidden="true" style="--d: 5">
-                        <img class="depth" src="images/logo-dark-600.png" alt="" aria-hidden="true" style="--d: 4">
-                        <img class="depth" src="images/logo-dark-600.png" alt="" aria-hidden="true" style="--d: 3">
-                        <img class="depth" src="images/logo-dark-600.png" alt="" aria-hidden="true" style="--d: 2">
-                        <img class="depth" src="images/logo-dark-600.png" alt="" aria-hidden="true" style="--d: 1">
-                        <img class="brand" src="images/logo-dark-600.png" alt="VanEngelandt Event Services logo" width="600" height="570">
-                        <canvas id="gobo-canvas" class="gobo" aria-hidden="true"></canvas>
+    <main>
+        <section id="home" class="hero">
+            <canvas id="show-canvas" class="show-canvas" aria-hidden="true"></canvas>
+            <div class="container depth">
+                <div class="hero-inner" data-hero-out>
+                    <div class="logo-stage">
+                        <div class="logo-tilt" id="logo-tilt">
+                            <div class="logo-3d">
+                                <img class="layer" src="images/logo-dark-600.png" alt="" aria-hidden="true" style="--d: 5">
+                                <img class="layer" src="images/logo-dark-600.png" alt="" aria-hidden="true" style="--d: 4">
+                                <img class="layer" src="images/logo-dark-600.png" alt="" aria-hidden="true" style="--d: 3">
+                                <img class="layer" src="images/logo-dark-600.png" alt="" aria-hidden="true" style="--d: 2">
+                                <img class="layer" src="images/logo-dark-600.png" alt="" aria-hidden="true" style="--d: 1">
+                                <img class="brand-logo" src="images/logo-dark-600.png" alt="VanEngelandt Event Services" width="600" height="570">
+                                <canvas id="gobo-canvas" class="gobo" aria-hidden="true"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="eyebrow" data-i18n="hero.eyebrow">Lighting &middot; Laser &middot; Video &middot; Previsualisation</span>
+                    <h1 data-i18n="hero.title">Light that <em>defines</em> the moment.</h1>
+                    <p class="lead" data-i18n="hero.lead">Independent lighting designer and show technician based in Wevelgem, Belgium. I design, visualise and operate lighting, laser and video for events, productions and organisations that expect nothing less than flawless.</p>
+                    <div class="hero-ctas">
+                        <a href="#contact" class="btn btn-gold">
+                            <span data-i18n="hero.cta">Discuss your project</span>
+                            <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </a>
+                        <a href="#services" class="btn btn-line" data-i18n="hero.cta2">Explore services</a>
                     </div>
                 </div>
             </div>
-            <p class="tagline">Multimedia Services for Events &amp; Organisations</p>
-            <h1>Expert Lighting Solutions for the Event Industry</h1>
-            <p class="lead">
-                As a dedicated freelancer, I provide specialised lighting design, operation, and technical support to businesses in the dynamic event sector.
-            </p>
-            <div class="hero-ctas">
-                <a href="#contact" class="btn btn-primary">
-                    Let's Illuminate Your Next Event
-                    <svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                </a>
-                <a href="#services" class="btn btn-ghost">View Services</a>
-            </div>
-        </div>
-    </section>
+            <a href="#services" class="scroll-cue" aria-hidden="true" tabindex="-1"><span data-i18n="hero.scroll">Scroll</span><span></span></a>
+        </section>
 
-    <section id="services" class="section">
-        <div class="container">
-            <div class="section-head reveal">
-                <span class="eyebrow">What I do</span>
-                <h2>My Services</h2>
-                <p>Light, lasers and video, from the first sketch to the last cue.</p>
-            </div>
-            <div class="grid">
-                <article class="card c-blue reveal">
-                    <div class="icon">
-                        <!-- moving head -->
-                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 21h10M9 21l1-4h4l1 4"/><path d="M6 6a6 6 0 0 1 12 0v5a6 6 0 0 1-12 0z"/><circle cx="12" cy="8" r="2.5"/></svg>
-                    </div>
-                    <h3>Lighting Design &amp; Pre-visualisation</h3>
-                    <p>Crafting innovative and impactful lighting designs that bring your event vision to life, with detailed pre-visualisation, including real-time previz in Unreal Engine 5.</p>
-                </article>
-
-                <article class="card c-purple reveal">
-                    <div class="icon">
-                        <!-- console faders -->
-                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8v8M12 8v8M16 8v8"/><path d="M6.5 13h3M10.5 10h3M14.5 14h3"/></svg>
-                    </div>
-                    <h3>On-Site Lighting Operation</h3>
-                    <p>Expert control and dynamic operation of lighting systems during live events for seamless execution.</p>
-                </article>
-
-                <article class="card c-red reveal">
-                    <div class="icon">
-                        <!-- wrench -->
-                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3-3 8-8M14.7 6.3 13 4.6a4 4 0 0 0-5.6 5.6L3 14.6 6.4 18l4.4-4.4"/></svg>
-                    </div>
-                    <h3>Technical Setup &amp; Support</h3>
-                    <p>Installation, configuration, and troubleshooting of lighting equipment to ensure flawless performance.</p>
-                </article>
-
-                <article class="card c-green reveal">
-                    <div class="icon">
-                        <!-- flight case -->
-                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 12h18M10 12v2h4v-2"/></svg>
-                    </div>
-                    <h3>Equipment Consultation &amp; Rental</h3>
-                    <p>Guidance on optimal lighting equipment selection and assistance with rental coordination for your projects.</p>
-                </article>
-
-                <article class="card c-blue reveal">
-                    <div class="icon">
-                        <!-- clipboard / planning -->
-                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/></svg>
-                    </div>
-                    <h3>Event Project Support</h3>
-                    <p>Assistance with technical aspects of event planning and coordination, ensuring smooth execution.</p>
-                </article>
-
-                <article class="card c-purple reveal">
-                    <div class="icon">
-                        <!-- sparkles -->
-                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>
-                    </div>
-                    <h3>Custom Technical Solutions</h3>
-                    <p>Developing bespoke technical solutions to meet unique event requirements and challenges.</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="section about">
-        <div class="container about-grid">
-            <div class="about-visual reveal" aria-hidden="true">
-                <!-- Illustrated stage: truss with fixtures, beams and a crowd. Swap for a photo any time, e.g. <img src="images/about.jpg"> -->
-                <svg viewBox="0 0 600 440">
-                    <defs>
-                        <linearGradient id="bc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a9aff" stop-opacity=".85"/><stop offset="1" stop-color="#9a9aff" stop-opacity="0"/></linearGradient>
-                        <linearGradient id="bv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b77fd6" stop-opacity=".85"/><stop offset="1" stop-color="#b77fd6" stop-opacity="0"/></linearGradient>
-                        <linearGradient id="bp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8f8f" stop-opacity=".85"/><stop offset="1" stop-color="#ff8f8f" stop-opacity="0"/></linearGradient>
-                        <linearGradient id="ba" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8cf5a0" stop-opacity=".8"/><stop offset="1" stop-color="#8cf5a0" stop-opacity="0"/></linearGradient>
-                        <radialGradient id="floor" cx="50%" cy="100%" r="60%"><stop offset="0" stop-color="#b77fd6" stop-opacity=".45"/><stop offset="1" stop-color="#b77fd6" stop-opacity="0"/></radialGradient>
-                        <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
-                    </defs>
-                    <rect width="600" height="440" fill="#050505"/>
-                    <!-- beams -->
-                    <g filter="url(#soft)" style="mix-blend-mode:screen">
-                        <polygon points="95,78 105,78 230,380 10,380" fill="url(#bc)"/>
-                        <polygon points="225,78 235,78 360,380 180,380" fill="url(#bv)"/>
-                        <polygon points="365,78 375,78 430,380 250,380" fill="url(#bp)"/>
-                        <polygon points="495,78 505,78 590,380 380,380" fill="url(#ba)"/>
-                    </g>
-                    <!-- laser fan -->
-                    <g stroke="#ffffff" stroke-width="1.2" opacity=".7">
-                        <line x1="300" y1="90" x2="40" y2="250"/><line x1="300" y1="90" x2="120" y2="290"/>
-                        <line x1="300" y1="90" x2="220" y2="310"/><line x1="300" y1="90" x2="380" y2="310"/>
-                        <line x1="300" y1="90" x2="480" y2="290"/><line x1="300" y1="90" x2="560" y2="250"/>
-                    </g>
-                    <!-- truss -->
-                    <g stroke="#6b6b6b" stroke-width="2" fill="none">
-                        <rect x="30" y="44" width="540" height="22"/>
-                        <path d="M30 66 52 44 74 66 96 44 118 66 140 44 162 66 184 44 206 66 228 44 250 66 272 44 294 66 316 44 338 66 360 44 382 66 404 44 426 66 448 44 470 66 492 44 514 66 536 44 558 66"/>
-                    </g>
-                    <!-- fixtures -->
-                    <g fill="#1c1c1c" stroke="#8a8a8a" stroke-width="1.5">
-                        <rect x="88" y="66" width="24" height="16" rx="4"/><rect x="218" y="66" width="24" height="16" rx="4"/>
-                        <rect x="358" y="66" width="24" height="16" rx="4"/><rect x="488" y="66" width="24" height="16" rx="4"/>
-                        <circle cx="300" cy="80" r="10"/>
-                    </g>
-                    <g>
-                        <circle cx="100" cy="80" r="4" fill="#9a9aff"/><circle cx="230" cy="80" r="4" fill="#b77fd6"/>
-                        <circle cx="370" cy="80" r="4" fill="#ff8f8f"/><circle cx="500" cy="80" r="4" fill="#8cf5a0"/>
-                        <circle cx="300" cy="84" r="4" fill="#ffffff"/>
-                    </g>
-                    <!-- stage + glow -->
-                    <rect x="0" y="330" width="600" height="110" fill="url(#floor)"/>
-                    <rect x="40" y="360" width="520" height="10" rx="3" fill="#1e1e1e"/>
-                    <!-- crowd -->
-                    <g fill="#000">
-                        <path d="M0 440V412c10-14 26-14 34 0 6-18 30-20 38-2 8-16 30-16 36 2 8-14 28-14 36 0 6-20 32-20 40-2 8-12 26-14 34 2 10-16 32-16 40 0 8-14 26-14 34 0 8-18 32-18 40 0 8-12 28-12 34 2 8-18 30-18 38 0 8-14 30-14 36 0 8-16 30-16 38 0 6-14 24-14 32 0 8-16 28-16 30-6V440z"/>
-                        <path d="M118 400l-10-40 6-2 12 40zM468 398l14-44 6 2-12 44z"/>
-                    </g>
-                </svg>
-            </div>
-            <div class="reveal">
-                <span class="eyebrow">Behind the desk</span>
-                <h2>About Me</h2>
-                <p>
-                    Hello! I'm a freelancer based in Wevelgem, Belgium, specialising in providing high-quality lighting, laser, and video technical services to businesses within the event industry. I primarily work with <strong>Chamsys MQ500M+</strong> and <strong>MA3</strong> lighting consoles, bringing advanced control and precision to every lighting design and operation.
-                </p>
-                <p>
-                    For laser projects, I utilise <strong>Pangolin Beyond Ultimate</strong> software to create stunning and safe laser displays. My pre-visualisation capabilities are powered by <strong>Vectorworks Designer</strong> and <strong>Capture</strong>, allowing for detailed planning and realistic renderings of event setups. For photorealistic, real-time previz I also work in <strong>Unreal Engine 5</strong> with <strong>Yunsio SuperStage</strong>, so clients can walk through their show before a single fixture is rigged. For video projects, I mostly use <strong>Resolume Arena</strong> to deliver dynamic and impactful visual content.
-                </p>
-                <p>
-                    With a passion for creating impactful visual experiences, I bring extensive experience and a meticulous approach to every project. My focus is on understanding the unique needs of each event and collaborating closely with clients to deliver solutions that enhance atmosphere, highlight key elements, and ensure seamless technical execution. I am dedicated to professionalism, reliability, and bringing your event's vision to light.
-                </p>
-                <div class="tools">
-                    <div class="tool">Chamsys MQ500M+<span>Lighting</span></div>
-                    <div class="tool">grandMA3<span>Lighting</span></div>
-                    <div class="tool">Pangolin Beyond<span>Laser</span></div>
-                    <div class="tool">Resolume Arena<span>Video</span></div>
-                    <div class="tool">Vectorworks<span>Design</span></div>
-                    <div class="tool">Capture<span>Previz</span></div>
-                    <div class="tool">Unreal Engine 5<span>Previz</span></div>
-                    <div class="tool">Yunsio SuperStage<span>Previz</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" style="padding-top: 24px;">
-        <div class="container">
-            <div class="cta-band reveal">
-                <h2>Ready to Illuminate Your <span class="gradient-text">Next Project?</span></h2>
-                <p>Let's discuss how my expertise in event lighting can elevate your next production. Contact me today for a consultation.</p>
-                <a href="mailto:info@vanengelandt.net?subject=Quote%20request" class="btn btn-primary">Get a Quote</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="section" style="padding-top: 24px;">
-        <div class="container">
-            <div class="section-head reveal">
-                <span class="eyebrow">Get in touch</span>
-                <h2>Contact Me</h2>
-            </div>
-            <div class="contact-grid">
-                <div class="contact-card reveal">
-                    <h3>Contact</h3>
-                    <div class="contact-row">
-                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
-                        <div><small>Email</small><a href="mailto:info@vanengelandt.net">info@vanengelandt.net</a></div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
-                        <div><small>Website</small><a href="http://www.vanengelandt.net" target="_blank" rel="noopener noreferrer">www.vanengelandt.net</a></div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="ci"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8.5c0-.3.2-.5.5-.5z"/></svg></div>
-                        <div><small>Facebook</small><a href="https://www.facebook.com/vanengelandt" target="_blank" rel="noopener noreferrer">facebook.com/vanengelandt</a></div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
-                        <div><small>Address</small><span>Plaatsweg 17, 8560 Wevelgem, Belgium</span></div>
+        <section id="services" class="section services">
+            <div class="container">
+                <div class="depth">
+                    <div class="section-head" data-3d="rise">
+                        <span class="eyebrow" data-i18n="services.eyebrow">Services</span>
+                        <h2 data-i18n="services.title">Expertise from first concept to final cue</h2>
+                        <p class="lead" data-i18n="services.intro">A single point of contact for every visual element of your event, delivered with the precision of a touring production.</p>
                     </div>
                 </div>
-                <div class="contact-card reveal">
-                    <h3>Business details</h3>
-                    <div class="contact-row">
-                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
-                        <div><small>BTW</small><span>BE0671.817.248</span></div>
+                <div class="grid">
+                    <div class="card-wrap"><article class="card" data-3d="flip-l" data-delay="0" data-tilt><div class="card-inner">
+                        <span class="num">01</span>
+                        <div class="icon"><svg fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 48 48"><path d="M14 42h20M18 42l2-8h8l2 8"/><path d="M12 12a12 12 0 0 1 24 0v10a12 12 0 0 1-24 0z"/><circle cx="24" cy="16" r="5"/><path d="M24 26v2"/></svg></div>
+                        <h3 data-i18n="s1.title">Lighting Design &amp; Previsualisation</h3>
+                        <p data-i18n="s1.text">Bespoke lighting concepts that translate your vision into atmosphere, fully visualised in advance, including photorealistic real-time previz in Unreal Engine&nbsp;5.</p>
+                    </div></article></div>
+                    <div class="card-wrap"><article class="card" data-3d="flip-up" data-delay=".15" data-tilt><div class="card-inner">
+                        <span class="num">02</span>
+                        <div class="icon"><svg fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 48 48"><rect x="5" y="8" width="38" height="32" rx="2"/><path d="M14 15v18M24 15v18M34 15v18"/><rect x="11" y="24" width="6" height="4"/><rect x="21" y="18" width="6" height="4"/><rect x="31" y="27" width="6" height="4"/></svg></div>
+                        <h3 data-i18n="s2.title">Show Programming &amp; Operation</h3>
+                        <p data-i18n="s2.text">Meticulous programming and confident live operation on grandMA3 and ChamSys, so every cue lands exactly when it should.</p>
+                    </div></article></div>
+                    <div class="card-wrap"><article class="card" data-3d="flip-r" data-delay=".3" data-tilt><div class="card-inner">
+                        <span class="num">03</span>
+                        <div class="icon"><svg fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 48 48"><rect x="18" y="36" width="12" height="7" rx="1"/><path d="M24 36 6 6M24 36 16 5M24 36 32 5M24 36 42 6M24 36V4"/></svg></div>
+                        <h3 data-i18n="s3.title">Laser Design</h3>
+                        <p data-i18n="s3.text">Striking, audience-safe laser content created in Pangolin Beyond Ultimate, integrated seamlessly with light and video.</p>
+                    </div></article></div>
+                    <div class="card-wrap"><article class="card" data-3d="flip-l" data-delay="0" data-tilt><div class="card-inner">
+                        <span class="num">04</span>
+                        <div class="icon"><svg fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 48 48"><rect x="4" y="8" width="40" height="26" rx="2"/><path d="M16 42h16M24 34v8"/><path d="M20 16v10l9-5z"/></svg></div>
+                        <h3 data-i18n="s4.title">Video &amp; Media Servers</h3>
+                        <p data-i18n="s4.text">Dynamic visual content and live playback with Resolume Arena, synchronised with the rest of your show.</p>
+                    </div></article></div>
+                    <div class="card-wrap"><article class="card" data-3d="flip-up" data-delay=".15" data-tilt><div class="card-inner">
+                        <span class="num">05</span>
+                        <div class="icon"><svg fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 48 48"><path d="M29 13a8 8 0 0 0 10 10l3 3-16 16-6-6 16-16M29 13l-3-3a8 8 0 0 0-11 11L6 30l7 7 9-9"/></svg></div>
+                        <h3 data-i18n="s5.title">Technical Production Support</h3>
+                        <p data-i18n="s5.text">Installation, configuration and troubleshooting on site, plus clear technical coordination with venues, suppliers and crew.</p>
+                    </div></article></div>
+                    <div class="card-wrap"><article class="card" data-3d="flip-r" data-delay=".3" data-tilt><div class="card-inner">
+                        <span class="num">06</span>
+                        <div class="icon"><svg fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 48 48"><rect x="5" y="14" width="38" height="26" rx="2"/><path d="M18 14v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4M5 24h38M20 24v4h8v-4"/></svg></div>
+                        <h3 data-i18n="s6.title">Equipment Consultancy &amp; Rental</h3>
+                        <p data-i18n="s6.text">Independent advice on the right fixtures and systems for your budget, with rental coordination handled for you.</p>
+                    </div></article></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="approach" class="section">
+            <div class="container">
+                <div class="depth">
+                    <div class="section-head" data-3d="rise">
+                        <span class="eyebrow" data-i18n="approach.eyebrow">Approach</span>
+                        <h2 data-i18n="approach.title">A process built for certainty</h2>
                     </div>
-                    <div class="contact-row">
-                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 10 12 4l9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg></div>
-                        <div><small>Bank</small><span>BELFIUS BANK</span></div>
+                </div>
+                <div class="steps">
+                    <div class="step-wrap"><div class="step" data-3d="swing" data-delay="0">
+                        <div class="n gold-text">I</div>
+                        <h3 data-i18n="a1.title">Consultation</h3>
+                        <p data-i18n="a1.text">We define your goals, audience, venue and budget, and agree on a clear scope.</p>
+                    </div></div>
+                    <div class="step-wrap"><div class="step" data-3d="swing" data-delay=".2">
+                        <div class="n gold-text">II</div>
+                        <h3 data-i18n="a2.title">Design &amp; Previz</h3>
+                        <p data-i18n="a2.text">The concept is drawn in Vectorworks and brought to life in Capture or Unreal Engine&nbsp;5 with Yunsio SuperStage, so you can walk through the show before a single fixture is rigged.</p>
+                    </div></div>
+                    <div class="step-wrap"><div class="step" data-3d="swing" data-delay=".4">
+                        <div class="n gold-text">III</div>
+                        <h3 data-i18n="a3.title">Programming</h3>
+                        <p data-i18n="a3.text">Cues, timing and effects are prepared offline, which keeps on-site time efficient and predictable.</p>
+                    </div></div>
+                    <div class="step-wrap"><div class="step" data-3d="swing" data-delay=".6">
+                        <div class="n gold-text">IV</div>
+                        <h3 data-i18n="a4.title">Show Day</h3>
+                        <p data-i18n="a4.text">Calm, precise operation from line check to final bow, with contingency plans ready.</p>
+                    </div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section about">
+            <div class="container about-grid">
+                <div class="depth">
+                    <div class="about-visual" data-3d="flip-l" aria-hidden="true">
+                        <!-- Illustrated stage in gold. Replace with a photo any time, e.g. <img src="images/about.jpg"> -->
+                        <svg viewBox="0 0 600 460">
+                            <defs>
+                                <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ecd9a6" stop-opacity=".75"/><stop offset="1" stop-color="#c9a45c" stop-opacity="0"/></linearGradient>
+                                <linearGradient id="beam2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6de" stop-opacity=".55"/><stop offset="1" stop-color="#fff6de" stop-opacity="0"/></linearGradient>
+                                <radialGradient id="floor" cx="50%" cy="100%" r="60%"><stop offset="0" stop-color="#c9a45c" stop-opacity=".35"/><stop offset="1" stop-color="#c9a45c" stop-opacity="0"/></radialGradient>
+                                <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+                            </defs>
+                            <rect width="600" height="460" fill="#070605"/>
+                            <g filter="url(#soft)">
+                                <polygon points="95,82 105,82 240,400 10,400" fill="url(#beam)"/>
+                                <polygon points="225,82 235,82 330,400 170,400" fill="url(#beam2)"/>
+                                <polygon points="365,82 375,82 430,400 270,400" fill="url(#beam2)"/>
+                                <polygon points="495,82 505,82 590,400 360,400" fill="url(#beam)"/>
+                            </g>
+                            <g stroke="#e8cf8f" stroke-width="1" opacity=".55">
+                                <line x1="300" y1="92" x2="30" y2="260"/><line x1="300" y1="92" x2="110" y2="300"/>
+                                <line x1="300" y1="92" x2="210" y2="320"/><line x1="300" y1="92" x2="390" y2="320"/>
+                                <line x1="300" y1="92" x2="490" y2="300"/><line x1="300" y1="92" x2="570" y2="260"/>
+                            </g>
+                            <g stroke="#8a6a2c" stroke-width="1.6" fill="none">
+                                <rect x="30" y="46" width="540" height="22"/>
+                                <path d="M30 68 52 46 74 68 96 46 118 68 140 46 162 68 184 46 206 68 228 46 250 68 272 46 294 68 316 46 338 68 360 46 382 68 404 46 426 68 448 46 470 68 492 46 514 68 536 46 558 68"/>
+                            </g>
+                            <g fill="#15120c" stroke="#c9a45c" stroke-width="1.2">
+                                <rect x="88" y="68" width="24" height="16" rx="3"/><rect x="218" y="68" width="24" height="16" rx="3"/>
+                                <rect x="358" y="68" width="24" height="16" rx="3"/><rect x="488" y="68" width="24" height="16" rx="3"/>
+                                <circle cx="300" cy="84" r="10"/>
+                            </g>
+                            <g fill="#f3e3b3"><circle cx="100" cy="82" r="3.5"/><circle cx="230" cy="82" r="3.5"/><circle cx="370" cy="82" r="3.5"/><circle cx="500" cy="82" r="3.5"/><circle cx="300" cy="88" r="3.5"/></g>
+                            <rect x="0" y="350" width="600" height="110" fill="url(#floor)"/>
+                            <rect x="40" y="382" width="520" height="8" rx="2" fill="#1c1810"/>
+                            <g fill="#000">
+                                <path d="M0 460V432c10-14 26-14 34 0 6-18 30-20 38-2 8-16 30-16 36 2 8-14 28-14 36 0 6-20 32-20 40-2 8-12 26-14 34 2 10-16 32-16 40 0 8-14 26-14 34 0 8-18 32-18 40 0 8-12 28-12 34 2 8-18 30-18 38 0 8-14 30-14 36 0 8-16 30-16 38 0 6-14 24-14 32 0 8-16 28-16 30-6V460z"/>
+                            </g>
+                        </svg>
                     </div>
-                    <div class="contact-row">
-                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div>
-                        <div><small>IBAN</small><span>BE33 0689 3189 0646</span></div>
-                    </div>
-                    <div class="contact-row">
-                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg></div>
-                        <div><small>Terms</small><a href="verkoopsvoorwaarden.html" target="_blank" rel="noopener noreferrer">General Terms of Sale</a></div>
+                </div>
+                <div class="depth">
+                    <div data-3d="rise">
+                        <span class="eyebrow" data-i18n="about.eyebrow">About</span>
+                        <h2 data-i18n="about.title">Peter Van Engelandt</h2>
+                        <p data-i18n="about.p1">I am an independent lighting, laser and video specialist based in Wevelgem, Belgium, working with event agencies, venues, production companies and organisations throughout Belgium and beyond.</p>
+                        <p data-i18n="about.p2">My workflow is built on industry-standard tools: <strong>grandMA3</strong> and <strong>ChamSys MQ500M+</strong> consoles for control, <strong>Pangolin Beyond Ultimate</strong> for laser, <strong>Resolume Arena</strong> for video, and <strong>Vectorworks</strong>, <strong>Capture</strong> and <strong>Unreal Engine&nbsp;5</strong> with <strong>Yunsio SuperStage</strong> for design and previsualisation.</p>
+                        <p data-i18n="about.p3">Every project starts with listening. By understanding the purpose of your event, I create visual experiences that elevate the atmosphere, put the spotlight where it belongs and run with complete technical reliability.</p>
+                        <div class="tools">
+                            <div class="tool">grandMA3<span data-i18n="tool.lighting">Lighting</span></div>
+                            <div class="tool">ChamSys MQ500M+<span data-i18n="tool.lighting">Lighting</span></div>
+                            <div class="tool">Pangolin Beyond<span data-i18n="tool.laser">Laser</span></div>
+                            <div class="tool">Resolume Arena<span data-i18n="tool.video">Video</span></div>
+                            <div class="tool">Vectorworks<span data-i18n="tool.design">Design</span></div>
+                            <div class="tool">Capture<span data-i18n="tool.previz">Previz</span></div>
+                            <div class="tool">Unreal Engine 5<span data-i18n="tool.previz">Previz</span></div>
+                            <div class="tool">Yunsio SuperStage<span data-i18n="tool.previz">Previz</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer>
+        <section class="cta">
+            <div class="container depth">
+                <div class="cta-panel" data-3d="zoom">
+                    <h2 data-i18n="cta.title">Let us create something <em>unforgettable</em>.</h2>
+                    <p data-i18n="cta.text">Share your plans and receive a tailored proposal, without obligation.</p>
+                    <a href="mailto:info@vanengelandt.net?subject=Quote%20request" class="btn btn-gold" data-i18n="cta.button">Request a quote</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section contact">
+            <div class="container">
+                <div class="depth">
+                    <div class="section-head" data-3d="rise">
+                        <span class="eyebrow" data-i18n="contact.eyebrow">Contact</span>
+                        <h2 data-i18n="contact.title">Get in touch</h2>
+                    </div>
+                </div>
+                <div class="contact-grid">
+                    <div class="depth"><div class="contact-card" data-3d="flip-l">
+                        <h3 data-i18n="contact.card1">Contact details</h3>
+                        <div class="row">
+                            <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 7 9 6 9-6"/></svg></div>
+                            <div><small data-i18n="label.email">Email</small><a href="mailto:info@vanengelandt.net">info@vanengelandt.net</a></div>
+                        </div>
+                        <div class="row">
+                            <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+                            <div><small data-i18n="label.website">Website</small><a href="http://www.vanengelandt.net" target="_blank" rel="noopener noreferrer">www.vanengelandt.net</a></div>
+                        </div>
+                        <div class="row">
+                            <div class="ci"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8.5c0-.3.2-.5.5-.5z"/></svg></div>
+                            <div><small data-i18n="label.facebook">Facebook</small><a href="https://www.facebook.com/vanengelandt" target="_blank" rel="noopener noreferrer">facebook.com/vanengelandt</a></div>
+                        </div>
+                        <div class="row">
+                            <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+                            <div><small data-i18n="label.address">Address</small><span>Plaatsweg 17, 8560 Wevelgem, Belgium</span></div>
+                        </div>
+                    </div></div>
+                    <div class="depth"><div class="contact-card" data-3d="flip-r">
+                        <h3 data-i18n="contact.card2">Company details</h3>
+                        <div class="row">
+                            <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+                            <div><small data-i18n="label.vat">VAT number</small><span>BE0671.817.248</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 10 12 4l9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg></div>
+                            <div><small data-i18n="label.bank">Bank</small><span>BELFIUS BANK</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="1"/><path d="M2 10h20M6 15h4"/></svg></div>
+                            <div><small data-i18n="label.iban">IBAN</small><span>BE33 0689 3189 0646</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg></div>
+                            <div><small data-i18n="label.terms">Terms</small><a href="verkoopsvoorwaarden.html" data-i18n="contact.terms">General Terms of Rental and Sale</a></div>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
         <div class="container footer-inner">
-            <p style="margin:0">&copy; <span id="year">2025</span> VanEngelandt.NET. All rights reserved.</p>
+            <p>&copy; <span id="year">2026</span> VanEngelandt.NET. <span data-i18n="footer.rights">All rights reserved.</span></p>
             <div class="footer-links">
-                <a href="#services">Services</a>
-                <a href="#about">About</a>
-                <a href="verkoopsvoorwaarden.html" target="_blank" rel="noopener noreferrer">Terms of Sale</a>
-                <a href="#contact">Contact</a>
+                <a href="#services" data-i18n="nav.services">Services</a>
+                <a href="#about" data-i18n="nav.about">About</a>
+                <a href="verkoopsvoorwaarden.html" data-i18n="nav.terms">Terms of Sale</a>
+                <a href="#home" data-i18n="footer.top">Back to top</a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Mobile menu
         const menuBtn = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        menuBtn.addEventListener('click', () => {
-            const open = mobileMenu.classList.toggle('open');
-            menuBtn.setAttribute('aria-expanded', open);
-        });
+        menuBtn.addEventListener('click', () => menuBtn.setAttribute('aria-expanded', mobileMenu.classList.toggle('open')));
         mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
             mobileMenu.classList.remove('open');
             menuBtn.setAttribute('aria-expanded', false);
         }));
-
-        // Reveal sections as they scroll into view
-        const reveals = document.querySelectorAll('.reveal');
-        if ('IntersectionObserver' in window) {
-            const io = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-                });
-            }, { threshold: 0.12 });
-            reveals.forEach(el => io.observe(el));
-        } else {
-            reveals.forEach(el => el.classList.add('visible'));
-        }
+        document.getElementById('year').textContent = new Date().getFullYear();
 
         // Tilt the logo towards the pointer
         const tilt = document.getElementById('logo-tilt');
         const hero = document.getElementById('home');
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
             hero.addEventListener('pointermove', e => {
                 const r = tilt.getBoundingClientRect();
-                const x = (e.clientX - (r.left + r.width / 2)) / window.innerWidth;
-                const y = (e.clientY - (r.top + r.height / 2)) / window.innerHeight;
-                tilt.style.setProperty('--ry', (x * 30).toFixed(1) + 'deg');
-                tilt.style.setProperty('--rx', (-y * 24).toFixed(1) + 'deg');
+                tilt.style.setProperty('--ry', ((e.clientX - (r.left + r.width / 2)) / innerWidth * 30).toFixed(1) + 'deg');
+                tilt.style.setProperty('--rx', (-(e.clientY - (r.top + r.height / 2)) / innerHeight * 24).toFixed(1) + 'deg');
             });
-            hero.addEventListener('pointerleave', () => {
-                tilt.style.setProperty('--ry', '0deg');
-                tilt.style.setProperty('--rx', '0deg');
-            });
+            hero.addEventListener('pointerleave', () => { tilt.style.setProperty('--ry', '0deg'); tilt.style.setProperty('--rx', '0deg'); });
         }
-
-        document.getElementById('year').textContent = new Date().getFullYear();
     </script>
+    <script src="js/i18n.js"></script>
+    <script src="js/scroll3d.js"></script>
     <script src="js/lightshow.js" defer></script>
 </body>
 </html>

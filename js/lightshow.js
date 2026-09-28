@@ -1,5 +1,5 @@
-// Hero light show: moving heads that project gobos onto the logo,
-// and RGB lasers fanning out from behind it.
+// Hero light show: moving heads that project gold gobos onto the logo,
+// and gold lasers fanning out from behind it.
 (() => {
     const hero = document.getElementById('home');
     const stage = document.querySelector('.logo-stage');
@@ -24,29 +24,33 @@
         x.beginPath(); x.arc(s / 2, s / 2, s / 2, 0, Math.PI * 2); x.fill();
         x.globalCompositeOperation = 'destination-out';
         x.translate(s / 2, s / 2);
-        // Smiley faces cut out of the metal disc, like a custom gobo
-        const eye = (ex, ey, rx, ry) => { x.beginPath(); x.ellipse(ex, ey, rx, ry, 0, 0, Math.PI * 2); x.fill(); };
-        x.lineCap = 'round';
         if (kind === 0) {
-            // Classic smile
-            eye(-s * 0.15, -s * 0.1, s * 0.05, s * 0.08);
-            eye(s * 0.15, -s * 0.1, s * 0.05, s * 0.08);
-            x.lineWidth = s * 0.055;
-            x.beginPath(); x.arc(0, s * 0.02, s * 0.24, Math.PI * 0.18, Math.PI * 0.82); x.stroke();
+            // "Flower": six petals cut from the disc, with a solid centre
+            for (let i = 0; i < 6; i++) {
+                x.save(); x.rotate(i * Math.PI / 3);
+                x.beginPath(); x.ellipse(0, -s * 0.27, s * 0.07, s * 0.17, 0, 0, Math.PI * 2); x.fill();
+                x.restore();
+            }
+            x.beginPath(); x.arc(0, 0, s * 0.06, 0, Math.PI * 2); x.fill();
         } else if (kind === 1) {
-            // Wink
-            eye(-s * 0.15, -s * 0.1, s * 0.05, s * 0.08);
-            x.lineWidth = s * 0.045;
-            x.beginPath(); x.arc(s * 0.15, -s * 0.06, s * 0.07, Math.PI * 1.1, Math.PI * 1.9); x.stroke();
-            x.lineWidth = s * 0.055;
-            x.beginPath(); x.arc(0, s * 0.02, s * 0.24, Math.PI * 0.15, Math.PI * 0.85); x.stroke();
+            // "Dots": two rings of holes
+            for (const [r, n, d] of [[0.34, 12, 0.055], [0.18, 6, 0.05]]) {
+                for (let i = 0; i < n; i++) {
+                    const a = i * Math.PI * 2 / n;
+                    x.beginPath(); x.arc(Math.cos(a) * s * r, Math.sin(a) * s * r, s * d, 0, Math.PI * 2); x.fill();
+                }
+            }
         } else {
-            // Big grin with happy closed eyes
-            x.lineWidth = s * 0.045;
-            x.beginPath(); x.arc(-s * 0.15, -s * 0.06, s * 0.07, Math.PI * 1.1, Math.PI * 1.9); x.stroke();
-            x.beginPath(); x.arc(s * 0.15, -s * 0.06, s * 0.07, Math.PI * 1.1, Math.PI * 1.9); x.stroke();
-            x.beginPath(); x.moveTo(-s * 0.24, s * 0.06); x.lineTo(s * 0.24, s * 0.06);
-            x.arc(0, s * 0.06, s * 0.24, 0, Math.PI); x.closePath(); x.fill();
+            // "Spiral": curved blades
+            for (let i = 0; i < 5; i++) {
+                x.save(); x.rotate(i * Math.PI * 2 / 5);
+                x.beginPath();
+                x.moveTo(0, -s * 0.08);
+                x.quadraticCurveTo(s * 0.22, -s * 0.2, s * 0.12, -s * 0.44);
+                x.quadraticCurveTo(s * 0.05, -s * 0.26, 0, -s * 0.08);
+                x.lineWidth = s * 0.05; x.stroke(); x.fill();
+                x.restore();
+            }
         }
         return c;
     }
@@ -62,7 +66,7 @@
         const x = c.getContext('2d');
         x.drawImage(gobos[i], 0, 0);
         x.globalCompositeOperation = 'source-in';
-        x.fillStyle = `hsl(${hue}, 100%, 62%)`;
+        x.fillStyle = `hsl(${hue}, 85%, 70%)`;
         x.fillRect(0, 0, 256, 256);
         tintCache.set(key, c);
         return c;
@@ -70,10 +74,10 @@
 
     // ---------- Fixtures ----------
     const heads = [
-        { fx: 0.10, gobo: 0, hue: 0,   sp: 0.50, ph: 0.0 },
-        { fx: 0.32, gobo: 1, hue: 240, sp: 0.62, ph: 1.7 },
-        { fx: 0.68, gobo: 2, hue: 120, sp: 0.57, ph: 3.1 },
-        { fx: 0.90, gobo: 1, hue: 300, sp: 0.46, ph: 4.4 },
+        { fx: 0.10, gobo: 0, sp: 0.50, ph: 0.0 },
+        { fx: 0.32, gobo: 1, sp: 0.62, ph: 1.7 },
+        { fx: 0.68, gobo: 2, sp: 0.57, ph: 3.1 },
+        { fx: 0.90, gobo: 0, sp: 0.46, ph: 4.4 },
     ];
 
     function measure() {
@@ -88,7 +92,7 @@
     }
 
     // ---------- Lasers ----------
-    const LASER = ['#ff2d2d', '#2dff5a', '#3d5bff'];
+    const LASER = ['#ffcf6b', '#fff3d6', '#e0a53a'];
     function laserLine(x0, y0, ang, len, col, alpha) {
         const x1 = x0 + Math.cos(ang) * len, y1 = y0 + Math.sin(ang) * len;
         const g = sctx.createLinearGradient(x0, y0, x1, y1);
@@ -149,18 +153,18 @@
         };
     }
     function drawHeads(t) {
-        const trussY = 26, spotR = logo.w * 0.2;
+        const trussY = window.innerWidth < 1100 ? 96 : 104, spotR = logo.w * 0.2;
         // Truss
         sctx.globalCompositeOperation = 'source-over';
         sctx.globalAlpha = 1;
-        sctx.strokeStyle = '#3a3a3a'; sctx.lineWidth = 1.5;
+        sctx.strokeStyle = 'rgba(201, 164, 92, 0.35)'; sctx.lineWidth = 1.2;
         sctx.strokeRect(-2, trussY - 16, W + 4, 12);
         sctx.beginPath();
         for (let x = 0; x < W; x += 16) { sctx.moveTo(x, trussY - 4); sctx.lineTo(x + 8, trussY - 16); sctx.lineTo(x + 16, trussY - 4); }
         sctx.stroke();
 
         for (const h of heads) {
-            const hue = (h.hue + t * 25) % 360;
+            const hue = 38 + 8 * Math.sin(t * 0.4 + h.ph);
             const fx = h.fx * W, fy = trussY + 14;
             const tg = targetOf(h, t);
             const sx = logo.x + tg.u * logo.w, sy = logo.y + tg.v * logo.h;
@@ -172,8 +176,8 @@
             const px = -Math.sin(ang), py = Math.cos(ang);
             for (const [wMul, a0, a1] of [[1.35, 0.10, 0.03], [1, 0.26, 0.09]]) {
                 const g = sctx.createLinearGradient(lx, ly, sx, sy);
-                g.addColorStop(0, `hsla(${hue}, 100%, 75%, ${a0})`);
-                g.addColorStop(1, `hsla(${hue}, 100%, 65%, ${a1})`);
+                g.addColorStop(0, `hsla(${hue}, 80%, 78%, ${a0})`);
+                g.addColorStop(1, `hsla(${hue}, 80%, 68%, ${a1})`);
                 sctx.fillStyle = g;
                 sctx.beginPath();
                 sctx.moveTo(lx + px * 5, ly + py * 5);
@@ -191,8 +195,8 @@
             sctx.save();
             sctx.translate(fx, fy); sctx.rotate(ang - Math.PI / 2);
             sctx.beginPath(); sctx.roundRect(-10, -8, 20, 24, 5); sctx.fill(); sctx.stroke();
-            sctx.fillStyle = `hsl(${hue}, 100%, 80%)`;
-            sctx.shadowColor = `hsl(${hue}, 100%, 60%)`; sctx.shadowBlur = 14;
+            sctx.fillStyle = `hsl(${hue}, 90%, 82%)`;
+            sctx.shadowColor = `hsl(${hue}, 90%, 60%)`; sctx.shadowBlur = 14;
             sctx.beginPath(); sctx.ellipse(0, 16, 7, 3, 0, 0, Math.PI * 2); sctx.fill();
             sctx.restore();
         }
@@ -205,12 +209,12 @@
         gctx.globalCompositeOperation = 'lighter';
         const r = GW * 0.24;
         for (const h of heads) {
-            const hue = (h.hue + t * 25) % 360;
+            const hue = 38 + 8 * Math.sin(t * 0.4 + h.ph);
             const tg = targetOf(h, t);
             const cx = GW / 2 + tg.u * GW, cy = GH / 2 + tg.v * GH;
             gctx.save();
             gctx.translate(cx, cy);
-            gctx.rotate(Math.sin(t * 0.9 + h.ph) * 0.35); // a happy wobble, faces stay upright
+            gctx.rotate(t * (h.gobo === 1 ? -0.5 : 0.4) + h.ph);
             gctx.globalAlpha = 0.6;
             gctx.drawImage(tinted(h.gobo, hue), -r, -r, r * 2, r * 2);
             gctx.restore();
