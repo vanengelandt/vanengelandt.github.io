@@ -1,83 +1,22 @@
-// Hero light show: moving heads that project gold gobos onto the logo,
+// Hero light show: moving heads aimed at the logo,
 // and gold lasers fanning out from behind it.
 (() => {
     const hero = document.getElementById('home');
     const stage = document.querySelector('.logo-stage');
     const sky = document.getElementById('show-canvas');   // behind the logo: lasers, fixtures, beams
-    const gobo = document.getElementById('gobo-canvas');  // on the logo, masked to its shape
-    if (!hero || !stage || !sky || !gobo) return;
+    if (!hero || !stage || !sky) return;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const sctx = sky.getContext('2d');
-    const gctx = gobo.getContext('2d');
-    let W = 0, H = 0, GW = 0, GH = 0, dpr = 1;
+    let W = 0, H = 0, dpr = 1;
     let logo = { x: 0, y: 0, w: 1, h: 1 };
-
-    // ---------- Gobo artwork (white on transparent, tinted per fixture) ----------
-    function makeGobo(kind) {
-        const s = 256, c = document.createElement('canvas');
-        c.width = c.height = s;
-        const x = c.getContext('2d');
-        const g = x.createRadialGradient(s / 2, s / 2, s * 0.3, s / 2, s / 2, s / 2);
-        g.addColorStop(0, '#fff'); g.addColorStop(0.9, 'rgba(255,255,255,.9)'); g.addColorStop(1, 'rgba(255,255,255,0)');
-        x.fillStyle = g;
-        x.beginPath(); x.arc(s / 2, s / 2, s / 2, 0, Math.PI * 2); x.fill();
-        x.globalCompositeOperation = 'destination-out';
-        x.translate(s / 2, s / 2);
-        if (kind === 0) {
-            // "Flower": six petals cut from the disc, with a solid centre
-            for (let i = 0; i < 6; i++) {
-                x.save(); x.rotate(i * Math.PI / 3);
-                x.beginPath(); x.ellipse(0, -s * 0.27, s * 0.07, s * 0.17, 0, 0, Math.PI * 2); x.fill();
-                x.restore();
-            }
-            x.beginPath(); x.arc(0, 0, s * 0.06, 0, Math.PI * 2); x.fill();
-        } else if (kind === 1) {
-            // "Dots": two rings of holes
-            for (const [r, n, d] of [[0.34, 12, 0.055], [0.18, 6, 0.05]]) {
-                for (let i = 0; i < n; i++) {
-                    const a = i * Math.PI * 2 / n;
-                    x.beginPath(); x.arc(Math.cos(a) * s * r, Math.sin(a) * s * r, s * d, 0, Math.PI * 2); x.fill();
-                }
-            }
-        } else {
-            // "Spiral": curved blades
-            for (let i = 0; i < 5; i++) {
-                x.save(); x.rotate(i * Math.PI * 2 / 5);
-                x.beginPath();
-                x.moveTo(0, -s * 0.08);
-                x.quadraticCurveTo(s * 0.22, -s * 0.2, s * 0.12, -s * 0.44);
-                x.quadraticCurveTo(s * 0.05, -s * 0.26, 0, -s * 0.08);
-                x.lineWidth = s * 0.05; x.stroke(); x.fill();
-                x.restore();
-            }
-        }
-        return c;
-    }
-    const gobos = [makeGobo(0), makeGobo(1), makeGobo(2)];
-    const tintCache = new Map();
-    function tinted(i, hue) {
-        const key = i + ':' + Math.round(hue / 6);
-        let c = tintCache.get(key);
-        if (c) return c;
-        if (tintCache.size > 400) tintCache.clear();
-        c = document.createElement('canvas');
-        c.width = c.height = 256;
-        const x = c.getContext('2d');
-        x.drawImage(gobos[i], 0, 0);
-        x.globalCompositeOperation = 'source-in';
-        x.fillStyle = `hsl(${hue}, 85%, 70%)`;
-        x.fillRect(0, 0, 256, 256);
-        tintCache.set(key, c);
-        return c;
-    }
 
     // ---------- Fixtures ----------
     const heads = [
-        { fx: 0.10, gobo: 0, sp: 0.50, ph: 0.0 },
-        { fx: 0.32, gobo: 1, sp: 0.62, ph: 1.7 },
-        { fx: 0.68, gobo: 2, sp: 0.57, ph: 3.1 },
-        { fx: 0.90, gobo: 0, sp: 0.46, ph: 4.4 },
+        { fx: 0.10, sp: 0.50, ph: 0.0 },
+        { fx: 0.32, sp: 0.62, ph: 1.7 },
+        { fx: 0.68, sp: 0.57, ph: 3.1 },
+        { fx: 0.90, sp: 0.46, ph: 4.4 },
     ];
 
     function measure() {
@@ -87,8 +26,6 @@
         if (sky.width !== Math.round(W * dpr) || sky.height !== Math.round(H * dpr)) { sky.width = Math.round(W * dpr); sky.height = Math.round(H * dpr); }
         const sr = stage.getBoundingClientRect();
         logo = { x: sr.left - hr.left + sr.width / 2, y: sr.top - hr.top + sr.height / 2, w: sr.width, h: sr.height };
-        GW = gobo.clientWidth; GH = gobo.clientHeight;
-        if (gobo.width !== Math.round(GW * dpr) || gobo.height !== Math.round(GH * dpr)) { gobo.width = Math.round(GW * dpr); gobo.height = Math.round(GH * dpr); }
     }
 
     // ---------- Lasers ----------
@@ -146,7 +83,7 @@
 
     // ---------- Moving heads ----------
     function targetOf(h, t) {
-        // Local gobo position on the logo, as a fraction of its box (-0.5..0.5)
+        // Where each beam lands on the logo, as a fraction of its box (-0.5..0.5)
         return {
             u: 0.3 * Math.sin(t * h.sp + h.ph),
             v: 0.28 * Math.sin(t * h.sp * 1.37 + h.ph * 0.7) - 0.02,
@@ -202,25 +139,6 @@
         }
     }
 
-    // Gobo projections, drawn on a canvas that sits on the logo and is masked to its shape
-    function drawGobos(t) {
-        gctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        gctx.clearRect(0, 0, GW, GH);
-        gctx.globalCompositeOperation = 'lighter';
-        const r = GW * 0.24;
-        for (const h of heads) {
-            const hue = 38 + 8 * Math.sin(t * 0.4 + h.ph);
-            const tg = targetOf(h, t);
-            const cx = GW / 2 + tg.u * GW, cy = GH / 2 + tg.v * GH;
-            gctx.save();
-            gctx.translate(cx, cy);
-            gctx.rotate(t * (h.gobo === 1 ? -0.5 : 0.4) + h.ph);
-            gctx.globalAlpha = 0.6;
-            gctx.drawImage(tinted(h.gobo, hue), -r, -r, r * 2, r * 2);
-            gctx.restore();
-        }
-    }
-
     function frame(ms) {
         const t = ms / 1000;
         sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -228,7 +146,6 @@
         sctx.clearRect(0, 0, W, H);
         drawLasers(t);
         drawHeads(t);
-        drawGobos(t);
     }
 
     let running = false, visible = true, raf = 0;
