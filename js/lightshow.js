@@ -25,6 +25,10 @@
         const hr = hero.getBoundingClientRect();
         W = hr.width; H = hr.height;
         if (sky.width !== Math.round(W * dpr) || sky.height !== Math.round(H * dpr)) { sky.width = Math.round(W * dpr); sky.height = Math.round(H * dpr); }
+        trackLogo(hr);
+    }
+    // The logo moves while scrolling, so the fixtures re-aim at it on every frame
+    function trackLogo(hr = hero.getBoundingClientRect()) {
         const sr = stage.getBoundingClientRect();
         logo = { x: sr.left - hr.left + sr.width / 2, y: sr.top - hr.top + sr.height / 2, w: sr.width, h: sr.height };
     }
@@ -290,6 +294,7 @@
 
     function frame(ms) {
         const t = ms / 1000;
+        if (!reduceMotion) trackLogo();
         sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         sctx.globalCompositeOperation = 'source-over';
         sctx.clearRect(0, 0, W, H);
@@ -299,13 +304,10 @@
 
     let running = false, visible = true, raf = 0;
     // Once the hero has mostly faded out while scrolling, stop drawing so the scroll effects get the frame budget
-    // and while the page is actively scrolling the show redraws every other frame
-    let idle = false, scrolling = 0, tick = 0;
-    window.addEventListener('scroll', () => { scrolling = performance.now(); }, { passive: true });
+    let idle = false;
     function loop(ms) {
         const faded = window.scrollY > hero.offsetHeight * 0.7;
-        const busy = ms - scrolling < 180;
-        if (!faded && (!busy || (tick++ & 1))) frame(ms);
+        if (!faded) frame(ms);
         else if (!idle) { sctx.setTransform(1, 0, 0, 1, 0, 0); sctx.clearRect(0, 0, sky.width, sky.height); }
         idle = faded;
         raf = running ? requestAnimationFrame(loop) : 0;
