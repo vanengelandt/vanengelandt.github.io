@@ -222,7 +222,7 @@
             'a2.text': 'Le concept est dessiné dans Vectorworks puis mis en scène dans Capture ou Unreal Engine&nbsp;5 avec Yunsio SuperStage, pour découvrir le spectacle avant même l’accroche du premier projecteur.',
             'a3.title': 'Programmation',
             'a3.text': 'Les effets, conduites et timings sont préparés hors ligne, pour un temps sur site efficace et maîtrisé.',
-            'a4.title': 'Jour J',
+            'a4.title': 'Le jour du spectacle',
             'a4.text': 'Un pupitrage calme et précis, des derniers réglages au salut final, avec des plans de secours prêts.',
 
             'about.eyebrow': 'À propos',
@@ -237,7 +237,7 @@
             'tool.previz': 'Prévisu',
 
             'cta.title': 'Créons ensemble un moment <em>inoubliable</em>.',
-            'cta.text': 'Présentez-nous votre projet et recevez une proposition sur mesure, sans engagement.',
+            'cta.text': 'Présentez-moi votre projet et recevez une proposition sur mesure, sans engagement.',
             'cta.button': 'Demander un devis',
 
             'contact.eyebrow': 'Contact',

@@ -7,9 +7,7 @@
     <meta name="description" content="Algemene verhuur- en verkoopvoorwaarden van VanEngelandt.NET. General terms of rental and sale. Conditions générales de location et de vente.">
     <meta name="theme-color" content="#050505">
     <link rel="icon" type="image/png" href="images/logo-mark-128.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="css/site.css">
     <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
     <style>
@@ -26,7 +24,7 @@
             clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%); transform: rotate(18deg); transform-origin: 50% 0;
             filter: blur(6px); pointer-events: none;
         }
-        .page-hero h1 { font-size: clamp(2.4rem, 6vw, 4.6rem); margin: 22px 0 36px; max-width: 900px; }
+        .page-hero h1 { font-size: clamp(1.3rem, 5.2vw, 3.4rem); margin: 22px 0 36px; max-width: 1100px; }
         .company { display: flex; flex-wrap: wrap; gap: 12px; }
         .company div { padding: 12px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(201, 164, 92, .03); color: var(--ivory); font-size: .92rem; }
         .company small { display: block; color: var(--gold); font-size: .64rem; letter-spacing: .24em; text-transform: uppercase; line-height: 1.6; }
@@ -38,7 +36,7 @@
         @media (min-width: 1040px) { .toc { position: sticky; top: 104px; max-height: calc(100vh - 130px); overflow-y: auto; } }
         .toc summary {
             list-style: none; cursor: pointer; padding: 18px 22px; display: flex; align-items: center; justify-content: space-between;
-            font-size: .7rem; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--gold);
+            font-size: .7rem; font-weight: 700; font-stretch: var(--wide); letter-spacing: .24em; text-transform: uppercase; color: var(--gold);
         }
         .toc summary::-webkit-details-marker { display: none; }
         .toc summary svg { width: 18px; height: 18px; transition: transform .25s; }
@@ -54,7 +52,7 @@
         .term { padding: 36px 26px; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); position: relative; }
         .term::before { content: ""; position: absolute; left: 0; top: 36px; width: 2px; height: 40px; background: var(--gold-grad); }
         @media (min-width: 640px) { .term { padding: 44px 48px; } }
-        .term h2 { display: flex; gap: 18px; align-items: baseline; font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 22px; }
+        .term h2 { display: flex; gap: 18px; align-items: baseline; font-size: clamp(1.02rem, 2.2vw, 1.35rem); line-height: 1.2; margin-bottom: 22px; }
         .term .num { flex: none; font-size: 1rem; letter-spacing: .12em; color: var(--gold); font-family: var(--sans); font-weight: 600; }
         .term p { margin: 0 0 16px; color: var(--text); font-weight: 300; font-size: .97rem; overflow-wrap: break-word; }
         .term p:last-child { margin-bottom: 0; }
@@ -70,7 +68,7 @@
         .back-to-top svg { width: 20px; height: 20px; }
         .nav .btn-line { padding: 12px 16px; }
         .nav .btn-line .long { display: none; }
-        @media (min-width: 760px) { .nav .btn-line .long { display: inline; } .nav .btn-line .short { display: none; } }
+        @media (min-width: 900px) { .nav .btn-line .long { display: inline; } .nav .btn-line .short { display: none; } }
         @media (max-width: 480px) { .nav .btn-line .short { display: none; } }
 
         @media print {
