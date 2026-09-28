@@ -2,7 +2,7 @@
 // and gold lasers fanning out from behind it.
 (() => {
     const hero = document.getElementById('home');
-    const stage = document.querySelector('.logo-stage');
+    const stage = document.querySelector('.logo-symbol');   // the beams aim at the symbol
     const sky = document.getElementById('show-canvas');   // behind the logo: lasers, fixtures, beams
     if (!hero || !stage || !sky) return;
 
@@ -192,7 +192,7 @@
     }
 
     function drawHeads(t) {
-        const trussY = window.innerWidth < 1100 ? 96 : 104, spotR = logo.w * 0.19;
+        const trussY = window.innerWidth < 1100 ? 96 : 104, spotR = Math.min(logo.w, logo.h * 1.4) * 0.22;
         // Truss
         sctx.globalCompositeOperation = 'source-over';
         sctx.globalAlpha = 1;

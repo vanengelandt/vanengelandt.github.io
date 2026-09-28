@@ -306,9 +306,22 @@
         document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
     }
 
+    // Switching language fades the page down and back up, like a crossfade between two cues
+    const root = document.documentElement;
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let pending = null;
     document.querySelectorAll('[data-set-lang]').forEach(b => b.addEventListener('click', () => {
-        store.set(b.dataset.setLang);
-        apply(b.dataset.setLang);
+        const lang = b.dataset.setLang;
+        store.set(lang);
+        if (still || lang === root.lang) { apply(lang); return; }
+        clearTimeout(pending);
+        // The pressed button lights up straight away; the text changes while the page is dark
+        document.querySelectorAll('[data-set-lang]').forEach(o => o.classList.toggle('active', o === b));
+        root.classList.add('lang-out');
+        pending = setTimeout(() => {
+            apply(lang);
+            requestAnimationFrame(() => root.classList.remove('lang-out'));
+        }, 320);
     }));
     apply(initialLang());
 })();
