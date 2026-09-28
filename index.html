@@ -4,389 +4,590 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VanEngelandt.NET - Event Lighting & Technical Solutions</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter (for body text) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Google Fonts - Bebas Neue (for stylish logo) -->
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <meta name="description" content="Freelance lighting, laser and video technician from Wevelgem, Belgium. Lighting design, pre-visualisation and live operation for events and organisations.">
+    <meta name="theme-color" content="#07060f">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='.5' stop-color='%23a855f7'/%3E%3Cstop offset='1' stop-color='%23f472b6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%2307060f'/%3E%3Cpath d='M14 16h9l9 26 9-26h9L37 50h-10z' fill='url(%23g)'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        html, body {
-            /* Remove default browser margins and padding to eliminate white borders */
-            margin: 0;
-            padding: 0;
-            width: 100%; /* Ensure they take full width */
-            overflow-x: hidden; /* Prevent horizontal scrollbar if elements slightly overflow */
+        :root {
+            --bg: #07060f;
+            --bg-2: #0e0c1d;
+            --surface: rgba(255, 255, 255, 0.04);
+            --surface-hover: rgba(255, 255, 255, 0.07);
+            --border: rgba(255, 255, 255, 0.09);
+            --text: #ece9f7;
+            --muted: #a09cb8;
+            --cyan: #22d3ee;
+            --violet: #a855f7;
+            --pink: #f472b6;
+            --amber: #fbbf24;
+            --grad: linear-gradient(100deg, var(--cyan), var(--violet) 50%, var(--pink));
+            --radius: 18px;
+            --max: 1140px;
         }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Light gray background */
+            margin: 0;
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
-        /* Custom styles for subtle shadows and rounded corners */
-        .card {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-            border-radius: 0.75rem; /* rounded-xl */
+
+        a { color: inherit; }
+        img, svg { display: block; max-width: 100%; }
+
+        .container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+        @media (min-width: 640px) { .container { padding: 0 28px; } }
+
+        .gradient-text {
+            background: var(--grad);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: hue-flow 8s linear infinite;
+        }
+        @keyframes hue-flow { to { background-position: 200% center; } }
+
+        .eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--cyan);
+        }
+        .eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--grad); border-radius: 2px; }
+
+        h1, h2, h3 { line-height: 1.15; margin: 0; }
+        h2 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; letter-spacing: -0.02em; margin: 12px 0 16px; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 14px 26px; border-radius: 999px;
+            font-weight: 600; font-size: 0.98rem; text-decoration: none;
+            transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
         }
         .btn-primary {
-            background-color: #3b82f6; /* Blue-500 */
-            color: white;
-            padding: 0.75rem 1.5rem; /* py-3 px-6 */
-            border-radius: 0.5rem; /* rounded-lg */
-            transition: background-color 0.3s ease;
+            background: var(--grad); color: #0b0616;
+            box-shadow: 0 10px 30px -10px rgba(168, 85, 247, .7);
         }
-        .btn-primary:hover {
-            background-color: #2563eb; /* Blue-600 */
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px -10px rgba(34, 211, 238, .7); }
+        .btn-ghost { border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+        .btn-ghost:hover { background: var(--surface-hover); transform: translateY(-2px); }
+        .btn svg { width: 18px; height: 18px; }
+
+        /* ---------- Header ---------- */
+        .site-header {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(7, 6, 15, 0.72);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+        .logo {
+            font-family: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif; font-size: clamp(1.5rem, 6vw, 2rem); white-space: nowrap; letter-spacing: 0.04em;
+            text-decoration: none; display: flex; align-items: center; gap: 10px; line-height: 1;
+        }
+        .logo-mark { width: 30px; height: 30px; flex: none; }
+        .nav-links { display: none; gap: 30px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--muted); font-weight: 500; font-size: 0.95rem; transition: color .2s; }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links .btn { padding: 10px 20px; color: #0b0616; }
+
+        .menu-btn {
+            background: var(--surface); border: 1px solid var(--border); color: var(--text);
+            width: 44px; height: 44px; border-radius: 12px; cursor: pointer;
+            display: grid; place-items: center;
+        }
+        .menu-btn svg { width: 22px; height: 22px; }
+        @media (min-width: 900px) { .nav-links { display: flex; } .menu-btn { display: none; } }
+        .mobile-menu { display: none; border-top: 1px solid var(--border); padding: 8px 16px 18px; }
+        .mobile-menu.open { display: block; }
+        .mobile-menu a {
+            display: block; padding: 12px 8px; text-decoration: none; color: var(--text);
+            border-bottom: 1px solid var(--border); font-weight: 500;
+        }
+        .mobile-menu a:last-child { border-bottom: 0; }
+        @media (min-width: 900px) { .mobile-menu, .mobile-menu.open { display: none; } }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            position: relative; overflow: hidden; isolation: isolate;
+            padding: 96px 0 120px;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(168, 85, 247, .22), transparent 70%),
+                linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+        }
+        @media (min-width: 900px) { .hero { padding: 140px 0 170px; } }
+
+        /* Stage-light beams */
+        .beams { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+        .beam {
+            position: absolute; top: -10%; width: 38vw; max-width: 520px; height: 130%;
+            transform-origin: 50% 0;
+            clip-path: polygon(46% 0, 54% 0, 100% 100%, 0 100%);
+            filter: blur(6px);
+            mix-blend-mode: screen;
+            opacity: .55;
+        }
+        .beam.b1 { left: 4%;  background: linear-gradient(180deg, rgba(34, 211, 238, .9), rgba(34, 211, 238, 0) 85%); animation: sweep-a 9s ease-in-out infinite alternate; }
+        .beam.b2 { left: 31%; background: linear-gradient(180deg, rgba(168, 85, 247, .9), rgba(168, 85, 247, 0) 85%); animation: sweep-b 11s ease-in-out infinite alternate; }
+        .beam.b3 { right: 31%; background: linear-gradient(180deg, rgba(244, 114, 182, .85), rgba(244, 114, 182, 0) 85%); animation: sweep-a 10s ease-in-out infinite alternate-reverse; }
+        .beam.b4 { right: 4%; background: linear-gradient(180deg, rgba(251, 191, 36, .75), rgba(251, 191, 36, 0) 85%); animation: sweep-b 12s ease-in-out infinite alternate-reverse; }
+        @keyframes sweep-a { from { transform: rotate(-22deg); } to { transform: rotate(14deg); } }
+        @keyframes sweep-b { from { transform: rotate(18deg); } to { transform: rotate(-16deg); } }
+
+        .haze {
+            position: absolute; inset: auto 0 0 0; height: 55%; z-index: -1;
+            background: linear-gradient(0deg, var(--bg-2), transparent);
+        }
+        .stage-floor {
+            position: absolute; left: 0; right: 0; bottom: 0; height: 120px; z-index: -1;
+            background:
+                repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 60px),
+                linear-gradient(0deg, rgba(168, 85, 247, .15), transparent);
+            transform: perspective(400px) rotateX(60deg); transform-origin: bottom;
+            mask-image: linear-gradient(0deg, #000, transparent);
+            -webkit-mask-image: linear-gradient(0deg, #000, transparent);
         }
 
-        /* Rainbow text animation for individual letters/words */
-        @keyframes rainbow-shift {
-            0% { color: #FF0000; } /* Red */
-            16% { color: #FF7F00; } /* Orange */
-            33% { color: #FFFF00; } /* Yellow */
-            50% { color: #00FF00; } /* Green */
-            66% { color: #0000FF; } /* Blue */
-            83% { color: #4B0082; } /* Indigo */
-            100% { color: #9400D3; } /* Violet */
+        .hero-inner { text-align: center; max-width: 860px; margin: 0 auto; }
+        .brand {
+            font-family: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
+            font-size: clamp(2.6rem, 12vw, 7.5rem);
+            letter-spacing: 0.02em; line-height: .95; margin: 22px 0 6px;
+            filter: drop-shadow(0 8px 40px rgba(168, 85, 247, .35));
         }
+        .tagline { font-size: clamp(1rem, 2.4vw, 1.3rem); color: var(--muted); font-weight: 500; margin: 0 0 30px; }
+        .hero h1 { font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 18px; }
+        .hero p.lead { color: var(--muted); font-size: 1.1rem; max-width: 640px; margin: 0 auto 36px; }
+        .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
 
-        /* New keyframes for shadow shift animation */
-        @keyframes shadow-shift-left-right {
-            0% {
-                transform: translateX(0);
-            }
-            50% {
-                transform: translateX(0.5vw); /* Shift shadows using viewport width */
-            }
-            100% {
-                transform: translateX(0);
-            }
+        .chip {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 7px 14px; border-radius: 999px;
+            border: 1px solid var(--border); background: var(--surface);
+            font-size: .82rem; color: var(--muted);
         }
+        .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 10px #34d399; }
 
-        .rainbow-letter {
-            display: inline-block; /* Allows individual animation and spacing */
-            animation: rainbow-shift 8s linear infinite, shadow-shift-left-right 4s ease-in-out infinite alternate; /* Apply both animations */
-            font-family: 'Bebas Neue', sans-serif; /* Apply the new stylish font here */
-            /* 3D text effect using multiple text-shadows - scaled with vw */
-            text-shadow:
-                0.1vw 0.1vw 0px rgba(0,0,0,0.1),
-                0.2vw 0.2vw 0px rgba(0,0,0,0.1),
-                0.3vw 0.3vw 0px rgba(0,0,0,0.1),
-                0.4vw 0.4vw 0px rgba(0,0,0,0.1),
-                0.5vw 0.5vw 0px rgba(0,0,0,0.1),
-                0.6vw 0.6vw 0px rgba(0,0,0,0.1),
-                0.7vw 0.7vw 0px rgba(0,0,0,0.1),
-                0.8vw 0.8vw 0px rgba(0,0,0,0.1),
-                0.9vw 0.9vw 0px rgba(0,0,0,0.1),
-                1.0vw 1.0vw 0px rgba(0,0,0,0.1); /* Adjust values for desired depth using vw */
-            position: relative; /* Needed for transform to work correctly */
-            /* Removed font-size and line-height from here, now handled by parent <a> tag's Tailwind classes */
+        /* ---------- Sections ---------- */
+        section { position: relative; }
+        .section { padding: 96px 0; }
+        .section-head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
+        .section-head p { color: var(--muted); margin: 0; }
+
+        /* Services */
+        .grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
+        @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1000px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .card {
+            position: relative; padding: 30px 28px; border-radius: var(--radius);
+            background: var(--surface); border: 1px solid var(--border);
+            transition: transform .3s ease, background .3s ease, border-color .3s ease;
+            overflow: hidden;
         }
-        .rainbow-word {
-            display: inline-block; /* Allows individual animation and spacing for words */
-            animation: rainbow-shift 8s linear infinite, shadow-shift-left-right 4s ease-in-out infinite alternate; /* Apply both animations */
-            font-family: 'Inter', sans-serif; /* Use Inter for the subtitle for contrast */
-            font-weight: 600; /* Semi-bold */
-            /* Base 3D text effect using multiple text-shadows - scaled with vw */
-            text-shadow:
-                0.05vw 0.05vw 0px rgba(0,0,0,0.1),
-                0.1vw 0.1vw 0px rgba(0,0,0,0.1),
-                0.15vw 0.15vw 0px rgba(0,0,0,0.1),
-                0.2vw 0.2vw 0px rgba(0,0,0,0.1); /* Slightly less depth than main title, scaled with vw */
-            position: relative; /* Needed for transform to work correctly */
+        .card::before {
+            content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px;
+            background: var(--grad);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor; mask-composite: exclude;
+            opacity: 0; transition: opacity .3s ease;
+        }
+        .card::after {
+            content: ""; position: absolute; width: 220px; height: 220px; top: -110px; right: -110px;
+            background: radial-gradient(circle, var(--glow, rgba(34, 211, 238, .25)), transparent 70%);
+            pointer-events: none;
+        }
+        .card:hover { transform: translateY(-6px); background: var(--surface-hover); }
+        .card:hover::before { opacity: 1; }
+        .card h3 { font-size: 1.2rem; font-weight: 600; margin: 20px 0 10px; }
+        .card p { color: var(--muted); margin: 0; font-size: .97rem; }
+        .icon {
+            width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center;
+            background: var(--icon-bg, rgba(34, 211, 238, .12)); color: var(--icon, var(--cyan));
+            border: 1px solid var(--border);
+        }
+        .icon svg { width: 28px; height: 28px; }
+        .c-cyan   { --icon: var(--cyan);   --icon-bg: rgba(34, 211, 238, .12);  --glow: rgba(34, 211, 238, .22); }
+        .c-violet { --icon: var(--violet); --icon-bg: rgba(168, 85, 247, .14);  --glow: rgba(168, 85, 247, .25); }
+        .c-pink   { --icon: var(--pink);   --icon-bg: rgba(244, 114, 182, .13); --glow: rgba(244, 114, 182, .22); }
+        .c-amber  { --icon: var(--amber);  --icon-bg: rgba(251, 191, 36, .12);  --glow: rgba(251, 191, 36, .2); }
+
+        /* About */
+        .about { background: linear-gradient(180deg, var(--bg), var(--bg-2)); }
+        .about-grid { display: grid; gap: 48px; align-items: center; }
+        @media (min-width: 900px) { .about-grid { grid-template-columns: 1fr 1.1fr; gap: 64px; } }
+        .about-visual {
+            border-radius: 24px; overflow: hidden; border: 1px solid var(--border);
+            background: radial-gradient(ellipse at 50% 0%, #1b1535, var(--bg) 75%);
+            box-shadow: 0 30px 80px -30px rgba(168, 85, 247, .45);
+        }
+        .about-visual svg { width: 100%; height: auto; }
+        .about p { color: var(--muted); margin: 0 0 16px; }
+        .about strong { color: var(--text); font-weight: 600; }
+
+        .tools { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+        .tool {
+            padding: 8px 14px; border-radius: 10px; font-size: .86rem; font-weight: 500;
+            background: var(--surface); border: 1px solid var(--border); color: var(--text);
+        }
+        .tool span { color: var(--muted); font-weight: 400; margin-left: 6px; font-size: .78rem; }
+
+        /* CTA */
+        .cta-band {
+            position: relative; overflow: hidden; border-radius: 28px; padding: 64px 28px; text-align: center;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(34, 211, 238, .35), transparent 45%),
+                radial-gradient(circle at 85% 80%, rgba(244, 114, 182, .35), transparent 45%),
+                linear-gradient(135deg, #1a1036, #100c22);
+            border: 1px solid var(--border);
+        }
+        .cta-band h2 { margin-top: 0; }
+        .cta-band p { color: var(--muted); max-width: 580px; margin: 0 auto 30px; font-size: 1.08rem; }
+
+        /* Contact */
+        .contact-grid { display: grid; gap: 20px; }
+        @media (min-width: 800px) { .contact-grid { grid-template-columns: 1fr 1fr; } }
+        .contact-card { padding: 30px 28px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); }
+        .contact-card h3 { font-size: 1.05rem; margin-bottom: 18px; color: var(--muted); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+        .contact-row { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--border); }
+        .contact-row:last-child { border-bottom: 0; }
+        .contact-row .ci { flex: none; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: rgba(168, 85, 247, .12); color: var(--violet); }
+        .contact-row .ci svg { width: 19px; height: 19px; }
+        .contact-row small { display: block; color: var(--muted); font-size: .78rem; letter-spacing: .04em; }
+        .contact-row a, .contact-row span { color: var(--text); text-decoration: none; font-weight: 500; overflow-wrap: anywhere; }
+        .contact-row a:hover { color: var(--cyan); }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--border); padding: 36px 0; color: var(--muted); font-size: .9rem; }
+        .footer-inner { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+        footer a { color: var(--muted); text-decoration: none; }
+        footer a:hover { color: var(--text); }
+        .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+
+        /* Reveal on scroll */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .reveal { opacity: 1; transform: none; }
+            html { scroll-behavior: auto; }
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <header class="bg-white shadow-sm py-4 sticky top-0 z-50">
-        <div class="container mx-auto px-4 flex flex-col items-center">
-            <!-- Logo/Site Title with Per-Letter Rainbow Effect and scaled font size -->
-            <a href="#" class="font-bold rounded-lg p-2 hover:bg-gray-100 transition-colors mb-2 w-full text-center whitespace-nowrap text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
-                <span class="rainbow-letter" style="animation-delay: 0s;">V</span>
-                <span class="rainbow-letter" style="animation-delay: 0.2s;">a</span>
-                <span class="rainbow-letter" style="animation-delay: 0.4s;">n</span>
-                <span class="rainbow-letter" style="animation-delay: 0.6s;">E</span>
-                <span class="rainbow-letter" style="animation-delay: 0.8s;">n</span>
-                <span class="rainbow-letter" style="animation-delay: 1.0s;">g</span>
-                <span class="rainbow-letter" style="animation-delay: 1.2s;">e</span>
-                <span class="rainbow-letter" style="animation-delay: 1.4s;">l</span>
-                <span class="rainbow-letter" style="animation-delay: 1.6s;">a</span>
-                <span class="rainbow-letter" style="animation-delay: 1.8s;">n</span>
-                <span class="rainbow-letter" style="animation-delay: 2.0s;">d</span>
-                <span class="rainbow-letter" style="animation-delay: 2.2s;">t</span>
-                <span class="rainbow-letter" style="animation-delay: 2.4s;">.</span>
-                <span class="rainbow-letter" style="animation-delay: 2.6s;">N</span>
-                <span class="rainbow-letter" style="animation-delay: 2.8s;">E</span>
-                <span class="rainbow-letter" style="animation-delay: 3.0s;">T</span>
+    <header class="site-header">
+        <div class="container nav">
+            <a href="#home" class="logo" aria-label="VanEngelandt.NET home">
+                <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#a855f7"/><stop offset="1" stop-color="#f472b6"/>
+                        </linearGradient>
+                    </defs>
+                    <rect width="64" height="64" rx="14" fill="#15112a"/>
+                    <path d="M14 16h9l9 26 9-26h9L37 50H27z" fill="url(#lg)"/>
+                </svg>
+                <span class="gradient-text">VanEngelandt.NET</span>
             </a>
-
-            <!-- Subtitle with rainbow effect and smaller font, now directly under the logo -->
-            <p class="text-xl md:text-2xl font-semibold leading-tight mb-4">
-                <span class="rainbow-word" style="animation-delay: 0s;">Multimedia</span>
-                <span class="rainbow-word" style="animation-delay: 0.2s;">Services</span>
-                <span class="rainbow-word" style="animation-delay: 0.4s;">for</span>
-                <span class="rainbow-word" style="animation-delay: 0.6s;">Events</span>
-                <span class="rainbow-word" style="animation-delay: 0.8s;">&</span>
-                <span class="rainbow-word" style="animation-delay: 1.0s;">Organisations</span>
-            </p>
-
-            <!-- Navigation Menu (Desktop) -->
-            <nav class="hidden md:flex space-x-6">
-                <a href="#home" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Home</a>
-                <a href="#services" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Services</a>
-                <a href="#about" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">About Me</a>
-                <a href="https://vanengelandt.net/verkoopsvoorwaarden.html" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">General Terms of Sale</a>
-                <a href="#contact" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Contact</a>
+            <nav class="nav-links" aria-label="Main">
+                <a href="#services">Services</a>
+                <a href="#about">About Me</a>
+                <a href="verkoopsvoorwaarden.html" target="_blank" rel="noopener noreferrer">General Terms of Sale</a>
+                <a href="#contact" class="btn btn-primary">Contact</a>
             </nav>
-
-            <!-- Mobile Menu Button -->
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-gray-600 hover:text-blue-600 focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
+            <button id="mobile-menu-button" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+                <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
         </div>
-
-        <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white py-2 shadow-md">
-            <nav class="flex flex-col items-center space-y-2">
-                <a href="#home" class="block text-gray-700 hover:bg-gray-100 w-full text-center py-2 rounded-md">Home</a>
-                <a href="#services" class="block text-gray-700 hover:bg-gray-100 w-full text-center py-2 rounded-md">Services</a>
-                <a href="#about" class="block text-gray-700 hover:bg-gray-100 w-full text-center py-2 rounded-md">About Me</a>
-                <a href="https://vanengelandt.net/verkoopsvoorwaarden.html" target="_blank" rel="noopener noreferrer" class="block text-gray-700 hover:bg-gray-100 w-full text-center py-2 rounded-md">General Terms of Sale</a>
-                <a href="#contact" class="block text-gray-700 hover:bg-gray-100 w-full text-center py-2 rounded-md">Contact</a>
-            </nav>
-        </div>
+        <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile">
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#about">About Me</a>
+            <a href="verkoopsvoorwaarden.html" target="_blank" rel="noopener noreferrer">General Terms of Sale</a>
+            <a href="#contact">Contact</a>
+        </nav>
     </header>
 
-    <section id="home" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 md:py-32 rounded-b-xl shadow-lg">
-        <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
-                <!-- Apply rainbow effect to each word of the heading -->
-                <span class="rainbow-letter" style="animation-delay: 0s;">Expert</span>
-                <span class="rainbow-letter" style="animation-delay: 0.4s;">Lighting</span>
-                <span class="rainbow-letter" style="animation-delay: 0.8s;">Solutions</span>
-                <span class="rainbow-letter" style="animation-delay: 1.2s;">for</span>
-                <span class="rainbow-letter" style="animation-delay: 1.6s;">the</span>
-                <span class="rainbow-letter" style="animation-delay: 2.0s;">Event</span>
-                <span class="rainbow-letter" style="animation-delay: 2.4s;">Industry</span>
-            </h1>
-            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+    <section id="home" class="hero">
+        <div class="beams" aria-hidden="true">
+            <div class="beam b1"></div>
+            <div class="beam b2"></div>
+            <div class="beam b3"></div>
+            <div class="beam b4"></div>
+        </div>
+        <div class="haze" aria-hidden="true"></div>
+        <div class="stage-floor" aria-hidden="true"></div>
+
+        <div class="container hero-inner">
+            <span class="chip"><span class="dot"></span> Freelance &middot; Wevelgem, Belgium</span>
+            <div class="brand gradient-text">VanEngelandt<wbr>.NET</div>
+            <p class="tagline">Multimedia Services for Events &amp; Organisations</p>
+            <h1>Expert Lighting Solutions for the Event Industry</h1>
+            <p class="lead">
                 As a dedicated freelancer, I provide specialised lighting design, operation, and technical support to businesses in the dynamic event sector.
             </p>
-            <a href="#contact" class="btn-primary inline-block hover:scale-105 transform transition-transform duration-300">
-                Let's Illuminate Your Next Event
-            </a>
-        </div>
-    </section>
-
-    <section id="services" class="py-16 md:py-24 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">My Services</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Service Card 1: Lighting Design -->
-                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
-                    <div class="text-blue-500 mb-4">
-                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h4l2-2m-6-2h5a2 2 0 002-2V9a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Lighting Design & Pre-visualisation</h3>
-                    <p class="text-gray-600">
-                        Crafting innovative and impactful lighting designs that **brings** your event vision to life, with detailed pre-visualisation.
-                    </p>
-                </div>
-
-                <!-- Service Card 2: Lighting Operation -->
-                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
-                    <div class="text-blue-500 mb-4">
-                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">On-Site Lighting Operation</h3>
-                    <p class="text-gray-600">
-                        Expert control and dynamic operation of lighting systems during live events for seamless execution.
-                    </p>
-                </div>
-
-                <!-- Service Card 3: Technical Support -->
-                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
-                    <div class="text-blue-500 mb-4">
-                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 16v-2m8-6h2M4 12H2m15.32-6.68l.707-.707M6.68 17.32l-.707.707M17.32 17.32l.707.707M6.68 6.68l-.707-.707"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Technical Setup & Support</h3>
-                    <p class="text-gray-600">
-                        Installation, configuration, and troubleshooting of lighting equipment to ensure flawless performance.
-                    </p>
-                </div>
-
-                <!-- Service Card 4: Equipment Consultation -->
-                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
-                    <div class="text-blue-500 mb-4">
-                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Equipment Consultation & Rental</h3>
-                    <p class="text-gray-600">
-                        Guidance on optimal lighting equipment selection and assistance with rental coordination for your projects.
-                    </p>
-                </div>
-
-                <!-- Service Card 5: Project Management (General Business) -->
-                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
-                    <div class="text-blue-500 mb-4">
-                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2v8m0-8V4m0 2v8m0 0a2 2 0 100 4 2 2 0 000-4z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Event Project Support</h3>
-                    <p class="text-gray-600">
-                        Assistance with technical aspects of event planning and coordination, ensuring smooth execution.
-                    </p>
-                </div>
-
-                <!-- Service Card 6: Custom Solutions (General Business) -->
-                <div class="bg-white p-8 card text-center hover:scale-105 transform transition-transform duration-300">
-                    <div class="text-blue-500 mb-4">
-                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Custom Technical Solutions</h3>
-                    <p class="text-gray-600">
-                        Developing bespoke technical solutions to meet unique event requirements and challenges.
-                    </p>
-                </div>
+            <div class="hero-ctas">
+                <a href="#contact" class="btn btn-primary">
+                    Let's Illuminate Your Next Event
+                    <svg fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+                <a href="#services" class="btn btn-ghost">View Services</a>
             </div>
         </div>
     </section>
 
-    <section id="about" class="py-16 md:py-24 bg-white">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-12">
-            <div class="md:w-1/2">
-                <img src="https://placehold.co/600x400/e0e7ff/3b82f6?text=About+Me" alt="About Me Image" class="rounded-xl shadow-lg w-full h-auto object-cover">
+    <section id="services" class="section">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow">What I do</span>
+                <h2>My Services</h2>
+                <p>Light, lasers and video, from the first sketch to the last cue.</p>
             </div>
-            <div class="md:w-1/2">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">About Me</h2>
-                <p class="text-gray-700 leading-relaxed mb-4">
+            <div class="grid">
+                <article class="card c-cyan reveal">
+                    <div class="icon">
+                        <!-- moving head -->
+                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 21h10M9 21l1-4h4l1 4"/><path d="M6 6a6 6 0 0 1 12 0v5a6 6 0 0 1-12 0z"/><circle cx="12" cy="8" r="2.5"/></svg>
+                    </div>
+                    <h3>Lighting Design &amp; Pre-visualisation</h3>
+                    <p>Crafting innovative and impactful lighting designs that bring your event vision to life, with detailed pre-visualisation.</p>
+                </article>
+
+                <article class="card c-violet reveal">
+                    <div class="icon">
+                        <!-- console faders -->
+                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 8v8M12 8v8M16 8v8"/><path d="M6.5 13h3M10.5 10h3M14.5 14h3"/></svg>
+                    </div>
+                    <h3>On-Site Lighting Operation</h3>
+                    <p>Expert control and dynamic operation of lighting systems during live events for seamless execution.</p>
+                </article>
+
+                <article class="card c-pink reveal">
+                    <div class="icon">
+                        <!-- wrench -->
+                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3-3 8-8M14.7 6.3 13 4.6a4 4 0 0 0-5.6 5.6L3 14.6 6.4 18l4.4-4.4"/></svg>
+                    </div>
+                    <h3>Technical Setup &amp; Support</h3>
+                    <p>Installation, configuration, and troubleshooting of lighting equipment to ensure flawless performance.</p>
+                </article>
+
+                <article class="card c-amber reveal">
+                    <div class="icon">
+                        <!-- flight case -->
+                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 12h18M10 12v2h4v-2"/></svg>
+                    </div>
+                    <h3>Equipment Consultation &amp; Rental</h3>
+                    <p>Guidance on optimal lighting equipment selection and assistance with rental coordination for your projects.</p>
+                </article>
+
+                <article class="card c-cyan reveal">
+                    <div class="icon">
+                        <!-- clipboard / planning -->
+                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/></svg>
+                    </div>
+                    <h3>Event Project Support</h3>
+                    <p>Assistance with technical aspects of event planning and coordination, ensuring smooth execution.</p>
+                </article>
+
+                <article class="card c-violet reveal">
+                    <div class="icon">
+                        <!-- sparkles -->
+                        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></svg>
+                    </div>
+                    <h3>Custom Technical Solutions</h3>
+                    <p>Developing bespoke technical solutions to meet unique event requirements and challenges.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section about">
+        <div class="container about-grid">
+            <div class="about-visual reveal" aria-hidden="true">
+                <!-- Illustrated stage: truss with fixtures, beams and a crowd. Swap for a photo any time, e.g. <img src="images/about.jpg"> -->
+                <svg viewBox="0 0 600 440">
+                    <defs>
+                        <linearGradient id="bc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22d3ee" stop-opacity=".85"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+                        <linearGradient id="bv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a855f7" stop-opacity=".85"/><stop offset="1" stop-color="#a855f7" stop-opacity="0"/></linearGradient>
+                        <linearGradient id="bp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f472b6" stop-opacity=".85"/><stop offset="1" stop-color="#f472b6" stop-opacity="0"/></linearGradient>
+                        <linearGradient id="ba" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24" stop-opacity=".8"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0"/></linearGradient>
+                        <radialGradient id="floor" cx="50%" cy="100%" r="60%"><stop offset="0" stop-color="#a855f7" stop-opacity=".45"/><stop offset="1" stop-color="#a855f7" stop-opacity="0"/></radialGradient>
+                        <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+                    </defs>
+                    <rect width="600" height="440" fill="#0b0918"/>
+                    <!-- beams -->
+                    <g filter="url(#soft)" style="mix-blend-mode:screen">
+                        <polygon points="95,78 105,78 230,380 10,380" fill="url(#bc)"/>
+                        <polygon points="225,78 235,78 360,380 180,380" fill="url(#bv)"/>
+                        <polygon points="365,78 375,78 430,380 250,380" fill="url(#bp)"/>
+                        <polygon points="495,78 505,78 590,380 380,380" fill="url(#ba)"/>
+                    </g>
+                    <!-- laser fan -->
+                    <g stroke="#34d399" stroke-width="1.2" opacity=".7">
+                        <line x1="300" y1="90" x2="40" y2="250"/><line x1="300" y1="90" x2="120" y2="290"/>
+                        <line x1="300" y1="90" x2="220" y2="310"/><line x1="300" y1="90" x2="380" y2="310"/>
+                        <line x1="300" y1="90" x2="480" y2="290"/><line x1="300" y1="90" x2="560" y2="250"/>
+                    </g>
+                    <!-- truss -->
+                    <g stroke="#6b6590" stroke-width="2" fill="none">
+                        <rect x="30" y="44" width="540" height="22"/>
+                        <path d="M30 66 52 44 74 66 96 44 118 66 140 44 162 66 184 44 206 66 228 44 250 66 272 44 294 66 316 44 338 66 360 44 382 66 404 44 426 66 448 44 470 66 492 44 514 66 536 44 558 66"/>
+                    </g>
+                    <!-- fixtures -->
+                    <g fill="#1f1a38" stroke="#8a84b3" stroke-width="1.5">
+                        <rect x="88" y="66" width="24" height="16" rx="4"/><rect x="218" y="66" width="24" height="16" rx="4"/>
+                        <rect x="358" y="66" width="24" height="16" rx="4"/><rect x="488" y="66" width="24" height="16" rx="4"/>
+                        <circle cx="300" cy="80" r="10"/>
+                    </g>
+                    <g>
+                        <circle cx="100" cy="80" r="4" fill="#22d3ee"/><circle cx="230" cy="80" r="4" fill="#a855f7"/>
+                        <circle cx="370" cy="80" r="4" fill="#f472b6"/><circle cx="500" cy="80" r="4" fill="#fbbf24"/>
+                        <circle cx="300" cy="84" r="4" fill="#34d399"/>
+                    </g>
+                    <!-- stage + glow -->
+                    <rect x="0" y="330" width="600" height="110" fill="url(#floor)"/>
+                    <rect x="40" y="360" width="520" height="10" rx="3" fill="#221c40"/>
+                    <!-- crowd -->
+                    <g fill="#05040b">
+                        <path d="M0 440V412c10-14 26-14 34 0 6-18 30-20 38-2 8-16 30-16 36 2 8-14 28-14 36 0 6-20 32-20 40-2 8-12 26-14 34 2 10-16 32-16 40 0 8-14 26-14 34 0 8-18 32-18 40 0 8-12 28-12 34 2 8-18 30-18 38 0 8-14 30-14 36 0 8-16 30-16 38 0 6-14 24-14 32 0 8-16 28-16 30-6V440z"/>
+                        <path d="M118 400l-10-40 6-2 12 40zM468 398l14-44 6 2-12 44z"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="reveal">
+                <span class="eyebrow">Behind the desk</span>
+                <h2>About Me</h2>
+                <p>
                     Hello! I'm a freelancer based in Wevelgem, Belgium, specialising in providing high-quality lighting, laser, and video technical services to businesses within the event industry. I primarily work with <strong>Chamsys MQ500M+</strong> and <strong>MA3</strong> lighting consoles, bringing advanced control and precision to every lighting design and operation.
                 </p>
-                <p class="text-gray-700 leading-relaxed mb-4">
-                    For laser projects, I utilize <strong>Pangolin Beyond Ultimate</strong> software to create stunning and safe laser displays. My pre-visualisation capabilities are powered by <strong>Vectorworks Designer</strong> and <strong>Capture</strong>, allowing for detailed planning and realistic renderings of event setups. For video projects, I mostly use <strong>Resolume Arena</strong> to deliver dynamic and impactful visual content.
+                <p>
+                    For laser projects, I utilise <strong>Pangolin Beyond Ultimate</strong> software to create stunning and safe laser displays. My pre-visualisation capabilities are powered by <strong>Vectorworks Designer</strong> and <strong>Capture</strong>, allowing for detailed planning and realistic renderings of event setups. For video projects, I mostly use <strong>Resolume Arena</strong> to deliver dynamic and impactful visual content.
                 </p>
-                <p class="text-gray-700 leading-relaxed">
-                    With a passion for creating impactful visual experiences, I bring extensive experience and a meticulous approach to every project. My focus is on understanding the unique needs of each event and collaborating closely with clients to deliver solutions that enhance atmosphere, highlight key elements, and ensure seamless technical execution. I am dedicated to professionalism, reliability, and that brings your event's vision to light.
+                <p>
+                    With a passion for creating impactful visual experiences, I bring extensive experience and a meticulous approach to every project. My focus is on understanding the unique needs of each event and collaborating closely with clients to deliver solutions that enhance atmosphere, highlight key elements, and ensure seamless technical execution. I am dedicated to professionalism, reliability, and bringing your event's vision to light.
                 </p>
-            </div>
-        </div>
-    </section>
-
-    <section class="bg-blue-600 text-white py-16 md:py-20 text-center rounded-t-xl shadow-lg">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Illuminate Your Next Project?</h2>
-            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-                Let's discuss how my expertise in event lighting can elevate your next production. Contact me today for a consultation.
-            </p>
-            <a href="#contact" class="btn-primary inline-block bg-white text-blue-600 hover:bg-gray-100 hover:text-blue-700 transform transition-transform duration-300">
-                Get a Quote
-            </a>
-        </div>
-    </section>
-
-    <section id="contact" class="py-16 md:py-24 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Contact Me</h2>
-            <div class="max-w-3xl mx-auto bg-white p-8 card">
-                <div class="mt-8 text-center text-gray-600">
-                    <p class="mb-2"><strong>Email:</strong> info@vanengelandt.net</p>
-                    <p class="mb-2">
-                        <strong>Website:</strong>
-                        <a href="http://www.vanengelandt.net" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-                            www.vanengelandt.net
-                        </a>
-                    </p>
-                    <p class="mb-2">
-                        <strong>Facebook:</strong>
-                        <a href="https://www.facebook.com/vanengelandt" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
-                            facebook.com/vanengelandt
-                        </a>
-                    </p>
-                    <p class="mb-2"><strong>BTW:</strong> BE0671.817.248</p>
-                    <p class="mb-2"><strong>Bank:</strong> BELFIUS BANK</p>
-                    <p class="mb-2"><strong>IBAN:</strong> BE33 0689 3189 0646</p>
-                    <p class="mb-2"><strong>Address:</strong> Plaatsweg 17, 8560 Wevelgem, Belgium</p>
+                <div class="tools">
+                    <div class="tool">Chamsys MQ500M+<span>Lighting</span></div>
+                    <div class="tool">grandMA3<span>Lighting</span></div>
+                    <div class="tool">Pangolin Beyond<span>Laser</span></div>
+                    <div class="tool">Resolume Arena<span>Video</span></div>
+                    <div class="tool">Vectorworks<span>Design</span></div>
+                    <div class="tool">Capture<span>Previz</span></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="bg-gray-800 text-white py-8 rounded-t-xl shadow-inner">
-        <div class="container mx-auto px-4 text-center text-sm">
-            <p>&copy; 2025 VanEngelandt.NET. All rights reserved.</p>
-            <div class="mt-4 space-x-4">
-                <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+    <section class="section" style="padding-top: 24px;">
+        <div class="container">
+            <div class="cta-band reveal">
+                <h2>Ready to Illuminate Your <span class="gradient-text">Next Project?</span></h2>
+                <p>Let's discuss how my expertise in event lighting can elevate your next production. Contact me today for a consultation.</p>
+                <a href="mailto:info@vanengelandt.net?subject=Quote%20request" class="btn btn-primary">Get a Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section" style="padding-top: 24px;">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="eyebrow">Get in touch</span>
+                <h2>Contact Me</h2>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-card reveal">
+                    <h3>Contact</h3>
+                    <div class="contact-row">
+                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
+                        <div><small>Email</small><a href="mailto:info@vanengelandt.net">info@vanengelandt.net</a></div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+                        <div><small>Website</small><a href="http://www.vanengelandt.net" target="_blank" rel="noopener noreferrer">www.vanengelandt.net</a></div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="ci"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8.5c0-.3.2-.5.5-.5z"/></svg></div>
+                        <div><small>Facebook</small><a href="https://www.facebook.com/vanengelandt" target="_blank" rel="noopener noreferrer">facebook.com/vanengelandt</a></div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+                        <div><small>Address</small><span>Plaatsweg 17, 8560 Wevelgem, Belgium</span></div>
+                    </div>
+                </div>
+                <div class="contact-card reveal">
+                    <h3>Business details</h3>
+                    <div class="contact-row">
+                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+                        <div><small>BTW</small><span>BE0671.817.248</span></div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 10 12 4l9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg></div>
+                        <div><small>Bank</small><span>BELFIUS BANK</span></div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="2"/><path d="M2 10h20M6 15h4"/></svg></div>
+                        <div><small>IBAN</small><span>BE33 0689 3189 0646</span></div>
+                    </div>
+                    <div class="contact-row">
+                        <div class="ci"><svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg></div>
+                        <div><small>Terms</small><a href="verkoopsvoorwaarden.html" target="_blank" rel="noopener noreferrer">General Terms of Sale</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-inner">
+            <p style="margin:0">&copy; <span id="year">2025</span> VanEngelandt.NET. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#services">Services</a>
+                <a href="#about">About</a>
+                <a href="verkoopsvoorwaarden.html" target="_blank" rel="noopener noreferrer">Terms of Sale</a>
+                <a href="#contact">Contact</a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                // Close mobile menu if open
-                const mobileMenu = document.getElementById('mobile-menu');
-                if (!mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.add('hidden');
-                }
-            });
-        });
-
-        // Toggle mobile menu visibility
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        // Mobile menu
+        const menuBtn = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        menuBtn.addEventListener('click', () => {
+            const open = mobileMenu.classList.toggle('open');
+            menuBtn.setAttribute('aria-expanded', open);
         });
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            menuBtn.setAttribute('aria-expanded', false);
+        }));
 
-        // Replace alert with a custom message box for better UX
-        function showAlert(message) {
-            const existingMessageBox = document.getElementById('custom-message-box');
-            if (existingMessageBox) {
-                existingMessageBox.remove();
-            }
-
-            const messageBox = document.createElement('div');
-            messageBox.id = 'custom-message-box';
-            messageBox.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50';
-            messageBox.innerHTML = `
-                <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center">
-                    <p class="text-lg font-semibold text-gray-800 mb-4">${message}</p>
-                    <button id="close-message-box" class="btn-primary">OK</button>
-                </div>
-            `;
-            document.body.appendChild(messageBox);
-
-            document.getElementById('close-message-box').addEventListener('click', () => {
-                messageBox.remove();
-            });
+        // Reveal sections as they scroll into view
+        const reveals = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.12 });
+            reveals.forEach(el => io.observe(el));
+        } else {
+            reveals.forEach(el => el.classList.add('visible'));
         }
 
-        // Override the default alert to use our custom one
-        window.alert = showAlert;
-        
+        document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>
