@@ -68,6 +68,7 @@ def render(src, lang, page):
         return f'<{m.group(1)}{m.group(2)}>{d[key]}</{m.group(1)}>'
     s = re.sub(r'<(\w+)([^>]*\sdata-i18n="([^"]+)"[^>]*)>(.*?)</\1>', fill, s, flags=re.S)
     s = re.sub(r'(data-i18n-aria="([^"]+)"[^>]*?aria-label=")[^"]*', lambda m: m.group(1) + html.escape(html.unescape(d.get(m.group(2), '')), quote=True), s)
+    s = re.sub(r'data-i18n-alt="([^"]+)" alt="[^"]*"', lambda m: f'data-i18n-alt="{m.group(1)}" alt="{html.escape(html.unescape(re.sub("<[^>]+>", "", d.get(m.group(1), ""))), quote=True)}"', s)
     s = re.sub(r'<p class="notice"( hidden)?>', '<p class="notice">' if d.get('terms.notice') else '<p class="notice" hidden>', s)
     s = re.sub(r'<span class="lang-code">\w+</span>', f'<span class="lang-code">{lang.upper()}</span>', s)
     s = re.sub(r'(<button type="button" role="menuitemradio" data-set-lang="(\w+)"[^>]*?)( class="active")?( aria-checked="\w+")?>',
