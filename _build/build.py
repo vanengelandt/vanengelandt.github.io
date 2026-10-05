@@ -12,7 +12,7 @@ published by GitHub Pages.
 """
 import hashlib, html, json, os, re, subprocess
 
-SITE = 'https://vanengelandt.github.io/'
+SITE = 'https://vanengelandt.net/'
 LANGS = ['en', 'nl', 'fr', 'zh', 'th', 'vi']
 TAG = {'zh': 'zh-Hans'}
 OG_LOCALE = {'en': 'en_GB', 'nl': 'nl_BE', 'fr': 'fr_BE', 'zh': 'zh_CN', 'th': 'th_TH', 'vi': 'vi_VN'}

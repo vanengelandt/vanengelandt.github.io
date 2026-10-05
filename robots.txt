@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /indexnew.html
 
-Sitemap: https://vanengelandt.github.io/sitemap.xml
+Sitemap: https://vanengelandt.net/sitemap.xml
