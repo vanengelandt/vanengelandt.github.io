@@ -1,10 +1,11 @@
 // Language switch (English, Nederlands, Français, 中文, ไทย, Tiếng Việt).
-// Elements carry data-i18n="key" (inner HTML) or data-i18n-aria="key" (aria-label).
+// Elements carry data-i18n="key" (inner HTML), data-i18n-aria="key" (aria-label) or data-i18n-alt="key" (image alt).
 // Long legal text on the terms page is marked up per language with data-lang-block.
 (() => {
     const T = {
         en: {
             'meta.home': 'VanEngelandt.NET | Lighting, Laser & Video Design for Live Events',
+            'meta.homeDesc': 'Independent lighting designer and show technician in Wevelgem, Belgium. Lighting, laser and video design, previsualisation in Unreal Engine 5 and live show operation.',
             'meta.terms': 'General Terms of Rental and Sale | VanEngelandt.NET',
             'nav.services': 'Services',
             'nav.approach': 'Approach',
@@ -48,6 +49,27 @@
             'a3.text': 'Cues, timing and effects are prepared offline, which keeps on-site time efficient and predictable.',
             'a4.title': 'Show Day',
             'a4.text': 'Calm, precise operation from line check to final bow, with contingency plans ready.',
+
+            'work.eyebrow': 'Work',
+            'work.title': 'Selected <em>work</em>',
+            'work.intro': 'From club nights to festival stages: a few of the shows I designed, programmed and operated.',
+            'work.close': 'Close',
+            'work.prev': 'Previous',
+            'work.next': 'Next',
+            'w1.cat': 'Laser show',
+            'w1.title': 'Laser fans over the DJ booth',
+            'w2.cat': 'Band show',
+            'w2.title': 'Live band with LED columns and a beam rig',
+            'w3.cat': 'Party',
+            'w3.title': 'Chandeliers meet moving heads and lasers',
+            'w4.cat': 'Live show',
+            'w4.title': 'Front of house on ChamSys',
+            'w5.cat': 'Club night',
+            'w5.title': 'Beams and spots over a packed dance floor',
+            'w6.cat': 'Open air',
+            'w6.title': 'DJ stage in front of the church tower',
+            'w7.cat': 'Show control',
+            'w7.title': 'Programming on the MagicQ MQ500M+',
 
             'about.eyebrow': 'About',
             'about.title': 'Peter Van Engelandt',
@@ -93,6 +115,7 @@
 
         nl: {
             'meta.home': 'VanEngelandt.NET | Licht-, laser- en videodesign voor live evenementen',
+            'meta.homeDesc': 'Onafhankelijk lichtontwerper en showtechnicus uit Wevelgem (West-Vlaanderen). Licht-, laser- en videodesign, previsualisatie in Unreal Engine 5 en live showbediening voor evenementen.',
             'meta.terms': 'Algemene verhuur- en verkoopvoorwaarden | VanEngelandt.NET',
             'nav.services': 'Diensten',
             'nav.approach': 'Werkwijze',
@@ -136,6 +159,27 @@
             'a3.text': 'Cues, timing en effecten worden vooraf offline voorbereid, wat de tijd op locatie efficiënt en voorspelbaar houdt.',
             'a4.title': 'Showdag',
             'a4.text': 'Rustige, precieze bediening van line check tot slotapplaus, met noodscenario’s klaar.',
+
+            'work.eyebrow': 'Realisaties',
+            'work.title': 'Geselecteerd <em>werk</em>',
+            'work.intro': 'Van clubavond tot festivalpodium: een greep uit de shows die ik ontwierp, programmeerde en draaide.',
+            'work.close': 'Sluiten',
+            'work.prev': 'Vorige',
+            'work.next': 'Volgende',
+            'w1.cat': 'Lasershow',
+            'w1.title': 'Laserwaaiers boven de dj-booth',
+            'w2.cat': 'Bandshow',
+            'w2.title': 'Liveband met LED-kolommen en een beamrig',
+            'w3.cat': 'Feest',
+            'w3.title': 'Kroonluchters ontmoeten moving heads en lasers',
+            'w4.cat': 'Liveshow',
+            'w4.title': 'Front of house op ChamSys',
+            'w5.cat': 'Clubavond',
+            'w5.title': 'Beams en spots boven een volle dansvloer',
+            'w6.cat': 'Openlucht',
+            'w6.title': 'Dj-podium voor de kerktoren',
+            'w7.cat': 'Showcontrole',
+            'w7.title': 'Programmeren op de MagicQ MQ500M+',
 
             'about.eyebrow': 'Over mij',
             'about.title': 'Peter Van Engelandt',
@@ -181,6 +225,7 @@
 
         fr: {
             'meta.home': 'VanEngelandt.NET | Conception lumière, laser et vidéo pour événements live',
+            'meta.homeDesc': 'Concepteur lumière et technicien de spectacle indépendant à Wevelgem, en Belgique. Conception lumière, laser et vidéo, prévisualisation sous Unreal Engine 5 et régie live.',
             'meta.terms': 'Conditions générales de location et de vente | VanEngelandt.NET',
             'nav.services': 'Services',
             'nav.approach': 'Méthode',
@@ -225,6 +270,27 @@
             'a4.title': 'Le jour du spectacle',
             'a4.text': 'Un pupitrage calme et précis, des derniers réglages au salut final, avec des plans de secours prêts.',
 
+            'work.eyebrow': 'Réalisations',
+            'work.title': 'Projets <em>choisis</em>',
+            'work.intro': 'Des soirées club aux scènes de festival : une sélection de shows que j’ai conçus, programmés et pilotés.',
+            'work.close': 'Fermer',
+            'work.prev': 'Précédent',
+            'work.next': 'Suivant',
+            'w1.cat': 'Show laser',
+            'w1.title': 'Éventails laser au-dessus de la cabine DJ',
+            'w2.cat': 'Concert',
+            'w2.title': 'Groupe live avec colonnes LED et kit de beams',
+            'w3.cat': 'Soirée',
+            'w3.title': 'Lustres, lyres asservies et lasers',
+            'w4.cat': 'Concert live',
+            'w4.title': 'Régie façade sur ChamSys',
+            'w5.cat': 'Soirée club',
+            'w5.title': 'Beams et spots au-dessus d’une piste comble',
+            'w6.cat': 'Plein air',
+            'w6.title': 'Scène DJ devant le clocher',
+            'w7.cat': 'Pupitre',
+            'w7.title': 'Programmation sur MagicQ MQ500M+',
+
             'about.eyebrow': 'À propos',
             'about.title': 'Peter Van Engelandt',
             'about.p1': 'Spécialiste indépendant de la lumière, du laser et de la vidéo basé à Wevelgem, je travaille pour des agences événementielles, des lieux, des sociétés de production et des organisations dans toute la Belgique et au-delà.',
@@ -268,6 +334,7 @@
         },
         zh: {
             'meta.home': 'VanEngelandt.NET | 现场活动灯光、激光与视频设计',
+            'meta.homeDesc': '比利时 Wevelgem 的独立灯光设计师与演出技术师，提供灯光、激光与视频设计、Unreal Engine 5 预可视化及现场演出执行。',
             'meta.terms': '租赁与销售通用条款 | VanEngelandt.NET',
 
             'nav.services': '服务',
@@ -312,6 +379,27 @@
             'a3.text': 'Cue、时间线与效果均提前离线编程，让现场工作高效可控。',
             'a4.title': '演出当日',
             'a4.text': '从信号检查到最后谢幕，沉着精准地执行，并备有完善的应急预案。',
+
+            'work.eyebrow': '作品',
+            'work.title': '精选<em>作品</em>',
+            'work.intro': '从俱乐部之夜到音乐节舞台：精选部分由我设计、编程并现场执行的演出。',
+            'work.close': '关闭',
+            'work.prev': '上一张',
+            'work.next': '下一张',
+            'w1.cat': '激光秀',
+            'w1.title': 'DJ 台上方展开的激光扇面',
+            'w2.cat': '乐队演出',
+            'w2.title': 'LED 柱屏与光束灯阵下的现场乐队',
+            'w3.cat': '派对',
+            'w3.title': '水晶吊灯与摇头灯、激光的碰撞',
+            'w4.cat': '现场演出',
+            'w4.title': 'ChamSys 控台坐镇调音位',
+            'w5.cat': '俱乐部之夜',
+            'w5.title': '满场舞池上空的光束与图案灯',
+            'w6.cat': '户外演出',
+            'w6.title': '教堂塔楼前的 DJ 舞台',
+            'w7.cat': '灯控',
+            'w7.title': '在 MagicQ MQ500M+ 上编程',
             'about.eyebrow': '关于',
             'about.title': 'Peter Van Engelandt',
             'about.p1': '我是一名常驻比利时 Wevelgem 的独立灯光、激光与视频专家，服务于比利时及其他国家和地区的活动策划公司、演出场馆、制作公司与各类机构。',
@@ -357,6 +445,7 @@
         },
         vi: {
             'meta.home': 'VanEngelandt.NET | Thiết kế ánh sáng, laser và video cho sự kiện trực tiếp',
+            'meta.homeDesc': 'Nhà thiết kế ánh sáng và kỹ thuật viên show độc lập tại Wevelgem, Bỉ. Thiết kế ánh sáng, laser và video, previz bằng Unreal Engine 5 và vận hành show trực tiếp.',
             'meta.terms': 'Điều khoản chung về cho thuê và mua bán | VanEngelandt.NET',
 
             'nav.services': 'Dịch vụ',
@@ -401,6 +490,27 @@
             'a3.text': 'Cue, timing và hiệu ứng được chuẩn bị offline từ trước, giúp thời gian tại hiện trường luôn hiệu quả và chủ động.',
             'a4.title': 'Ngày diễn',
             'a4.text': 'Vận hành điềm tĩnh, chính xác từ khâu line check đến màn chào kết, luôn sẵn sàng phương án dự phòng.',
+
+            'work.eyebrow': 'Dự án',
+            'work.title': 'Dự án <em>tiêu biểu</em>',
+            'work.intro': 'Từ đêm club đến sân khấu lễ hội: một số show tôi đã thiết kế, lập trình và vận hành.',
+            'work.close': 'Đóng',
+            'work.prev': 'Trước',
+            'work.next': 'Tiếp',
+            'w1.cat': 'Laser show',
+            'w1.title': 'Quạt laser phía trên DJ booth',
+            'w2.cat': 'Show ban nhạc',
+            'w2.title': 'Ban nhạc live với cột LED và dàn đèn beam',
+            'w3.cat': 'Tiệc',
+            'w3.title': 'Đèn chùm pha lê gặp moving head và laser',
+            'w4.cat': 'Show trực tiếp',
+            'w4.title': 'Điều khiển FOH trên ChamSys',
+            'w5.cat': 'Đêm club',
+            'w5.title': 'Beam và spot trên sàn nhảy chật kín',
+            'w6.cat': 'Ngoài trời',
+            'w6.title': 'Sân khấu DJ trước tháp nhà thờ',
+            'w7.cat': 'Điều khiển show',
+            'w7.title': 'Lập trình trên MagicQ MQ500M+',
             'about.eyebrow': 'Giới thiệu',
             'about.title': 'Peter Van Engelandt',
             'about.p1': 'Tôi là chuyên gia ánh sáng, laser và video độc lập tại Wevelgem, Bỉ, đồng hành cùng các agency sự kiện, địa điểm tổ chức, công ty sản xuất và doanh nghiệp trên khắp nước Bỉ và quốc tế.',
@@ -446,6 +556,7 @@
         },
         th: {
             'meta.home': 'VanEngelandt.NET | ออกแบบไลท์ติ้ง เลเซอร์ และวิดีโอสำหรับงานอีเวนต์',
+            'meta.homeDesc': 'นักออกแบบแสงและช่างเทคนิคโชว์อิสระจาก Wevelgem ประเทศเบลเยียม รับออกแบบไลท์ติ้ง เลเซอร์ และวิดีโอ พรีวิชวลไลเซชันด้วย Unreal Engine 5 และควบคุมโชว์สด',
             'meta.terms': 'ข้อกำหนดและเงื่อนไขทั่วไปในการเช่าและการขาย | VanEngelandt.NET',
 
             'nav.services': 'บริการ',
@@ -490,6 +601,27 @@
             'a3.text': 'คิว ไทม์มิ่ง และเอฟเฟกต์ถูกเตรียมไว้ล่วงหน้าแบบออฟไลน์ ทำให้เวลาหน้างานคุ้มค่าและคาดการณ์ได้',
             'a4.title': 'วันโชว์',
             'a4.text': 'ควบคุมโชว์อย่างนิ่งและแม่นยำ ตั้งแต่ไลน์เช็กจนถึงช่วงโค้งคำนับสุดท้าย พร้อมแผนสำรองในทุกสถานการณ์',
+
+            'work.eyebrow': 'ผลงาน',
+            'work.title': 'ผลงาน<em>ที่คัดสรร</em>',
+            'work.intro': 'ตั้งแต่คลับไนท์จนถึงเวทีเทศกาล: ผลงานบางส่วนที่ผมออกแบบ โปรแกรม และควบคุมเอง',
+            'work.close': 'ปิด',
+            'work.prev': 'ก่อนหน้า',
+            'work.next': 'ถัดไป',
+            'w1.cat': 'เลเซอร์โชว์',
+            'w1.title': 'แฉกเลเซอร์เหนือบูธดีเจ',
+            'w2.cat': 'โชว์วงดนตรี',
+            'w2.title': 'วงดนตรีสดกับเสา LED และไฟบีม',
+            'w3.cat': 'ปาร์ตี้',
+            'w3.title': 'แชนเดอเลียร์ผสานมูฟวิ่งเฮดและเลเซอร์',
+            'w4.cat': 'ไลฟ์โชว์',
+            'w4.title': 'ควบคุมหน้าเวทีด้วย ChamSys',
+            'w5.cat': 'คลับไนท์',
+            'w5.title': 'ไฟบีมและสปอตเหนือฟลอร์ที่แน่นขนัด',
+            'w6.cat': 'เวทีกลางแจ้ง',
+            'w6.title': 'เวทีดีเจหน้าหอคอยโบสถ์',
+            'w7.cat': 'ควบคุมโชว์',
+            'w7.title': 'โปรแกรมบน MagicQ MQ500M+',
             'about.eyebrow': 'เกี่ยวกับเรา',
             'about.title': 'Peter Van Engelandt',
             'about.p1': 'ผมเป็นผู้เชี่ยวชาญอิสระด้านไลท์ติ้ง เลเซอร์ และวิดีโอ ประจำอยู่ที่ Wevelgem ประเทศเบลเยียม ทำงานร่วมกับอีเวนต์เอเจนซี สถานที่จัดงาน บริษัทโปรดักชัน และองค์กรต่าง ๆ ทั่วเบลเยียมและต่างประเทศ',
@@ -543,13 +675,15 @@
         set(v) { try { localStorage.setItem('lang', v); } catch (e) { /* private mode */ } },
     };
 
+    // Each language has its own page (/, /nl/, /fr/ …); the page says which one it is
     function initialLang() {
-        const q = new URLSearchParams(location.search).get('lang');
-        if (LANGS.includes(q)) return q;
-        const saved = store.get();
-        if (LANGS.includes(saved)) return saved;
-        const nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
-        return LANGS.includes(nav) ? nav : 'en';
+        const here = document.documentElement.dataset.lang;
+        return LANGS.includes(here) ? here : 'en';
+    }
+    function pageFor(lang) {
+        const file = location.pathname.split('/').pop();
+        const up = document.documentElement.dataset.lang && document.documentElement.dataset.lang !== 'en' ? '../' : '';
+        return up + (lang === 'en' ? '' : lang + '/') + file + location.hash;
     }
 
     function apply(lang) {
@@ -560,12 +694,18 @@
             const v = d[el.dataset.i18n];
             if (v !== undefined) el.innerHTML = v;
         });
+        document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+            const v = d[el.dataset.i18nAlt];
+            if (v !== undefined) el.alt = v.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&');
+        });
         document.querySelectorAll('[data-i18n-aria]').forEach(el => {
             const v = d[el.dataset.i18nAria];
             if (v !== undefined) el.setAttribute('aria-label', v);
         });
         const page = document.documentElement.dataset.page;
         if (page && d['meta.' + page]) document.title = d['meta.' + page];
+        const desc = document.querySelector('meta[name="description"]');
+        if (desc && d['meta.' + page + 'Desc']) desc.content = d['meta.' + page + 'Desc'];
         document.querySelectorAll('[data-lang-block]').forEach(el => { el.hidden = el.dataset.langBlock !== lang; });
         document.querySelectorAll('[data-set-lang]').forEach(b => {
             const on = b.dataset.setLang === lang;
@@ -611,16 +751,16 @@
         const lang = b.dataset.setLang;
         store.set(lang);
         closeMenu();
-        if (still || lang === root.dataset.lang) { apply(lang); return; }
+        if (lang === root.dataset.lang) return;
+        if (still) { location.href = pageFor(lang); return; }
         clearTimeout(pending);
-        // The pressed button lights up straight away; the text changes while the page is dark
+        // The pressed button lights up straight away; the page fades down before the next language loads
         document.querySelectorAll('[data-set-lang]').forEach(o => o.classList.toggle('active', o === b));
         document.querySelectorAll('.lang-code').forEach(el => { el.textContent = lang.toUpperCase(); });
         root.classList.add('lang-out');
-        pending = setTimeout(() => {
-            apply(lang);
-            requestAnimationFrame(() => root.classList.remove('lang-out'));
-        }, 320);
+        pending = setTimeout(() => { location.href = pageFor(lang); }, 320);
     }));
+    // Coming back with the Back button restores the page as it was left: lift the fade again
+    addEventListener('pageshow', e => { if (e.persisted) { root.classList.remove('lang-out'); apply(initialLang()); } });
     apply(initialLang());
 })();
