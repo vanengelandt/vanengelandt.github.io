@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://vanengelandt.github.io/</loc>
+    <lastmod>2026-10-05</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://vanengelandt.github.io/?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://vanengelandt.github.io/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://vanengelandt.github.io/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://vanengelandt.github.io/?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://vanengelandt.github.io/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://vanengelandt.github.io/?lang=vi"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://vanengelandt.github.io/"/>
+  </url>
+  <url>
+    <loc>https://vanengelandt.github.io/verkoopsvoorwaarden.html</loc>
+    <lastmod>2026-10-05</lastmod>
+  </url>
+</urlset>

@@ -5,6 +5,7 @@
     const T = {
         en: {
             'meta.home': 'VanEngelandt.NET | Lighting, Laser & Video Design for Live Events',
+            'meta.homeDesc': 'Independent lighting designer and show technician in Wevelgem, Belgium. Lighting, laser and video design, previsualisation in Unreal Engine 5 and live show operation.',
             'meta.terms': 'General Terms of Rental and Sale | VanEngelandt.NET',
             'nav.services': 'Services',
             'nav.approach': 'Approach',
@@ -93,6 +94,7 @@
 
         nl: {
             'meta.home': 'VanEngelandt.NET | Licht-, laser- en videodesign voor live evenementen',
+            'meta.homeDesc': 'Onafhankelijk lichtontwerper en showtechnicus uit Wevelgem (West-Vlaanderen). Licht-, laser- en videodesign, previsualisatie in Unreal Engine 5 en live showbediening voor evenementen.',
             'meta.terms': 'Algemene verhuur- en verkoopvoorwaarden | VanEngelandt.NET',
             'nav.services': 'Diensten',
             'nav.approach': 'Werkwijze',
@@ -181,6 +183,7 @@
 
         fr: {
             'meta.home': 'VanEngelandt.NET | Conception lumière, laser et vidéo pour événements live',
+            'meta.homeDesc': 'Concepteur lumière et technicien de spectacle indépendant à Wevelgem, en Belgique. Conception lumière, laser et vidéo, prévisualisation sous Unreal Engine 5 et régie live.',
             'meta.terms': 'Conditions générales de location et de vente | VanEngelandt.NET',
             'nav.services': 'Services',
             'nav.approach': 'Méthode',
@@ -268,6 +271,7 @@
         },
         zh: {
             'meta.home': 'VanEngelandt.NET | 现场活动灯光、激光与视频设计',
+            'meta.homeDesc': '比利时 Wevelgem 的独立灯光设计师与演出技术师，提供灯光、激光与视频设计、Unreal Engine 5 预可视化及现场演出执行。',
             'meta.terms': '租赁与销售通用条款 | VanEngelandt.NET',
 
             'nav.services': '服务',
@@ -357,6 +361,7 @@
         },
         vi: {
             'meta.home': 'VanEngelandt.NET | Thiết kế ánh sáng, laser và video cho sự kiện trực tiếp',
+            'meta.homeDesc': 'Nhà thiết kế ánh sáng và kỹ thuật viên show độc lập tại Wevelgem, Bỉ. Thiết kế ánh sáng, laser và video, previz bằng Unreal Engine 5 và vận hành show trực tiếp.',
             'meta.terms': 'Điều khoản chung về cho thuê và mua bán | VanEngelandt.NET',
 
             'nav.services': 'Dịch vụ',
@@ -446,6 +451,7 @@
         },
         th: {
             'meta.home': 'VanEngelandt.NET | ออกแบบไลท์ติ้ง เลเซอร์ และวิดีโอสำหรับงานอีเวนต์',
+            'meta.homeDesc': 'นักออกแบบแสงและช่างเทคนิคโชว์อิสระจาก Wevelgem ประเทศเบลเยียม รับออกแบบไลท์ติ้ง เลเซอร์ และวิดีโอ พรีวิชวลไลเซชันด้วย Unreal Engine 5 และควบคุมโชว์สด',
             'meta.terms': 'ข้อกำหนดและเงื่อนไขทั่วไปในการเช่าและการขาย | VanEngelandt.NET',
 
             'nav.services': 'บริการ',
@@ -566,6 +572,8 @@
         });
         const page = document.documentElement.dataset.page;
         if (page && d['meta.' + page]) document.title = d['meta.' + page];
+        const desc = document.querySelector('meta[name="description"]');
+        if (desc && d['meta.' + page + 'Desc']) desc.content = d['meta.' + page + 'Desc'];
         document.querySelectorAll('[data-lang-block]').forEach(el => { el.hidden = el.dataset.langBlock !== lang; });
         document.querySelectorAll('[data-set-lang]').forEach(b => {
             const on = b.dataset.setLang === lang;
