@@ -84,7 +84,8 @@ def render(src, lang, page):
     s = s.replace('    <meta property="og:type"', block + '    <meta property="og:type"', 1)
 
     if lang != 'en':
-        s = re.sub(r'((?:href|src)=")((?:css|js|fonts|images|brand)/)', r'\1../\2', s)
+        s = re.sub(r'((?:href|src|data-full)=")((?:css|js|fonts|images|brand)/)', r'\1../\2', s)
+        s = re.sub(r'srcset="[^"]*"', lambda m: re.sub(r'(["\s])(images/)', r'\1../\2', m.group(0)), s)
     return s
 
 
