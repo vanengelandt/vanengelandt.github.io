@@ -162,7 +162,7 @@
 
             'work.eyebrow': 'Realisaties',
             'work.title': 'Geselecteerd <em>werk</em>',
-            'work.intro': 'Van clubavond tot festivalpodium: een greep uit de shows die ik ontwierp, programmeerde en draaide.',
+            'work.intro': 'Van clubavond tot festivalpodium: een greep uit de shows die ik ontwierp, programmeerde en bediende.',
             'work.close': 'Sluiten',
             'work.prev': 'Vorige',
             'work.next': 'Volgende',
