@@ -549,13 +549,15 @@
         set(v) { try { localStorage.setItem('lang', v); } catch (e) { /* private mode */ } },
     };
 
+    // Each language has its own page (/, /nl/, /fr/ …); the page says which one it is
     function initialLang() {
-        const q = new URLSearchParams(location.search).get('lang');
-        if (LANGS.includes(q)) return q;
-        const saved = store.get();
-        if (LANGS.includes(saved)) return saved;
-        const nav = (navigator.language || 'en').slice(0, 2).toLowerCase();
-        return LANGS.includes(nav) ? nav : 'en';
+        const here = document.documentElement.dataset.lang;
+        return LANGS.includes(here) ? here : 'en';
+    }
+    function pageFor(lang) {
+        const file = location.pathname.split('/').pop();
+        const up = document.documentElement.dataset.lang && document.documentElement.dataset.lang !== 'en' ? '../' : '';
+        return up + (lang === 'en' ? '' : lang + '/') + file + location.hash;
     }
 
     function apply(lang) {
@@ -619,16 +621,16 @@
         const lang = b.dataset.setLang;
         store.set(lang);
         closeMenu();
-        if (still || lang === root.dataset.lang) { apply(lang); return; }
+        if (lang === root.dataset.lang) return;
+        if (still) { location.href = pageFor(lang); return; }
         clearTimeout(pending);
-        // The pressed button lights up straight away; the text changes while the page is dark
+        // The pressed button lights up straight away; the page fades down before the next language loads
         document.querySelectorAll('[data-set-lang]').forEach(o => o.classList.toggle('active', o === b));
         document.querySelectorAll('.lang-code').forEach(el => { el.textContent = lang.toUpperCase(); });
         root.classList.add('lang-out');
-        pending = setTimeout(() => {
-            apply(lang);
-            requestAnimationFrame(() => root.classList.remove('lang-out'));
-        }, 320);
+        pending = setTimeout(() => { location.href = pageFor(lang); }, 320);
     }));
+    // Coming back with the Back button restores the page as it was left: lift the fade again
+    addEventListener('pageshow', e => { if (e.persisted) { root.classList.remove('lang-out'); apply(initialLang()); } });
     apply(initialLang());
 })();
