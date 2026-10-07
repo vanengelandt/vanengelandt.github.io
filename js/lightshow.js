@@ -1,5 +1,5 @@
-// Hero light show: moving heads in haze lighting up the logo,
-// and gold lasers fanning out from behind it.
+// Hero light show: moving heads in haze lighting up the logo, run from a cue stack like a
+// lighting desk (slow moves, odd/even, dimmer and strobe hits), with gold laser accents.
 (() => {
     const hero = document.getElementById('home');
     const stage = document.querySelector('.logo-symbol');   // the beams aim at the symbol
@@ -12,12 +12,61 @@
     let logo = { x: 0, y: 0, w: 1, h: 1 };
 
     // ---------- Fixtures ----------
-    const heads = [
-        { fx: 0.10, sp: 0.50, ph: 0.0 },
-        { fx: 0.32, sp: 0.62, ph: 1.7 },
-        { fx: 0.68, sp: 0.57, ph: 3.1 },
-        { fx: 0.90, sp: 0.46, ph: 4.4 },
+    // Six heads on wide screens, four on phones; odd = 1, 3, 5 (index 0, 2, 4)
+    let heads = [];
+    function rig() {
+        const n = W < 700 ? 4 : 6;
+        if (heads.length === n) return;
+        heads = Array.from({ length: n }, (_, i) => ({ i, fx: 0.08 + 0.84 * i / (n - 1), odd: i % 2 === 0 }));
+    }
+
+    // ---------- Cue stack ----------
+    // Programmed like a lighting desk: each cue sets a position (u, v in logo widths/heights from
+    // the logo centre; |u|,|v| > 0.5 points past the logo into the room) and a dimmer level per
+    // head, with its own fade times. Effects run on top. Moves into a new look happen in the dark.
+    const spread = (i, n, w) => (i / (n - 1) - 0.5) * w;
+    const LOOP = 40;
+    const CUES = [
+        { at: 0,    pf: 0,   df: 1.2, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: () => 0 },
+        { at: 1,    pf: 0,   df: 1.5, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: (h) => h.odd ? 1 : 0 },
+        { at: 3,    pf: 0,   df: 1.5, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: () => 1 },
+        { at: 5,    pf: 3,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.36), v: -0.04 }), dim: () => 1 },
+        { at: 9,    pf: 5,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 4.6), v: 2.4 }), dim: () => 1, fx: 'oddeven', rate: 1 },
+        { at: 15,   pf: 0.4, df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0 },
+        { at: 15.5, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, fx: 'strobe', who: 'all', laser: 'strobe' },
+        { at: 17.1, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0 },
+        { at: 17.5, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1 },
+        { at: 20.5, pf: 6,   df: 1,   pos: (i, n) => ({ u: -spread(i, n, 1.7), v: 0.7 }), dim: () => 1, fx: 'wave', rate: 2.4 },
+        { at: 27,   pf: 3,   df: 0.5, pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'odd' },
+        { at: 30,   pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'even' },
+        { at: 33,   pf: 2,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 1, laser: 'fan' },
+        { at: 37,   pf: 0,   df: 2.5, pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 0 },
     ];
+    const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    const STROBE_HZ = 8, STROBE_DUTY = 0.4;
+    const strobe = t => ((t * STROBE_HZ) % 1) < STROBE_DUTY;
+
+    // Where each head points and how bright it is at show time t
+    function cueState(t) {
+        const lt = ((t % LOOP) + LOOP) % LOOP;
+        let k = CUES.length - 1;
+        while (k > 0 && CUES[k].at > lt) k--;
+        const cue = CUES[k], prev = CUES[(k - 1 + CUES.length) % CUES.length];
+        const since = lt - cue.at;
+        const pk = cue.pf ? ease(since / cue.pf) : 1, dk = cue.df ? Math.min(1, since / cue.df) : 1;
+        const n = heads.length;
+        return {
+            cue, since,
+            heads: heads.map(h => {
+                const a = prev.pos(h.i, n), b = cue.pos(h.i, n);
+                let level = prev.dim(h) + (cue.dim(h) - prev.dim(h)) * dk, flash = false;
+                if (cue.fx === 'oddeven') level *= (Math.floor(since * cue.rate) % 2 === 0) === h.odd ? 1 : 0;
+                if (cue.fx === 'wave') level *= 0.12 + 0.88 * Math.max(0, Math.sin(2 * Math.PI * (since / cue.rate - h.i / n)));
+                if (cue.fx === 'strobe' && (cue.who === 'all' || (cue.who === 'odd') === h.odd)) { flash = strobe(lt); level *= flash ? 1 : 0; }
+                return { u: a.u + (b.u - a.u) * pk, v: a.v + (b.v - a.v) * pk, level, flash };
+            }),
+        };
+    }
 
     function measure() {
         // Soft light needs no retina sharpness; a lower canvas resolution keeps scrolling smooth
@@ -26,6 +75,7 @@
         W = hr.width; H = hr.height;
         if (sky.width !== Math.round(W * dpr) || sky.height !== Math.round(H * dpr)) { sky.width = Math.round(W * dpr); sky.height = Math.round(H * dpr); }
         trackLogo(hr);
+        rig();
     }
     // The logo moves while scrolling, so the fixtures re-aim at it on every frame
     function trackLogo(hr = hero.getBoundingClientRect()) {
@@ -46,38 +96,24 @@
         sctx.globalAlpha = alpha; sctx.lineWidth = 1.4;
         sctx.beginPath(); sctx.moveTo(x0, y0); sctx.lineTo(x1, y1); sctx.stroke();
     }
-    function drawLasers(t) {
+    function drawLasers(state) {
+        const mode = state.cue.laser;
+        if (!mode) return;
         const len = Math.hypot(W, H);
         const x0 = logo.x, y0 = logo.y - logo.h * 0.05;
-        const phase = Math.floor(t / 7) % 4;
-        const local = (t % 7) / 7;
-        // short blackout between looks, like a real show
-        if (local < 0.03) return;
-        const fade = Math.min(1, (local - 0.03) * 12, (1 - local) * 12);
+        let fade = Math.min(1, state.since / 0.6);
         sctx.globalCompositeOperation = 'lighter';
-        if (phase === 0) {
-            // Fan sweeping upwards
-            const n = 11, spread = 1.9, base = -Math.PI / 2 + Math.sin(t * 0.9) * 0.45;
-            for (let i = 0; i < n; i++) laserLine(x0, y0, base - spread / 2 + spread * i / (n - 1), len, LASER[1], 0.9 * fade);
-        } else if (phase === 1) {
-            // Rotating tunnel all around
-            const n = 16;
-            for (let i = 0; i < n; i++) laserLine(x0, y0, t * 0.7 + i * Math.PI * 2 / n, len, LASER[i % 3], 0.8 * fade);
-        } else if (phase === 2) {
-            // Two crossing fans, red and blue
-            const n = 7, spread = 1.1;
-            const a = -Math.PI / 2 + Math.sin(t * 1.3) * 0.8, b = -Math.PI / 2 - Math.sin(t * 1.3) * 0.8;
-            for (let i = 0; i < n; i++) {
-                laserLine(x0, y0, a - spread / 2 + spread * i / (n - 1), len, LASER[0], 0.85 * fade);
-                laserLine(x0, y0, b - spread / 2 + spread * i / (n - 1), len, LASER[2], 0.85 * fade);
-            }
+        if (mode === 'strobe') {
+            // Static fan, flashing with the heads
+            if (!strobe(state.since)) return;
+            fade = 1;
+            const n = 13, spread = 2.2;
+            for (let i = 0; i < n; i++) laserLine(x0, y0, -Math.PI / 2 - spread / 2 + spread * i / (n - 1), len, LASER[1], 1);
         } else {
-            // Chasing single beams in RGB
-            const n = 24;
-            for (let i = 0; i < n; i++) {
-                const on = Math.sin(t * 6 - i * 0.6) > 0.3;
-                if (on) laserLine(x0, y0, -Math.PI + (Math.PI * i) / (n - 1), len, LASER[i % 3], fade);
-            }
+            // One slow, deliberate sweep in gold
+            const n = 9, spread = 1.5, base = -Math.PI / 2 + Math.sin(state.since * 0.55) * 0.5;
+            fade = Math.min(fade, Math.max(0, (4 - state.since) / 0.6));
+            for (let i = 0; i < n; i++) laserLine(x0, y0, base - spread / 2 + spread * i / (n - 1), len, LASER[0], 0.9 * fade);
         }
         sctx.globalAlpha = 1;
         // Hot spot where the lasers leave the projector, peeking from behind the logo
@@ -138,13 +174,6 @@
     }
 
     // ---------- Moving heads ----------
-    function targetOf(h, t) {
-        // Where each beam lands on the logo, as a fraction of its box (-0.5..0.5)
-        return {
-            u: 0.3 * Math.sin(t * h.sp + h.ph),
-            v: 0.28 * Math.sin(t * h.sp * 1.37 + h.ph * 0.7) - 0.02,
-        };
-    }
     // One beam is rendered once into a sprite (soft Gaussian-like cross-section, brightest at
     // the lens) and then stretched and rotated per fixture each frame, which is far cheaper
     const BEAM_W = 96, BEAM_L = 256;
@@ -168,30 +197,30 @@
     })();
     // Tinted copies of the sprite, cached per hue step
     const tinted = new Map();
-    function beamFor(hue) {
-        const key = Math.round(hue);
+    function beamFor(hue, white) {
+        const key = white ? 'w' : Math.round(hue);
         if (!tinted.has(key)) {
             const cv = document.createElement('canvas'); cv.width = BEAM_W; cv.height = BEAM_L;
             const c = cv.getContext('2d');
             c.drawImage(beamSprite, 0, 0);
             c.globalCompositeOperation = 'source-in';
-            c.fillStyle = `hsl(${key}, 70%, 86%)`; c.fillRect(0, 0, BEAM_W, BEAM_L);
+            c.fillStyle = white ? 'hsl(45, 25%, 96%)' : `hsl(${key}, 70%, 86%)`; c.fillRect(0, 0, BEAM_W, BEAM_L);
             tinted.set(key, cv);
         }
         return tinted.get(key);
     }
     const beamCol = (hue, a) => `hsla(${hue}, 70%, 86%, ${a})`;
 
-    function drawBeam(lx, ly, sx, sy, spotR, hue, level) {
+    function drawBeam(lx, ly, sx, sy, spotR, hue, level, white) {
         const len = Math.hypot(sx - lx, sy - ly), ang = Math.atan2(sy - ly, sx - lx);
         bctx.save();
         bctx.translate(lx, ly); bctx.rotate(ang - Math.PI / 2);
-        bctx.globalAlpha = level;
-        bctx.drawImage(beamFor(hue), -spotR * 1.3, 0, spotR * 2.6, len);
+        bctx.globalAlpha = Math.min(1, level);
+        bctx.drawImage(beamFor(hue, white), -spotR * 1.3, 0, spotR * 2.6, len);
         bctx.restore();
     }
 
-    function drawHeads(t) {
+    function drawHeads(t, state) {
         const trussY = window.innerWidth < 1100 ? 96 : 104, spotR = Math.min(logo.w, logo.h * 1.4) * 0.22;
         // Truss
         sctx.globalCompositeOperation = 'source-over';
@@ -211,21 +240,25 @@
 
         const spots = [];
         for (const h of heads) {
-            const hue = 40 + 5 * Math.sin(t * 0.3 + h.ph);
-            const level = 0.9 + 0.1 * Math.sin(t * 0.5 + h.ph * 2);
+            const st = state.heads[h.i];
+            const hue = 40, level = st.level;
             const fx = h.fx * W, fy = trussY + 14;
-            const tg = targetOf(h, t);
-            const sx = logo.x + tg.u * logo.w, sy = logo.y + tg.v * logo.h;
+            const sx = logo.x + st.u * logo.w, sy = logo.y + st.v * logo.h;
             const ang = Math.atan2(sy - fy, sx - fx);
             const lx = fx + Math.cos(ang) * 16, ly = fy + Math.sin(ang) * 16;
-            h.ang = ang; h.hue = hue; h.lx = lx; h.ly = ly;
-            spots.push({ u: tg.u, v: tg.v, ang, hue, level });
-
-            drawBeam(lx, ly, sx, sy, spotR, hue, level);
-            // Light scattering in the haze where the beam meets the logo
-            const sc = bctx.createRadialGradient(sx, sy, 0, sx, sy, spotR * 1.9);
-            sc.addColorStop(0, beamCol(hue, 0.2 * level)); sc.addColorStop(1, beamCol(hue, 0));
-            bctx.fillStyle = sc; bctx.fillRect(sx - spotR * 2, sy - spotR * 2, spotR * 4, spotR * 4);
+            h.ang = ang; h.hue = hue; h.lx = lx; h.ly = ly; h.level = level; h.flash = st.flash;
+            if (level <= 0.002) continue;
+            const onLogo = Math.abs(st.u) < 0.6 && Math.abs(st.v) < 0.6;
+            spots.push({ u: st.u, v: st.v, ang, hue, level: Math.min(1, level) });
+            // The cone keeps widening past the logo when a head points into the room
+            const ref = Math.hypot(logo.x - fx, logo.y - fy), dist = Math.hypot(sx - lx, sy - ly);
+            drawBeam(lx, ly, sx, sy, spotR * Math.max(1, dist / ref), hue, level, st.flash);
+            if (onLogo) {
+                // Light scattering in the haze where the beam meets the logo
+                const sc = bctx.createRadialGradient(sx, sy, 0, sx, sy, spotR * 1.9);
+                sc.addColorStop(0, beamCol(hue, 0.2 * level)); sc.addColorStop(1, beamCol(hue, 0));
+                bctx.fillStyle = sc; bctx.fillRect(sx - spotR * 2, sy - spotR * 2, spotR * 4, spotR * 4);
+            }
         }
 
         // Drifting smoke breaks the beams up, then the layer is added onto the scene
@@ -245,15 +278,18 @@
             sctx.save();
             sctx.translate(fx, fy); sctx.rotate(h.ang - Math.PI / 2);
             sctx.beginPath(); sctx.roundRect(-10, -8, 20, 24, 5); sctx.fill(); sctx.stroke();
-            sctx.fillStyle = '#fffaf0';
-            sctx.shadowColor = `hsl(${h.hue}, 90%, 70%)`; sctx.shadowBlur = 18;
+            sctx.fillStyle = h.level > 0.02 ? '#fffaf0' : '#2a2620';
+            sctx.shadowColor = `hsla(${h.hue}, 90%, 70%, ${Math.min(1, h.level)})`; sctx.shadowBlur = 18;
             sctx.beginPath(); sctx.ellipse(0, 16, 7, 3, 0, 0, Math.PI * 2); sctx.fill();
             sctx.restore();
             // Glare around the lens
+            if (h.level <= 0.02) continue;
             sctx.globalCompositeOperation = 'lighter';
+            sctx.globalAlpha = Math.min(1, h.level);
             const gl = sctx.createRadialGradient(h.lx, h.ly, 0, h.lx, h.ly, 46);
             gl.addColorStop(0, beamCol(h.hue, 0.55)); gl.addColorStop(0.25, beamCol(h.hue, 0.12)); gl.addColorStop(1, beamCol(h.hue, 0));
             sctx.fillStyle = gl; sctx.fillRect(h.lx - 46, h.ly - 46, 92, 92);
+            sctx.globalAlpha = 1;
         }
         lightLogo(spots, spotR);
     }
@@ -298,8 +334,9 @@
         sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         sctx.globalCompositeOperation = 'source-over';
         sctx.clearRect(0, 0, W, H);
-        drawLasers(t);
-        drawHeads(t);
+        const state = cueState(t);
+        drawLasers(state);
+        drawHeads(t, state);
     }
 
     let running = false, visible = true, raf = 0;
@@ -319,9 +356,9 @@
     }
 
     measure();
-    window.addEventListener('resize', () => { measure(); if (reduceMotion) frame(9000); });
+    window.addEventListener('resize', () => { measure(); if (reduceMotion) frame(19000); });
     setInterval(measure, 1500); // the page can reflow as fonts load
-    if (reduceMotion) { frame(9000); return; }
+    if (reduceMotion) { frame(19000); return; }
     if ('IntersectionObserver' in window) {
         new IntersectionObserver(([e]) => { visible = e.isIntersecting; setRunning(visible && !document.hidden); }).observe(hero);
     }
