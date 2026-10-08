@@ -1,5 +1,5 @@
 // Hero light show: moving heads in haze lighting up the logo, run from a cue stack like a
-// lighting desk (slow moves, mirrored pair effects, dimmer fades and strobe pulses), with steady gold lasers.
+// lighting desk (slow moves, mirrored pair effects, dimmer fades and strobe pulses), with steady 360° lasers.
 (() => {
     const hero = document.getElementById('home');
     const stage = document.querySelector('.logo-symbol');   // the beams aim at the symbol
@@ -37,16 +37,16 @@
         { at: 0,    pf: 0,   df: 1.2, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: () => 0 },
         { at: 1,    pf: 0,   df: 1.5, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: (h) => h.alt ? 1 : 0, laser: 'open', lf: 0.3 },
         { at: 3,    pf: 0,   df: 1.5, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: () => 1, laser: 'fan' },
-        { at: 5,    pf: 3,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.36), v: -0.04 }), dim: () => 1, laser: 'fan' },
-        { at: 9,    pf: 5,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 4.6), v: 2.4 }), dim: () => 1, fx: 'alt', rate: 1, laser: 'scissor', lf: 1.5 },
-        { at: 15,   pf: 0.4, df: 0.4,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0, laser: 'sheet', lf: 0.5 },
-        { at: 15.5, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, fx: 'strobe', who: 'all', laser: 'sheet' },
-        { at: 17.1, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0, laser: 'sheet' },
-        { at: 17.5, pf: 0,   df: 0.6,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, laser: 'sheet' },
-        { at: 20.5, pf: 6,   df: 1,   pos: (i, n) => ({ u: -spread(i, n, 1.7), v: 0.7 }), dim: () => 1, fx: 'wave', rate: 2.4, laser: 'fan', lf: 2 },
-        { at: 27,   pf: 3,   df: 0.5, pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'inout', laser: 'scissor', lf: 1.5 },
-        { at: 30,   pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'mid', laser: 'scissor' },
-        { at: 33,   pf: 2,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 1, laser: 'sheet', lf: 1.5 },
+        { at: 5,    pf: 3,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.36), v: -0.04 }), dim: () => 1, laser: 'star', lf: 1.2 },
+        { at: 9,    pf: 5,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 4.6), v: 2.4 }), dim: () => 1, fx: 'alt', rate: 1, laser: 'spin', lf: 1.5 },
+        { at: 15,   pf: 0.4, df: 0.4,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0, laser: 'rainbow', lf: 0.5 },
+        { at: 15.5, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, fx: 'strobe', who: 'all', laser: 'rainbow' },
+        { at: 17.1, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0, laser: 'rainbow' },
+        { at: 17.5, pf: 0,   df: 0.6,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, laser: 'rainbow' },
+        { at: 20.5, pf: 6,   df: 1,   pos: (i, n) => ({ u: -spread(i, n, 1.7), v: 0.7 }), dim: () => 1, fx: 'wave', rate: 2.4, laser: 'tunnel', lf: 2 },
+        { at: 27,   pf: 3,   df: 0.5, pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'inout', laser: 'spinbow', lf: 1.5 },
+        { at: 30,   pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'mid', laser: 'spinbow' },
+        { at: 33,   pf: 2,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 1, laser: 'rainbow', lf: 1.5 },
         { at: 37,   pf: 0,   df: 2.5, pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 0, lf: 2.5 },
     ];
     const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
@@ -108,8 +108,12 @@
 
     // ---------- Lasers ----------
     const LASER = ['#ffcf6b', '#fff3d6', '#e0a53a'];
-    function laserLine(x0, y0, ang, len, col, alpha) {
-        const x1 = x0 + Math.cos(ang) * len, y1 = y0 + Math.sin(ang) * len;
+    // r0 starts the beam on a ring around the logo, so 360° looks leave the logo free
+    function laserLine(cx, cy, ang, len, col, alpha, r0 = 0) {
+        const c = Math.cos(ang), s = Math.sin(ang);
+        const x0 = cx + c * r0, y0 = cy + s * r0, x1 = cx + c * len, y1 = cy + s * len;
+        // Beams pointing down cross the headline, so they run softer
+        alpha *= 0.55 + 0.45 * Math.max(0, -s);
         const g = sctx.createLinearGradient(x0, y0, x1, y1);
         g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)');
         sctx.strokeStyle = g;
@@ -119,19 +123,47 @@
         sctx.globalAlpha = alpha; sctx.lineWidth = 1.4;
         sctx.beginPath(); sctx.moveTo(x0, y0); sctx.lineTo(x1, y1); sctx.stroke();
     }
+    // Rainbow keyed to the angle away from straight up, so the left side mirrors the right
+    const bow = (ang, lt) => {
+        const a = Math.abs(Math.atan2(Math.cos(ang), -Math.sin(ang)));   // 0 = up, π = down
+        return `hsl(${(a / Math.PI * 300 + lt * 45) % 360}, 100%, 62%)`;
+    };
     // Every look is mirrored around the vertical line through the logo
     function laserLook(look, lt, since, len, x0, y0, alpha) {
         if (!look || alpha <= 0) return;
-        const up = -Math.PI / 2;
+        const up = -Math.PI / 2, TAU = Math.PI * 2, r0 = logo.w * 0.55;
         const fan = (n, spread, base, col, a) => { for (let i = 0; i < n; i++) laserLine(x0, y0, base - spread / 2 + spread * i / (n - 1), len, col, a); };
+        // n beams all the way round, mirrored: angles up ± (rot + k·2π/n)
+        const ring = (n, rot, colFn, a) => {
+            for (let k = 0; k < n; k++) {
+                const off = rot + TAU * k / n;
+                laserLine(x0, y0, up + off, len, colFn(up + off), a, r0);
+                if (Math.abs(Math.sin(off)) > 1e-3) laserLine(x0, y0, up - off, len, colFn(up - off), a, r0);
+            }
+        };
         if (look === 'open') fan(9, 0.1 + 1.9 * ease(since / 2), up, LASER[0], alpha);   // opens from one line
         if (look === 'fan') fan(9, 1.8 + 0.35 * Math.sin(lt * 0.4), up, LASER[0], 0.9 * alpha);   // breathes slowly
-        if (look === 'scissor') {   // two mirrored fans crossing and opening
-            const a = 0.15 + 0.55 * (0.5 - 0.5 * Math.cos(lt * 0.6));
-            fan(5, 0.45, up - a, LASER[0], 0.9 * alpha);
-            fan(5, 0.45, up + a, LASER[0], 0.9 * alpha);
+        // Gold star bursting open all round the logo
+        if (look === 'star') ring(12, 0.06 + 0.2 * ease(since / 3) + 0.08 * Math.sin(lt * 0.5), () => LASER[0], 0.75 * alpha);
+        // Two mirrored sets turning against each other all round: beams cross top and bottom
+        if (look === 'spin') ring(8, lt * 0.35, () => LASER[0], 0.8 * alpha);
+        if (look === 'spinbow') ring(8, lt * 0.35, ang => bow(ang, lt), 0.85 * alpha);
+        // Rainbow burst: dense 360° wall of thin beams, colours rolling from top to bottom
+        if (look === 'rainbow') ring(18, 0.04 * Math.sin(lt * 0.4), ang => bow(ang, lt), 0.6 * alpha);
+        // Tunnel: rainbow rings growing out of the logo, with a faint gold star behind
+        if (look === 'tunnel') {
+            ring(12, 0.13, () => LASER[2], 0.35 * alpha);
+            const M = 5, maxR = Math.hypot(W, H) * 0.6;
+            for (let j = 0; j < M; j++) {
+                const p = (lt * 0.22 + j / M) % 1, r = r0 + p * maxR;
+                const a = alpha * Math.sin(Math.PI * p) * 0.9;
+                sctx.strokeStyle = `hsl(${(j * 72 + lt * 30) % 360}, 100%, 62%)`;
+                sctx.globalAlpha = a * 0.18; sctx.lineWidth = 7;
+                sctx.beginPath(); sctx.arc(x0, y0, r, 0, TAU); sctx.stroke();
+                sctx.globalAlpha = a; sctx.lineWidth = 1.4;
+                sctx.beginPath(); sctx.arc(x0, y0, r, 0, TAU); sctx.stroke();
+            }
         }
-        if (look === 'sheet') fan(21, 2.5 + 0.25 * Math.sin(lt * 0.3), up, LASER[2], 0.55 * alpha);   // wide wall of thin beams
     }
     function drawLasers(state) {
         const { cue, prev } = state;
