@@ -38,7 +38,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "@id": "https://vanengelandt.net/#business", "name": "VanEngelandt.NET", "alternateName": "VanEngelandt Event Services", "url": "https://vanengelandt.net/", "logo": "https://vanengelandt.net/images/apple-touch-icon.png", "image": "https://vanengelandt.net/images/og-image.jpg", "description": "Independent lighting designer and show technician in Wevelgem, Belgium: lighting, laser and video design, previsualisation and live show operation for events.", "email": "info@vanengelandt.net", "vatID": "BE0671817248", "address": {"@type": "PostalAddress", "streetAddress": "Plaatsweg 17", "postalCode": "8560", "addressLocality": "Wevelgem", "addressRegion": "West-Vlaanderen", "addressCountry": "BE"}, "areaServed": [{"@type": "Country", "name": "Belgium"}, {"@type": "Country", "name": "Netherlands"}, {"@type": "Country", "name": "France"}], "founder": {"@type": "Person", "name": "Peter Van Engelandt", "jobTitle": "Lighting designer"}, "knowsLanguage": ["nl", "en", "fr"], "sameAs": ["https://www.facebook.com/vanengelandt"], "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Services", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lighting design and previsualisation"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Show programming and operation"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Laser design"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Video and media servers"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Technical production support"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Equipment consultancy and rental"}}]}}</script>
     <link rel="preload" href="../fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="../css/site.css?v=c8279421">
+    <link rel="stylesheet" href="../css/site.css?v=fbdad14f">
     <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('js');</script>
     <style>
         /* ---------- Hero ---------- */
@@ -47,14 +47,12 @@
             display: flex; align-items: center; padding: 150px 0 110px;
             background:
                 radial-gradient(ellipse 60% 45% at 50% 38%, rgba(201, 164, 92, .04), transparent 70%),
-                radial-gradient(ellipse 120% 60% at 50% 110%, rgba(138, 106, 44, .06), transparent 60%),
-                var(--black);
+                radial-gradient(ellipse 120% 60% at 50% 110%, rgba(138, 106, 44, .06), transparent 60%);
         }
         .show-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-        .hero::after {
-            content: ""; position: absolute; inset: auto 0 0 0; height: 220px; z-index: -1;
-            background: linear-gradient(0deg, var(--black), transparent);
-        }
+        /* The truss and moving heads stay on screen behind the whole page while scrolling */
+        .rig-canvas, .truss-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+        .truss-canvas { z-index: 59; }   /* over the page, under the menu */
         .hero .depth { width: 100%; }
         .hero-inner { text-align: center; max-width: 920px; margin: 0 auto; transform-style: preserve-3d; }
         .hero-inner > * { transform-origin: 50% 0%; }
@@ -90,7 +88,7 @@
         }
 
         /* ---------- Services ---------- */
-        .services { background: linear-gradient(180deg, var(--black), var(--ink) 60%, var(--black)); }
+        .services { background: linear-gradient(180deg, transparent, rgba(12, 11, 9, .55) 60%, transparent); }
         .grid { display: grid; gap: 22px; grid-template-columns: 1fr; }
         @media (min-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 1040px) { .grid { grid-template-columns: repeat(3, 1fr); } }
@@ -127,7 +125,7 @@
         .step p { margin: 0; color: var(--muted); font-size: .93rem; font-weight: 300; }
 
         /* ---------- About ---------- */
-        .about { background: var(--ink); overflow: hidden; }
+        .about { background: rgba(12, 11, 9, .55); overflow: hidden; }
         .about-grid { display: grid; gap: 64px; align-items: center; }
         @media (min-width: 960px) { .about-grid { grid-template-columns: 1fr 1.1fr; gap: 90px; } }
         .about-visual { position: relative; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #070605; box-shadow: 0 50px 100px -40px rgba(201, 164, 92, .35); }
@@ -213,6 +211,8 @@
         </nav>
     </header>
 
+    <canvas id="rig-canvas" class="rig-canvas" aria-hidden="true"></canvas>
+    <canvas id="truss-canvas" class="truss-canvas" aria-hidden="true"></canvas>
     <main>
         <section id="home" class="hero">
             <canvas id="show-canvas" class="show-canvas" aria-hidden="true"></canvas>
@@ -608,6 +608,6 @@
     <script src="../js/i18n.js?v=b98d26d5"></script>
     <script src="../js/scroll3d.js?v=8bb88e5c"></script>
     <script src="../js/work.js?v=09a75aa4" defer></script>
-    <script src="../js/lightshow.js?v=05b61f44" defer></script>
+    <script src="../js/lightshow.js?v=cf8d95b3" defer></script>
 </body>
 </html>
