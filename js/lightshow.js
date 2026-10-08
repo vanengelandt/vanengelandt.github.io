@@ -1,5 +1,5 @@
 // Hero light show: moving heads in haze lighting up the logo, run from a cue stack like a
-// lighting desk (slow moves, odd/even, dimmer and strobe hits), with gold laser accents.
+// lighting desk (slow moves, mirrored pair effects, dimmer and strobe hits), with steady gold lasers.
 (() => {
     const hero = document.getElementById('home');
     const stage = document.querySelector('.logo-symbol');   // the beams aim at the symbol
@@ -12,12 +12,18 @@
     let logo = { x: 0, y: 0, w: 1, h: 1 };
 
     // ---------- Fixtures ----------
-    // Six heads on wide screens, four on phones; odd = 1, 3, 5 (index 0, 2, 4)
+    // Six heads on wide screens, four on phones. Effects run in mirrored pairs counted from the
+    // centre (pair 0 = the two middle heads), so every look is symmetrical left to right;
+    // alt = pairs 0 and 2 (inner and outer) against pair 1.
     let heads = [];
     function rig() {
         const n = W < 700 ? 4 : 6;
         if (heads.length === n) return;
-        heads = Array.from({ length: n }, (_, i) => ({ i, fx: 0.08 + 0.84 * i / (n - 1), odd: i % 2 === 0 }));
+        const mid = (n - 1) / 2;
+        heads = Array.from({ length: n }, (_, i) => {
+            const pair = Math.round(Math.abs(i - mid) - 0.5);
+            return { i, fx: 0.08 + 0.84 * i / (n - 1), pair, alt: pair % 2 === 0, d: Math.abs(i - mid) / mid };
+        });
     }
 
     // ---------- Cue stack ----------
@@ -26,21 +32,22 @@
     // head, with its own fade times. Effects run on top. Moves into a new look happen in the dark.
     const spread = (i, n, w) => (i / (n - 1) - 0.5) * w;
     const LOOP = 40;
+    // laser: the laser look for the cue (steady, never strobed), crossfaded over lf seconds
     const CUES = [
         { at: 0,    pf: 0,   df: 1.2, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: () => 0 },
-        { at: 1,    pf: 0,   df: 1.5, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: (h) => h.odd ? 1 : 0 },
-        { at: 3,    pf: 0,   df: 1.5, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: () => 1 },
-        { at: 5,    pf: 3,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.36), v: -0.04 }), dim: () => 1 },
-        { at: 9,    pf: 5,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 4.6), v: 2.4 }), dim: () => 1, fx: 'oddeven', rate: 1 },
-        { at: 15,   pf: 0.4, df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0 },
-        { at: 15.5, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, fx: 'strobe', who: 'all', laser: 'strobe' },
-        { at: 17.1, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0 },
-        { at: 17.5, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1 },
-        { at: 20.5, pf: 6,   df: 1,   pos: (i, n) => ({ u: -spread(i, n, 1.7), v: 0.7 }), dim: () => 1, fx: 'wave', rate: 2.4 },
-        { at: 27,   pf: 3,   df: 0.5, pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'odd' },
-        { at: 30,   pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'even' },
-        { at: 33,   pf: 2,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 1, laser: 'fan' },
-        { at: 37,   pf: 0,   df: 2.5, pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 0 },
+        { at: 1,    pf: 0,   df: 1.5, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: (h) => h.alt ? 1 : 0, laser: 'open', lf: 0.3 },
+        { at: 3,    pf: 0,   df: 1.5, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: () => 1, laser: 'fan' },
+        { at: 5,    pf: 3,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.36), v: -0.04 }), dim: () => 1, laser: 'fan' },
+        { at: 9,    pf: 5,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 4.6), v: 2.4 }), dim: () => 1, fx: 'alt', rate: 1, laser: 'scissor', lf: 1.5 },
+        { at: 15,   pf: 0.4, df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0, laser: 'sheet', lf: 0.5 },
+        { at: 15.5, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, fx: 'strobe', who: 'all', laser: 'sheet' },
+        { at: 17.1, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0, laser: 'sheet' },
+        { at: 17.5, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, laser: 'sheet' },
+        { at: 20.5, pf: 6,   df: 1,   pos: (i, n) => ({ u: -spread(i, n, 1.7), v: 0.7 }), dim: () => 1, fx: 'wave', rate: 2.4, laser: 'fan', lf: 2 },
+        { at: 27,   pf: 3,   df: 0.5, pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'inout', laser: 'scissor', lf: 1.5 },
+        { at: 30,   pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'mid', laser: 'scissor' },
+        { at: 33,   pf: 2,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 1, laser: 'sheet', lf: 1.5 },
+        { at: 37,   pf: 0,   df: 2.5, pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 0, lf: 2.5 },
     ];
     const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
     const STROBE_HZ = 8, STROBE_DUTY = 0.4;
@@ -56,13 +63,14 @@
         const pk = cue.pf ? ease(since / cue.pf) : 1, dk = cue.df ? Math.min(1, since / cue.df) : 1;
         const n = heads.length;
         return {
-            cue, since,
+            cue, prev, since, lt,
             heads: heads.map(h => {
                 const a = prev.pos(h.i, n), b = cue.pos(h.i, n);
                 let level = prev.dim(h) + (cue.dim(h) - prev.dim(h)) * dk, flash = false;
-                if (cue.fx === 'oddeven') level *= (Math.floor(since * cue.rate) % 2 === 0) === h.odd ? 1 : 0;
-                if (cue.fx === 'wave') level *= 0.12 + 0.88 * Math.max(0, Math.sin(2 * Math.PI * (since / cue.rate - h.i / n)));
-                if (cue.fx === 'strobe' && (cue.who === 'all' || (cue.who === 'odd') === h.odd)) { flash = strobe(lt); level *= flash ? 1 : 0; }
+                if (cue.fx === 'alt') level *= (Math.floor(since * cue.rate) % 2 === 0) === h.alt ? 1 : 0;
+                // Wave rolls out from the centre to both sides at once
+                if (cue.fx === 'wave') level *= 0.12 + 0.88 * Math.max(0, Math.sin(2 * Math.PI * (since / cue.rate - h.d * 0.45)));
+                if (cue.fx === 'strobe' && (cue.who === 'all' || (cue.who === 'inout') === h.alt)) { flash = strobe(lt); level *= flash ? 1 : 0; }
                 return { u: a.u + (b.u - a.u) * pk, v: a.v + (b.v - a.v) * pk, level, flash };
             }),
         };
@@ -96,27 +104,34 @@
         sctx.globalAlpha = alpha; sctx.lineWidth = 1.4;
         sctx.beginPath(); sctx.moveTo(x0, y0); sctx.lineTo(x1, y1); sctx.stroke();
     }
+    // Every look is mirrored around the vertical line through the logo
+    function laserLook(look, lt, since, len, x0, y0, alpha) {
+        if (!look || alpha <= 0) return;
+        const up = -Math.PI / 2;
+        const fan = (n, spread, base, col, a) => { for (let i = 0; i < n; i++) laserLine(x0, y0, base - spread / 2 + spread * i / (n - 1), len, col, a); };
+        if (look === 'open') fan(9, 0.1 + 1.9 * ease(since / 2), up, LASER[0], alpha);   // opens from one line
+        if (look === 'fan') fan(9, 1.8 + 0.35 * Math.sin(lt * 0.4), up, LASER[0], 0.9 * alpha);   // breathes slowly
+        if (look === 'scissor') {   // two mirrored fans crossing and opening
+            const a = 0.15 + 0.55 * (0.5 - 0.5 * Math.cos(lt * 0.6));
+            fan(5, 0.45, up - a, LASER[0], 0.9 * alpha);
+            fan(5, 0.45, up + a, LASER[0], 0.9 * alpha);
+        }
+        if (look === 'sheet') fan(21, 2.5 + 0.25 * Math.sin(lt * 0.3), up, LASER[2], 0.55 * alpha);   // wide wall of thin beams
+    }
     function drawLasers(state) {
-        const mode = state.cue.laser;
-        if (!mode) return;
+        const { cue, prev } = state;
+        const k = Math.min(1, state.since / (cue.lf || 0.8));
+        const same = cue.laser === prev.laser;
+        const cur = same ? 1 : k, old = same ? 0 : 1 - k;
+        if (!cue.laser && !prev.laser) return;
         const len = Math.hypot(W, H);
         const x0 = logo.x, y0 = logo.y - logo.h * 0.05;
-        let fade = Math.min(1, state.since / 0.6);
         sctx.globalCompositeOperation = 'lighter';
-        if (mode === 'strobe') {
-            // Static fan, flashing with the heads
-            if (!strobe(state.since)) return;
-            fade = 1;
-            const n = 13, spread = 2.2;
-            for (let i = 0; i < n; i++) laserLine(x0, y0, -Math.PI / 2 - spread / 2 + spread * i / (n - 1), len, LASER[1], 1);
-        } else {
-            // One slow, deliberate sweep in gold
-            const n = 9, spread = 1.5, base = -Math.PI / 2 + Math.sin(state.since * 0.55) * 0.5;
-            fade = Math.min(fade, Math.max(0, (4 - state.since) / 0.6));
-            for (let i = 0; i < n; i++) laserLine(x0, y0, base - spread / 2 + spread * i / (n - 1), len, LASER[0], 0.9 * fade);
-        }
+        laserLook(prev.laser, state.lt, state.since + cue.at - prev.at, len, x0, y0, old);
+        laserLook(cue.laser, state.lt, state.since, len, x0, y0, cur);
         sctx.globalAlpha = 1;
         // Hot spot where the lasers leave the projector, peeking from behind the logo
+        const fade = (cue.laser ? cur : 0) + (prev.laser ? old : 0);
         const hot = sctx.createRadialGradient(x0, y0, 0, x0, y0, logo.w * 0.45);
         hot.addColorStop(0, `rgba(255,255,255,${0.18 * fade})`); hot.addColorStop(1, 'rgba(0,0,0,0)');
         sctx.fillStyle = hot; sctx.fillRect(x0 - logo.w, y0 - logo.w, logo.w * 2, logo.w * 2);
