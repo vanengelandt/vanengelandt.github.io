@@ -268,16 +268,35 @@
         }
         c.putImageData(img, 0, 0);
     })();
+    // Rounded end of the beam: a half disc that carries on the last row of the cone
+    const CAP_H = 48;
+    const capSprite = document.createElement('canvas');
+    capSprite.width = BEAM_W; capSprite.height = CAP_H;
+    (() => {
+        const c = capSprite.getContext('2d'), img = c.createImageData(BEAM_W, CAP_H);
+        for (let y = 0; y < CAP_H; y++) {
+            const half = Math.sqrt(Math.max(0, 1 - Math.pow((y + 0.5) / CAP_H, 2)));
+            for (let x = 0; x < BEAM_W; x++) {
+                const u = half ? Math.abs((x + 0.5) / BEAM_W * 2 - 1) / half : 9;
+                const across = u >= 1.15 ? 0 : Math.exp(-u * u * 2.2) * Math.min(1, (1.15 - u) * 4);
+                const i = (y * BEAM_W + x) * 4;
+                img.data[i] = img.data[i + 1] = img.data[i + 2] = 255;
+                img.data[i + 3] = Math.round(255 * Math.min(1, 0.42 * 0.55 * across));
+            }
+        }
+        c.putImageData(img, 0, 0);
+    })();
     // Tinted copies of the sprite, cached per hue step
     const tinted = new Map();
-    function beamFor(hue, white) {
-        const key = white ? 'w' : Math.round(hue);
+    function beamFor(hue, white, cap) {
+        const key = (cap ? 'c' : '') + (white ? 'w' : Math.round(hue));
         if (!tinted.has(key)) {
-            const cv = document.createElement('canvas'); cv.width = BEAM_W; cv.height = BEAM_L;
+            const src = cap ? capSprite : beamSprite;
+            const cv = document.createElement('canvas'); cv.width = BEAM_W; cv.height = src.height;
             const c = cv.getContext('2d');
-            c.drawImage(beamSprite, 0, 0);
+            c.drawImage(src, 0, 0);
             c.globalCompositeOperation = 'source-in';
-            c.fillStyle = white ? 'hsl(45, 25%, 96%)' : `hsl(${key}, 70%, 86%)`; c.fillRect(0, 0, BEAM_W, BEAM_L);
+            c.fillStyle = white ? 'hsl(45, 25%, 96%)' : `hsl(${key}, 70%, 86%)`; c.fillRect(0, 0, BEAM_W, src.height);
             tinted.set(key, cv);
         }
         return tinted.get(key);
@@ -290,6 +309,7 @@
         bctx.translate(lx, ly); bctx.rotate(ang - Math.PI / 2);
         bctx.globalAlpha = Math.min(1, level);
         bctx.drawImage(beamFor(hue, white), -spotR * 1.3, 0, spotR * 2.6, len);
+        bctx.drawImage(beamFor(hue, white, true), -spotR * 1.3, len, spotR * 2.6, spotR * 1.3);
         bctx.restore();
     }
 
