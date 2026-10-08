@@ -3,13 +3,18 @@
 (() => {
     const hero = document.getElementById('home');
     const stage = document.querySelector('.logo-symbol');   // the beams aim at the symbol
-    const sky = document.getElementById('show-canvas');   // behind the logo: lasers, fixtures, beams
-    if (!hero || !stage || !sky) return;
+    const sky = document.getElementById('show-canvas');   // in the hero, behind the logo: lasers
+    const rigCv = document.getElementById('rig-canvas');   // fixed to the screen, behind the page: the beams
+    const topCv = document.getElementById('truss-canvas');   // fixed to the screen, over the page: truss and fixtures
+    if (!hero || !stage || !sky || !rigCv || !topCv) return;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const sctx = sky.getContext('2d');
-    let W = 0, H = 0, dpr = 1;
-    let logo = { x: 0, y: 0, w: 1, h: 1 };
+    const sctx = sky.getContext('2d'), rctx = rigCv.getContext('2d'), tctx = topCv.getContext('2d');
+    let W = 0, H = 0, RW = 0, RH = 0, dpr = 1;
+    // logo: where the logo is now, in hero coordinates (the lasers follow it).
+    // aim: where the logo sits with the page at the top, in screen coordinates. The rig stays on
+    // screen while scrolling and keeps playing at that spot, behind whatever content is there.
+    let logo = { x: 0, y: 0, w: 1, h: 1 }, aim = { x: 0, y: 0, w: 1, h: 1 };
 
     // ---------- Fixtures ----------
     // Six heads on wide screens, four on phones. Effects run in mirrored pairs counted from the
@@ -17,7 +22,7 @@
     // alt = pairs 0 and 2 (inner and outer) against pair 1.
     let heads = [];
     function rig() {
-        const n = W < 700 ? 4 : 6;
+        const n = RW < 700 ? 4 : 6;
         if (heads.length === n) return;
         const mid = (n - 1) / 2;
         heads = Array.from({ length: n }, (_, i) => {
@@ -97,6 +102,12 @@
         const hr = hero.getBoundingClientRect();
         W = hr.width; H = hr.height;
         if (sky.width !== Math.round(W * dpr) || sky.height !== Math.round(H * dpr)) { sky.width = Math.round(W * dpr); sky.height = Math.round(H * dpr); }
+        RW = window.innerWidth; RH = window.innerHeight;
+        for (const cv of [rigCv, topCv]) if (cv.width !== Math.round(RW * dpr) || cv.height !== Math.round(RH * dpr)) { cv.width = Math.round(RW * dpr); cv.height = Math.round(RH * dpr); }
+        // Layout position without the scroll and 3D transforms
+        let x = 0, y = 0;
+        for (let el = stage; el; el = el.offsetParent) { x += el.offsetLeft; y += el.offsetTop; }
+        aim = { x: x + stage.offsetWidth / 2, y: y + stage.offsetHeight / 2, w: stage.offsetWidth, h: stage.offsetHeight };
         trackLogo(hr);
         rig();
     }
@@ -283,29 +294,34 @@
     }
 
     function drawHeads(t, state) {
-        const trussY = window.innerWidth < 1100 ? 96 : 104, spotR = Math.min(logo.w, logo.h * 1.4) * 0.22;
-        // Truss
-        sctx.globalCompositeOperation = 'source-over';
-        sctx.globalAlpha = 1;
-        sctx.strokeStyle = 'rgba(201, 164, 92, 0.35)'; sctx.lineWidth = 1.2;
-        sctx.strokeRect(-2, trussY - 16, W + 4, 12);
-        sctx.beginPath();
-        for (let x = 0; x < W; x += 16) { sctx.moveTo(x, trussY - 4); sctx.lineTo(x + 8, trussY - 16); sctx.lineTo(x + 16, trussY - 4); }
-        sctx.stroke();
+        const trussY = window.innerWidth < 1100 ? 96 : 104, spotR = Math.min(aim.w, aim.h * 1.4) * 0.22;
+        // Truss, over the page: once scrolled, a dark band behind it keeps passing text from showing through
+        if (window.scrollY > 40) {
+            const band = tctx.createLinearGradient(0, 0, 0, trussY + 40);
+            band.addColorStop(0, 'rgba(5,5,5,0.92)'); band.addColorStop(0.75, 'rgba(5,5,5,0.92)'); band.addColorStop(1, 'rgba(5,5,5,0)');
+            tctx.globalCompositeOperation = 'source-over'; tctx.fillStyle = band; tctx.fillRect(0, 0, RW, trussY + 40);
+        }
+        tctx.globalCompositeOperation = 'source-over';
+        tctx.globalAlpha = 1;
+        tctx.strokeStyle = 'rgba(201, 164, 92, 0.35)'; tctx.lineWidth = 1.2;
+        tctx.strokeRect(-2, trussY - 16, RW + 4, 12);
+        tctx.beginPath();
+        for (let x = 0; x < RW; x += 16) { tctx.moveTo(x, trussY - 4); tctx.lineTo(x + 8, trussY - 16); tctx.lineTo(x + 16, trussY - 4); }
+        tctx.stroke();
 
-        const bw = Math.max(1, Math.round(W / 2)), bh = Math.max(1, Math.round(H / 2));
+        const bw = Math.max(1, Math.round(RW / 2)), bh = Math.max(1, Math.round(RH / 2));
         if (beamCv.width !== bw || beamCv.height !== bh) { beamCv.width = bw; beamCv.height = bh; }
         bctx.setTransform(0.5, 0, 0, 0.5, 0, 0);
         bctx.globalCompositeOperation = 'source-over';
-        bctx.clearRect(0, 0, W, H);
+        bctx.clearRect(0, 0, RW, RH);
         bctx.globalCompositeOperation = 'lighter';
 
         const spots = [];
         for (const h of heads) {
             const st = state.heads[h.i];
             const hue = 40, level = st.level;
-            const fx = h.fx * W, fy = trussY + 14;
-            const sx = logo.x + st.u * logo.w, sy = logo.y + st.v * logo.h;
+            const fx = h.fx * RW, fy = trussY + 14;
+            const sx = aim.x + st.u * aim.w, sy = aim.y + st.v * aim.h;
             const ang = Math.atan2(sy - fy, sx - fx);
             const lx = fx + Math.cos(ang) * 16, ly = fy + Math.sin(ang) * 16;
             h.ang = ang; h.hue = hue; h.lx = lx; h.ly = ly; h.level = level; h.flash = st.flash;
@@ -313,7 +329,7 @@
             const onLogo = Math.abs(st.u) < 0.6 && Math.abs(st.v) < 0.6;
             spots.push({ u: st.u, v: st.v, ang, hue, level: Math.min(1, level) });
             // The cone keeps widening past the logo when a head points into the room
-            const ref = Math.hypot(logo.x - fx, logo.y - fy), dist = Math.hypot(sx - lx, sy - ly);
+            const ref = Math.hypot(aim.x - fx, aim.y - fy), dist = Math.hypot(sx - lx, sy - ly);
             drawBeam(lx, ly, sx, sy, spotR * Math.max(1, dist / ref), hue, level, st.flash);
             if (onLogo) {
                 // Light scattering in the haze where the beam meets the logo
@@ -326,34 +342,34 @@
         // Drifting smoke breaks the beams up, then the layer is added onto the scene
         bctx.globalCompositeOperation = 'destination-in';
         hazePat.setTransform(new DOMMatrix().translate(-t * 14, -t * 6).scale(3.2));
-        bctx.fillStyle = hazePat; bctx.fillRect(0, 0, W, H);
-        sctx.globalCompositeOperation = 'lighter';
-        sctx.drawImage(beamCv, 0, 0, W, H);
+        bctx.fillStyle = hazePat; bctx.fillRect(0, 0, RW, RH);
+        rctx.globalCompositeOperation = 'lighter';
+        rctx.drawImage(beamCv, 0, 0, RW, RH);
 
         // Fixtures: yoke on the truss, head aimed at its target, lens glowing
         for (const h of heads) {
-            const fx = h.fx * W, fy = trussY + 14;
-            sctx.globalCompositeOperation = 'source-over';
-            sctx.fillStyle = '#1b1b1b'; sctx.strokeStyle = '#555'; sctx.lineWidth = 1.5;
-            sctx.beginPath(); sctx.roundRect(fx - 9, trussY - 4, 18, 8, 2); sctx.fill(); sctx.stroke();
-            sctx.beginPath(); sctx.moveTo(fx - 12, fy - 10); sctx.lineTo(fx - 12, fy); sctx.moveTo(fx + 12, fy - 10); sctx.lineTo(fx + 12, fy); sctx.stroke();
-            sctx.save();
-            sctx.translate(fx, fy); sctx.rotate(h.ang - Math.PI / 2);
-            sctx.beginPath(); sctx.roundRect(-10, -8, 20, 24, 5); sctx.fill(); sctx.stroke();
-            sctx.fillStyle = h.level > 0.02 ? '#fffaf0' : '#2a2620';
-            sctx.shadowColor = `hsla(${h.hue}, 90%, 70%, ${Math.min(1, h.level)})`; sctx.shadowBlur = 18;
-            sctx.beginPath(); sctx.ellipse(0, 16, 7, 3, 0, 0, Math.PI * 2); sctx.fill();
-            sctx.restore();
+            const fx = h.fx * RW, fy = trussY + 14;
+            tctx.globalCompositeOperation = 'source-over';
+            tctx.fillStyle = '#1b1b1b'; tctx.strokeStyle = '#555'; tctx.lineWidth = 1.5;
+            tctx.beginPath(); tctx.roundRect(fx - 9, trussY - 4, 18, 8, 2); tctx.fill(); tctx.stroke();
+            tctx.beginPath(); tctx.moveTo(fx - 12, fy - 10); tctx.lineTo(fx - 12, fy); tctx.moveTo(fx + 12, fy - 10); tctx.lineTo(fx + 12, fy); tctx.stroke();
+            tctx.save();
+            tctx.translate(fx, fy); tctx.rotate(h.ang - Math.PI / 2);
+            tctx.beginPath(); tctx.roundRect(-10, -8, 20, 24, 5); tctx.fill(); tctx.stroke();
+            tctx.fillStyle = h.level > 0.02 ? '#fffaf0' : '#2a2620';
+            tctx.shadowColor = `hsla(${h.hue}, 90%, 70%, ${Math.min(1, h.level)})`; tctx.shadowBlur = 18;
+            tctx.beginPath(); tctx.ellipse(0, 16, 7, 3, 0, 0, Math.PI * 2); tctx.fill();
+            tctx.restore();
             // Glare around the lens
             if (h.level <= 0.02) continue;
-            sctx.globalCompositeOperation = 'lighter';
-            sctx.globalAlpha = Math.min(1, h.level);
-            const gl = sctx.createRadialGradient(h.lx, h.ly, 0, h.lx, h.ly, 46);
+            tctx.globalCompositeOperation = 'lighter';
+            tctx.globalAlpha = Math.min(1, h.level);
+            const gl = tctx.createRadialGradient(h.lx, h.ly, 0, h.lx, h.ly, 46);
             gl.addColorStop(0, beamCol(h.hue, 0.55)); gl.addColorStop(0.25, beamCol(h.hue, 0.12)); gl.addColorStop(1, beamCol(h.hue, 0));
-            sctx.fillStyle = gl; sctx.fillRect(h.lx - 46, h.ly - 46, 92, 92);
-            sctx.globalAlpha = 1;
+            tctx.fillStyle = gl; tctx.fillRect(h.lx - 46, h.ly - 46, 92, 92);
+            tctx.globalAlpha = 1;
         }
-        lightLogo(spots, spotR);
+        if (window.scrollY < hero.offsetHeight) lightLogo(spots, spotR);
     }
 
     function lightLogo(spots, spotR) {
@@ -390,25 +406,32 @@
         lctx.globalCompositeOperation = 'source-over';
     }
 
+    let skyClear = true;
     function frame(ms) {
         const t = ms / 1000;
-        if (!reduceMotion) trackLogo();
-        sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        sctx.globalCompositeOperation = 'source-over';
-        sctx.clearRect(0, 0, W, H);
         const state = cueState(t);
-        drawLasers(state);
+        // Lasers only while the hero is on screen; they scroll away with the logo
+        const heroOn = window.scrollY < hero.offsetHeight;
+        if (heroOn || !skyClear) {
+            if (!reduceMotion) trackLogo();
+            sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            sctx.globalCompositeOperation = 'source-over';
+            sctx.clearRect(0, 0, W, H);
+            if (heroOn) drawLasers(state);
+            skyClear = !heroOn;
+        }
+        rctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        rctx.globalCompositeOperation = 'source-over';
+        rctx.clearRect(0, 0, RW, RH);
+        tctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        tctx.globalCompositeOperation = 'source-over';
+        tctx.clearRect(0, 0, RW, RH);
         drawHeads(t, state);
     }
 
-    let running = false, visible = true, raf = 0;
-    // Once the hero has mostly faded out while scrolling, stop drawing so the scroll effects get the frame budget
-    let idle = false;
+    let running = false, raf = 0;
     function loop(ms) {
-        const faded = window.scrollY > hero.offsetHeight * 0.7;
-        if (!faded) frame(ms);
-        else if (!idle) { sctx.setTransform(1, 0, 0, 1, 0, 0); sctx.clearRect(0, 0, sky.width, sky.height); }
-        idle = faded;
+        frame(ms);
         raf = running ? requestAnimationFrame(loop) : 0;
     }
     function setRunning(on) {
@@ -421,9 +444,6 @@
     window.addEventListener('resize', () => { measure(); if (reduceMotion) frame(19000); });
     setInterval(measure, 1500); // the page can reflow as fonts load
     if (reduceMotion) { frame(19000); return; }
-    if ('IntersectionObserver' in window) {
-        new IntersectionObserver(([e]) => { visible = e.isIntersecting; setRunning(visible && !document.hidden); }).observe(hero);
-    }
-    document.addEventListener('visibilitychange', () => setRunning(visible && !document.hidden));
+    document.addEventListener('visibilitychange', () => setRunning(!document.hidden));
     setRunning(true);
 })();

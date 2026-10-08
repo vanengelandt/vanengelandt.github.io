@@ -51,7 +51,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 90px; background: var(--black); }
 body {
-    margin: 0; background: var(--black); color: var(--text);
+    margin: 0; color: var(--text);   /* the page colour is on html, so the fixed light rig can sit behind the content */
     font-family: var(--sans); font-weight: 400; line-height: 1.75; letter-spacing: 0.005em;
     -webkit-font-smoothing: antialiased; overflow-x: hidden;
 }
@@ -257,7 +257,7 @@ html:lang(zh) h1, html:lang(zh) h2, html:lang(zh) h3 { line-height: 1.2; letter-
 html:lang(zh) body { letter-spacing: 0.02em; }
 
 /* ---------- Selected work: a pinned 3D gallery that travels sideways as you scroll ---------- */
-.work { position: relative; padding: 120px 0; background: linear-gradient(180deg, var(--black), var(--ink) 30%, var(--ink) 70%, var(--black)); }
+.work { position: relative; padding: 120px 0; background: linear-gradient(180deg, transparent, rgba(12, 11, 9, .55) 30%, rgba(12, 11, 9, .55) 70%, transparent); }
 .work-head { display: grid; gap: 18px 60px; align-items: end; margin-bottom: 44px; }
 @media (min-width: 900px) { .work-head { grid-template-columns: 1fr minmax(0, 420px); } }
 .work-head h2 { margin-top: 18px; }
