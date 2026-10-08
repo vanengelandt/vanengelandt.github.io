@@ -1,5 +1,5 @@
-// Hero light show: moving heads in haze lighting up the logo,
-// and gold lasers fanning out from behind it.
+// Hero light show: moving heads in haze lighting up the logo, run from a cue stack like a
+// lighting desk (slow moves, mirrored pair effects, dimmer fades and strobe pulses), with steady 360° lasers.
 (() => {
     const hero = document.getElementById('home');
     const stage = document.querySelector('.logo-symbol');   // the beams aim at the symbol
@@ -12,12 +12,84 @@
     let logo = { x: 0, y: 0, w: 1, h: 1 };
 
     // ---------- Fixtures ----------
-    const heads = [
-        { fx: 0.10, sp: 0.50, ph: 0.0 },
-        { fx: 0.32, sp: 0.62, ph: 1.7 },
-        { fx: 0.68, sp: 0.57, ph: 3.1 },
-        { fx: 0.90, sp: 0.46, ph: 4.4 },
+    // Six heads on wide screens, four on phones. Effects run in mirrored pairs counted from the
+    // centre (pair 0 = the two middle heads), so every look is symmetrical left to right;
+    // alt = pairs 0 and 2 (inner and outer) against pair 1.
+    let heads = [];
+    function rig() {
+        const n = W < 700 ? 4 : 6;
+        if (heads.length === n) return;
+        const mid = (n - 1) / 2;
+        heads = Array.from({ length: n }, (_, i) => {
+            const pair = Math.round(Math.abs(i - mid) - 0.5);
+            return { i, fx: 0.08 + 0.84 * i / (n - 1), pair, alt: pair % 2 === 0, d: Math.abs(i - mid) / mid };
+        });
+    }
+
+    // ---------- Cue stack ----------
+    // Programmed like a lighting desk: each cue sets a position (u, v in logo widths/heights from
+    // the logo centre; |u|,|v| > 0.5 points past the logo into the room) and a dimmer level per
+    // head, with its own fade times. Effects run on top. Moves into a new look happen in the dark.
+    const spread = (i, n, w) => (i / (n - 1) - 0.5) * w;
+    const LOOP = 40;
+    // laser: the laser look for the cue (steady, never strobed), crossfaded over lf seconds
+    const CUES = [
+        { at: 0,    pf: 0,   df: 1.2, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: () => 0 },
+        { at: 1,    pf: 0,   df: 1.5, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: (h) => h.alt ? 1 : 0, laser: 'open', lf: 0.3 },
+        { at: 3,    pf: 0,   df: 1.5, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: () => 1, laser: 'fan' },
+        { at: 5,    pf: 3,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.36), v: -0.04 }), dim: () => 1, laser: 'star', lf: 1.2 },
+        { at: 9,    pf: 5,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 4.6), v: 2.4 }), dim: () => 1, fx: 'alt', rate: 1, laser: 'spin', lf: 1.5 },
+        { at: 15,   pf: 0.4, df: 0.4,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0, laser: 'rainbow', lf: 0.5 },
+        { at: 15.5, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, fx: 'strobe', who: 'all', laser: 'rainbow' },
+        { at: 17.1, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0, laser: 'rainbow' },
+        { at: 17.5, pf: 0,   df: 0.6,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, laser: 'rainbow' },
+        { at: 20.5, pf: 6,   df: 1,   pos: (i, n) => ({ u: -spread(i, n, 1.7), v: 0.7 }), dim: () => 1, fx: 'wave', rate: 2.4, laser: 'tunnel', lf: 2 },
+        { at: 27,   pf: 3,   df: 0.5, pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'inout', laser: 'spinbow', lf: 1.5 },
+        { at: 30,   pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'mid', laser: 'spinbow' },
+        { at: 33,   pf: 2,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 1, laser: 'rainbow', lf: 1.5 },
+        { at: 37,   pf: 0,   df: 2.5, pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 0, lf: 2.5 },
     ];
+    const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    // Nothing snaps: every dimmer change, effect start and effect stop has a fade time
+    const MIN_FADE = 0.35, FX_FADE = 0.6;
+    // Strobe runs as a soft pulse: quick swell up, short hold, smooth fall
+    const PULSE_HZ = 2.5;
+    const pulse = t => Math.pow(0.5 - 0.5 * Math.cos(2 * Math.PI * t * PULSE_HZ), 1.6);
+    const clamp01 = x => x < 0 ? 0 : x > 1 ? 1 : x;
+    // Dimmer multiplier an effect gives one head, `since` seconds into its cue
+    function fxLevel(c, h, since) {
+        if (c.fx === 'alt') {   // mirrored pairs crossfade against each other, holding between fades
+            const a = clamp01(0.5 + 1.6 * Math.cos(Math.PI * since * c.rate));
+            return h.alt ? a : 1 - a;
+        }
+        // Wave rolls out from the centre to both sides at once
+        if (c.fx === 'wave') return 0.12 + 0.88 * Math.max(0, Math.sin(2 * Math.PI * (since / c.rate - h.d * 0.45)));
+        if (c.fx === 'strobe' && (c.who === 'all' || (c.who === 'inout') === h.alt)) return pulse(since);
+        return 1;
+    }
+
+    // Where each head points and how bright it is at show time t
+    function cueState(t) {
+        const lt = ((t % LOOP) + LOOP) % LOOP;
+        let k = CUES.length - 1;
+        while (k > 0 && CUES[k].at > lt) k--;
+        const cue = CUES[k], prev = CUES[(k - 1 + CUES.length) % CUES.length];
+        const since = lt - cue.at;
+        const pk = cue.pf ? ease(since / cue.pf) : 1, dk = ease(since / Math.max(cue.df, MIN_FADE));
+        const fk = ease(since / FX_FADE), prevSince = since + cue.at - prev.at;
+        const n = heads.length;
+        return {
+            cue, prev, since, lt,
+            heads: heads.map(h => {
+                const a = prev.pos(h.i, n), b = cue.pos(h.i, n);
+                const base = prev.dim(h) + (cue.dim(h) - prev.dim(h)) * dk;
+                const mult = fxLevel(prev, h, prevSince) * (1 - fk) + fxLevel(cue, h, since) * fk;
+                const level = base * mult;
+                const flash = false;
+                return { u: a.u + (b.u - a.u) * pk, v: a.v + (b.v - a.v) * pk, level, flash };
+            }),
+        };
+    }
 
     function measure() {
         // Soft light needs no retina sharpness; a lower canvas resolution keeps scrolling smooth
@@ -26,6 +98,7 @@
         W = hr.width; H = hr.height;
         if (sky.width !== Math.round(W * dpr) || sky.height !== Math.round(H * dpr)) { sky.width = Math.round(W * dpr); sky.height = Math.round(H * dpr); }
         trackLogo(hr);
+        rig();
     }
     // The logo moves while scrolling, so the fixtures re-aim at it on every frame
     function trackLogo(hr = hero.getBoundingClientRect()) {
@@ -35,8 +108,12 @@
 
     // ---------- Lasers ----------
     const LASER = ['#ffcf6b', '#fff3d6', '#e0a53a'];
-    function laserLine(x0, y0, ang, len, col, alpha) {
-        const x1 = x0 + Math.cos(ang) * len, y1 = y0 + Math.sin(ang) * len;
+    // r0 starts the beam on a ring around the logo, so 360° looks leave the logo free
+    function laserLine(cx, cy, ang, len, col, alpha, r0 = 0) {
+        const c = Math.cos(ang), s = Math.sin(ang);
+        const x0 = cx + c * r0, y0 = cy + s * r0, x1 = cx + c * len, y1 = cy + s * len;
+        // Beams pointing down cross the headline, so they run softer
+        alpha *= 0.55 + 0.45 * Math.max(0, -s);
         const g = sctx.createLinearGradient(x0, y0, x1, y1);
         g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)');
         sctx.strokeStyle = g;
@@ -46,41 +123,62 @@
         sctx.globalAlpha = alpha; sctx.lineWidth = 1.4;
         sctx.beginPath(); sctx.moveTo(x0, y0); sctx.lineTo(x1, y1); sctx.stroke();
     }
-    function drawLasers(t) {
-        const len = Math.hypot(W, H);
-        const x0 = logo.x, y0 = logo.y - logo.h * 0.05;
-        const phase = Math.floor(t / 7) % 4;
-        const local = (t % 7) / 7;
-        // short blackout between looks, like a real show
-        if (local < 0.03) return;
-        const fade = Math.min(1, (local - 0.03) * 12, (1 - local) * 12);
-        sctx.globalCompositeOperation = 'lighter';
-        if (phase === 0) {
-            // Fan sweeping upwards
-            const n = 11, spread = 1.9, base = -Math.PI / 2 + Math.sin(t * 0.9) * 0.45;
-            for (let i = 0; i < n; i++) laserLine(x0, y0, base - spread / 2 + spread * i / (n - 1), len, LASER[1], 0.9 * fade);
-        } else if (phase === 1) {
-            // Rotating tunnel all around
-            const n = 16;
-            for (let i = 0; i < n; i++) laserLine(x0, y0, t * 0.7 + i * Math.PI * 2 / n, len, LASER[i % 3], 0.8 * fade);
-        } else if (phase === 2) {
-            // Two crossing fans, red and blue
-            const n = 7, spread = 1.1;
-            const a = -Math.PI / 2 + Math.sin(t * 1.3) * 0.8, b = -Math.PI / 2 - Math.sin(t * 1.3) * 0.8;
-            for (let i = 0; i < n; i++) {
-                laserLine(x0, y0, a - spread / 2 + spread * i / (n - 1), len, LASER[0], 0.85 * fade);
-                laserLine(x0, y0, b - spread / 2 + spread * i / (n - 1), len, LASER[2], 0.85 * fade);
+    // Rainbow keyed to the angle away from straight up, so the left side mirrors the right
+    const bow = (ang, lt) => {
+        const a = Math.abs(Math.atan2(Math.cos(ang), -Math.sin(ang)));   // 0 = up, π = down
+        return `hsl(${(a / Math.PI * 300 + lt * 45) % 360}, 100%, 62%)`;
+    };
+    // Every look is mirrored around the vertical line through the logo
+    function laserLook(look, lt, since, len, x0, y0, alpha) {
+        if (!look || alpha <= 0) return;
+        const up = -Math.PI / 2, TAU = Math.PI * 2, r0 = logo.w * 0.55;
+        const fan = (n, spread, base, col, a) => { for (let i = 0; i < n; i++) laserLine(x0, y0, base - spread / 2 + spread * i / (n - 1), len, col, a); };
+        // n beams all the way round, mirrored: angles up ± (rot + k·2π/n)
+        const ring = (n, rot, colFn, a) => {
+            for (let k = 0; k < n; k++) {
+                const off = rot + TAU * k / n;
+                laserLine(x0, y0, up + off, len, colFn(up + off), a, r0);
+                if (Math.abs(Math.sin(off)) > 1e-3) laserLine(x0, y0, up - off, len, colFn(up - off), a, r0);
             }
-        } else {
-            // Chasing single beams in RGB
-            const n = 24;
-            for (let i = 0; i < n; i++) {
-                const on = Math.sin(t * 6 - i * 0.6) > 0.3;
-                if (on) laserLine(x0, y0, -Math.PI + (Math.PI * i) / (n - 1), len, LASER[i % 3], fade);
+        };
+        if (look === 'open') fan(9, 0.1 + 1.9 * ease(since / 2), up, LASER[0], alpha);   // opens from one line
+        if (look === 'fan') fan(9, 1.8 + 0.35 * Math.sin(lt * 0.4), up, LASER[0], 0.9 * alpha);   // breathes slowly
+        // Gold star bursting open all round the logo
+        if (look === 'star') ring(12, 0.06 + 0.2 * ease(since / 3) + 0.08 * Math.sin(lt * 0.5), () => LASER[0], 0.75 * alpha);
+        // Two mirrored sets turning against each other all round: beams cross top and bottom
+        if (look === 'spin') ring(8, lt * 0.35, () => LASER[0], 0.8 * alpha);
+        if (look === 'spinbow') ring(8, lt * 0.35, ang => bow(ang, lt), 0.85 * alpha);
+        // Rainbow burst: dense 360° wall of thin beams, colours rolling from top to bottom
+        if (look === 'rainbow') ring(18, 0.04 * Math.sin(lt * 0.4), ang => bow(ang, lt), 0.6 * alpha);
+        // Tunnel: rainbow rings growing out of the logo, with a faint gold star behind
+        if (look === 'tunnel') {
+            ring(12, 0.13, () => LASER[2], 0.35 * alpha);
+            const M = 5, maxR = Math.hypot(W, H) * 0.6;
+            for (let j = 0; j < M; j++) {
+                const p = (lt * 0.22 + j / M) % 1, r = r0 + p * maxR;
+                const a = alpha * Math.sin(Math.PI * p) * 0.9;
+                sctx.strokeStyle = `hsl(${(j * 72 + lt * 30) % 360}, 100%, 62%)`;
+                sctx.globalAlpha = a * 0.18; sctx.lineWidth = 7;
+                sctx.beginPath(); sctx.arc(x0, y0, r, 0, TAU); sctx.stroke();
+                sctx.globalAlpha = a; sctx.lineWidth = 1.4;
+                sctx.beginPath(); sctx.arc(x0, y0, r, 0, TAU); sctx.stroke();
             }
         }
+    }
+    function drawLasers(state) {
+        const { cue, prev } = state;
+        const k = Math.min(1, state.since / (cue.lf || 0.8));
+        const same = cue.laser === prev.laser;
+        const cur = same ? 1 : k, old = same ? 0 : 1 - k;
+        if (!cue.laser && !prev.laser) return;
+        const len = Math.hypot(W, H);
+        const x0 = logo.x, y0 = logo.y - logo.h * 0.05;
+        sctx.globalCompositeOperation = 'lighter';
+        laserLook(prev.laser, state.lt, state.since + cue.at - prev.at, len, x0, y0, old);
+        laserLook(cue.laser, state.lt, state.since, len, x0, y0, cur);
         sctx.globalAlpha = 1;
         // Hot spot where the lasers leave the projector, peeking from behind the logo
+        const fade = (cue.laser ? cur : 0) + (prev.laser ? old : 0);
         const hot = sctx.createRadialGradient(x0, y0, 0, x0, y0, logo.w * 0.45);
         hot.addColorStop(0, `rgba(255,255,255,${0.18 * fade})`); hot.addColorStop(1, 'rgba(0,0,0,0)');
         sctx.fillStyle = hot; sctx.fillRect(x0 - logo.w, y0 - logo.w, logo.w * 2, logo.w * 2);
@@ -138,13 +236,6 @@
     }
 
     // ---------- Moving heads ----------
-    function targetOf(h, t) {
-        // Where each beam lands on the logo, as a fraction of its box (-0.5..0.5)
-        return {
-            u: 0.3 * Math.sin(t * h.sp + h.ph),
-            v: 0.28 * Math.sin(t * h.sp * 1.37 + h.ph * 0.7) - 0.02,
-        };
-    }
     // One beam is rendered once into a sprite (soft Gaussian-like cross-section, brightest at
     // the lens) and then stretched and rotated per fixture each frame, which is far cheaper
     const BEAM_W = 96, BEAM_L = 256;
@@ -168,30 +259,30 @@
     })();
     // Tinted copies of the sprite, cached per hue step
     const tinted = new Map();
-    function beamFor(hue) {
-        const key = Math.round(hue);
+    function beamFor(hue, white) {
+        const key = white ? 'w' : Math.round(hue);
         if (!tinted.has(key)) {
             const cv = document.createElement('canvas'); cv.width = BEAM_W; cv.height = BEAM_L;
             const c = cv.getContext('2d');
             c.drawImage(beamSprite, 0, 0);
             c.globalCompositeOperation = 'source-in';
-            c.fillStyle = `hsl(${key}, 70%, 86%)`; c.fillRect(0, 0, BEAM_W, BEAM_L);
+            c.fillStyle = white ? 'hsl(45, 25%, 96%)' : `hsl(${key}, 70%, 86%)`; c.fillRect(0, 0, BEAM_W, BEAM_L);
             tinted.set(key, cv);
         }
         return tinted.get(key);
     }
     const beamCol = (hue, a) => `hsla(${hue}, 70%, 86%, ${a})`;
 
-    function drawBeam(lx, ly, sx, sy, spotR, hue, level) {
+    function drawBeam(lx, ly, sx, sy, spotR, hue, level, white) {
         const len = Math.hypot(sx - lx, sy - ly), ang = Math.atan2(sy - ly, sx - lx);
         bctx.save();
         bctx.translate(lx, ly); bctx.rotate(ang - Math.PI / 2);
-        bctx.globalAlpha = level;
-        bctx.drawImage(beamFor(hue), -spotR * 1.3, 0, spotR * 2.6, len);
+        bctx.globalAlpha = Math.min(1, level);
+        bctx.drawImage(beamFor(hue, white), -spotR * 1.3, 0, spotR * 2.6, len);
         bctx.restore();
     }
 
-    function drawHeads(t) {
+    function drawHeads(t, state) {
         const trussY = window.innerWidth < 1100 ? 96 : 104, spotR = Math.min(logo.w, logo.h * 1.4) * 0.22;
         // Truss
         sctx.globalCompositeOperation = 'source-over';
@@ -211,21 +302,25 @@
 
         const spots = [];
         for (const h of heads) {
-            const hue = 40 + 5 * Math.sin(t * 0.3 + h.ph);
-            const level = 0.9 + 0.1 * Math.sin(t * 0.5 + h.ph * 2);
+            const st = state.heads[h.i];
+            const hue = 40, level = st.level;
             const fx = h.fx * W, fy = trussY + 14;
-            const tg = targetOf(h, t);
-            const sx = logo.x + tg.u * logo.w, sy = logo.y + tg.v * logo.h;
+            const sx = logo.x + st.u * logo.w, sy = logo.y + st.v * logo.h;
             const ang = Math.atan2(sy - fy, sx - fx);
             const lx = fx + Math.cos(ang) * 16, ly = fy + Math.sin(ang) * 16;
-            h.ang = ang; h.hue = hue; h.lx = lx; h.ly = ly;
-            spots.push({ u: tg.u, v: tg.v, ang, hue, level });
-
-            drawBeam(lx, ly, sx, sy, spotR, hue, level);
-            // Light scattering in the haze where the beam meets the logo
-            const sc = bctx.createRadialGradient(sx, sy, 0, sx, sy, spotR * 1.9);
-            sc.addColorStop(0, beamCol(hue, 0.2 * level)); sc.addColorStop(1, beamCol(hue, 0));
-            bctx.fillStyle = sc; bctx.fillRect(sx - spotR * 2, sy - spotR * 2, spotR * 4, spotR * 4);
+            h.ang = ang; h.hue = hue; h.lx = lx; h.ly = ly; h.level = level; h.flash = st.flash;
+            if (level <= 0.002) continue;
+            const onLogo = Math.abs(st.u) < 0.6 && Math.abs(st.v) < 0.6;
+            spots.push({ u: st.u, v: st.v, ang, hue, level: Math.min(1, level) });
+            // The cone keeps widening past the logo when a head points into the room
+            const ref = Math.hypot(logo.x - fx, logo.y - fy), dist = Math.hypot(sx - lx, sy - ly);
+            drawBeam(lx, ly, sx, sy, spotR * Math.max(1, dist / ref), hue, level, st.flash);
+            if (onLogo) {
+                // Light scattering in the haze where the beam meets the logo
+                const sc = bctx.createRadialGradient(sx, sy, 0, sx, sy, spotR * 1.9);
+                sc.addColorStop(0, beamCol(hue, 0.2 * level)); sc.addColorStop(1, beamCol(hue, 0));
+                bctx.fillStyle = sc; bctx.fillRect(sx - spotR * 2, sy - spotR * 2, spotR * 4, spotR * 4);
+            }
         }
 
         // Drifting smoke breaks the beams up, then the layer is added onto the scene
@@ -245,15 +340,18 @@
             sctx.save();
             sctx.translate(fx, fy); sctx.rotate(h.ang - Math.PI / 2);
             sctx.beginPath(); sctx.roundRect(-10, -8, 20, 24, 5); sctx.fill(); sctx.stroke();
-            sctx.fillStyle = '#fffaf0';
-            sctx.shadowColor = `hsl(${h.hue}, 90%, 70%)`; sctx.shadowBlur = 18;
+            sctx.fillStyle = h.level > 0.02 ? '#fffaf0' : '#2a2620';
+            sctx.shadowColor = `hsla(${h.hue}, 90%, 70%, ${Math.min(1, h.level)})`; sctx.shadowBlur = 18;
             sctx.beginPath(); sctx.ellipse(0, 16, 7, 3, 0, 0, Math.PI * 2); sctx.fill();
             sctx.restore();
             // Glare around the lens
+            if (h.level <= 0.02) continue;
             sctx.globalCompositeOperation = 'lighter';
+            sctx.globalAlpha = Math.min(1, h.level);
             const gl = sctx.createRadialGradient(h.lx, h.ly, 0, h.lx, h.ly, 46);
             gl.addColorStop(0, beamCol(h.hue, 0.55)); gl.addColorStop(0.25, beamCol(h.hue, 0.12)); gl.addColorStop(1, beamCol(h.hue, 0));
             sctx.fillStyle = gl; sctx.fillRect(h.lx - 46, h.ly - 46, 92, 92);
+            sctx.globalAlpha = 1;
         }
         lightLogo(spots, spotR);
     }
@@ -298,8 +396,9 @@
         sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         sctx.globalCompositeOperation = 'source-over';
         sctx.clearRect(0, 0, W, H);
-        drawLasers(t);
-        drawHeads(t);
+        const state = cueState(t);
+        drawLasers(state);
+        drawHeads(t, state);
     }
 
     let running = false, visible = true, raf = 0;
@@ -319,9 +418,9 @@
     }
 
     measure();
-    window.addEventListener('resize', () => { measure(); if (reduceMotion) frame(9000); });
+    window.addEventListener('resize', () => { measure(); if (reduceMotion) frame(19000); });
     setInterval(measure, 1500); // the page can reflow as fonts load
-    if (reduceMotion) { frame(9000); return; }
+    if (reduceMotion) { frame(19000); return; }
     if ('IntersectionObserver' in window) {
         new IntersectionObserver(([e]) => { visible = e.isIntersecting; setRunning(visible && !document.hidden); }).observe(hero);
     }
