@@ -22,12 +22,12 @@
     // alt = pairs 0 and 2 (inner and outer) against pair 1.
     let heads = [];
     function rig() {
-        const n = RW < 700 ? 4 : 6;
-        if (heads.length === n) return;
-        const mid = (n - 1) / 2;
+        const n = RW < 700 ? 4 : 6, mid = (n - 1) / 2;
+        // Keep the right end of the truss free for the colour buttons; the left side mirrors it
+        const m = Math.max(0.08, 64 / RW);
         heads = Array.from({ length: n }, (_, i) => {
             const pair = Math.round(Math.abs(i - mid) - 0.5);
-            return { i, fx: 0.08 + 0.84 * i / (n - 1), pair, alt: pair % 2 === 0, d: Math.abs(i - mid) / mid };
+            return { i, fx: m + (1 - 2 * m) * i / (n - 1), pair, alt: pair % 2 === 0, d: Math.abs(i - mid) / mid };
         });
     }
 
@@ -268,29 +268,50 @@
         }
         c.putImageData(img, 0, 0);
     })();
-    // Tinted copies of the sprite, cached per hue step
+    // Tinted copies of the sprite, cached per colour (a colour change fades through a few dozen)
     const tinted = new Map();
-    function beamFor(hue, white) {
-        const key = white ? 'w' : Math.round(hue);
+    function beamFor(col) {
+        const key = col.join(',');
         if (!tinted.has(key)) {
+            if (tinted.size > 60) tinted.clear();
             const cv = document.createElement('canvas'); cv.width = BEAM_W; cv.height = BEAM_L;
             const c = cv.getContext('2d');
             c.drawImage(beamSprite, 0, 0);
             c.globalCompositeOperation = 'source-in';
-            c.fillStyle = white ? 'hsl(45, 25%, 96%)' : `hsl(${key}, 70%, 86%)`; c.fillRect(0, 0, BEAM_W, BEAM_L);
+            c.fillStyle = `rgb(${key})`; c.fillRect(0, 0, BEAM_W, BEAM_L);
             tinted.set(key, cv);
         }
         return tinted.get(key);
     }
-    const beamCol = (hue, a) => `hsla(${hue}, 70%, 86%, ${a})`;
+    const beamCol = (c, a) => `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${a})`;
 
-    function drawBeam(lx, ly, sx, sy, spotR, hue, level, white) {
+    // ---------- Colour ----------
+    // Picked with the buttons on the truss: warm white, then the red, green, blue and magenta of the logo
+    const COLOURS = [[244, 228, 194], [255, 92, 98], [64, 214, 140], [96, 132, 255], [216, 96, 200]];
+    let pick = 0;
+    try { pick = Math.min(COLOURS.length - 1, Math.max(0, parseInt(localStorage.getItem('lightColour'), 10) || 0)); } catch (e) {}
+    let colNow = COLOURS[pick].slice(), lightCol = COLOURS[pick].slice(), lastT = 0;
+    // Colour changes fade like a CMY mix on a real head
+    function stepColour(t) {
+        const k = Math.min(1, Math.max(0, t - lastT) / 0.9);
+        lastT = t;
+        colNow = colNow.map((v, i) => v + (COLOURS[pick][i] - v) * (k || 1));
+        lightCol = colNow.map(Math.round);
+    }
+
+    function drawBeam(lx, ly, sx, sy, spotR, col, level) {
         const len = Math.hypot(sx - lx, sy - ly), ang = Math.atan2(sy - ly, sx - lx);
         bctx.save();
         bctx.translate(lx, ly); bctx.rotate(ang - Math.PI / 2);
         bctx.globalAlpha = Math.min(1, level);
-        bctx.drawImage(beamFor(hue, white), -spotR * 1.3, 0, spotR * 2.6, len);
+        bctx.drawImage(beamFor(col), -spotR * 1.3, 0, spotR * 2.6, len);
         bctx.restore();
+        // The beam ends in a round pool of light instead of a straight cut
+        const r = spotR * 1.3, a = 0.32 * Math.min(1, level);
+        const pool = bctx.createRadialGradient(sx, sy, 0, sx, sy, r);
+        pool.addColorStop(0, beamCol(col, a)); pool.addColorStop(0.7, beamCol(col, a * 0.85)); pool.addColorStop(1, beamCol(col, 0));
+        bctx.fillStyle = pool;
+        bctx.beginPath(); bctx.arc(sx, sy, r, 0, Math.PI * 2); bctx.fill();
     }
 
     function drawHeads(t, state) {
@@ -319,22 +340,22 @@
         const spots = [];
         for (const h of heads) {
             const st = state.heads[h.i];
-            const hue = 40, level = st.level;
+            const col = lightCol, level = st.level;
             const fx = h.fx * RW, fy = trussY + 14;
             const sx = aim.x + st.u * aim.w, sy = aim.y + st.v * aim.h;
             const ang = Math.atan2(sy - fy, sx - fx);
             const lx = fx + Math.cos(ang) * 16, ly = fy + Math.sin(ang) * 16;
-            h.ang = ang; h.hue = hue; h.lx = lx; h.ly = ly; h.level = level; h.flash = st.flash;
+            h.ang = ang; h.col = col; h.lx = lx; h.ly = ly; h.level = level; h.flash = st.flash;
             if (level <= 0.002) continue;
             const onLogo = Math.abs(st.u) < 0.6 && Math.abs(st.v) < 0.6;
-            spots.push({ u: st.u, v: st.v, ang, hue, level: Math.min(1, level) });
+            spots.push({ u: st.u, v: st.v, ang, col, level: Math.min(1, level) });
             // The cone keeps widening past the logo when a head points into the room
             const ref = Math.hypot(aim.x - fx, aim.y - fy), dist = Math.hypot(sx - lx, sy - ly);
-            drawBeam(lx, ly, sx, sy, spotR * Math.max(1, dist / ref), hue, level, st.flash);
+            drawBeam(lx, ly, sx, sy, spotR * Math.max(1, dist / ref), col, level);
             if (onLogo) {
                 // Light scattering in the haze where the beam meets the logo
                 const sc = bctx.createRadialGradient(sx, sy, 0, sx, sy, spotR * 1.9);
-                sc.addColorStop(0, beamCol(hue, 0.2 * level)); sc.addColorStop(1, beamCol(hue, 0));
+                sc.addColorStop(0, beamCol(col, 0.2 * level)); sc.addColorStop(1, beamCol(col, 0));
                 bctx.fillStyle = sc; bctx.fillRect(sx - spotR * 2, sy - spotR * 2, spotR * 4, spotR * 4);
             }
         }
@@ -357,7 +378,7 @@
             tctx.translate(fx, fy); tctx.rotate(h.ang - Math.PI / 2);
             tctx.beginPath(); tctx.roundRect(-10, -8, 20, 24, 5); tctx.fill(); tctx.stroke();
             tctx.fillStyle = h.level > 0.02 ? '#fffaf0' : '#2a2620';
-            tctx.shadowColor = `hsla(${h.hue}, 90%, 70%, ${Math.min(1, h.level)})`; tctx.shadowBlur = 18;
+            tctx.shadowColor = beamCol(h.col || lightCol, Math.min(1, h.level)); tctx.shadowBlur = 18;
             tctx.beginPath(); tctx.ellipse(0, 16, 7, 3, 0, 0, Math.PI * 2); tctx.fill();
             tctx.restore();
             // Glare around the lens
@@ -365,7 +386,7 @@
             tctx.globalCompositeOperation = 'lighter';
             tctx.globalAlpha = Math.min(1, h.level);
             const gl = tctx.createRadialGradient(h.lx, h.ly, 0, h.lx, h.ly, 46);
-            gl.addColorStop(0, beamCol(h.hue, 0.55)); gl.addColorStop(0.25, beamCol(h.hue, 0.12)); gl.addColorStop(1, beamCol(h.hue, 0));
+            gl.addColorStop(0, beamCol(h.col, 0.55)); gl.addColorStop(0.25, beamCol(h.col, 0.12)); gl.addColorStop(1, beamCol(h.col, 0));
             tctx.fillStyle = gl; tctx.fillRect(h.lx - 46, h.ly - 46, 92, 92);
             tctx.globalAlpha = 1;
         }
@@ -401,7 +422,9 @@
         lctx.drawImage(bakeBrightLogo(w, h), 0, 0, w, h);
         // 3. Warm colour of the lamps on top, only where the logo is already lit
         lctx.globalCompositeOperation = 'source-atop';
-        lctx.fillStyle = `hsla(${spots[0] ? spots[0].hue : 40}, 80%, 70%, 0.1)`;
+        // Saturated colours tint the lit logo more than warm white does
+        const c = spots[0] ? spots[0].col : lightCol, sat = (Math.max(...c) - Math.min(...c)) / 255;
+        lctx.fillStyle = beamCol(c, 0.1 + 0.45 * sat);
         lctx.fillRect(0, 0, w, h);
         lctx.globalCompositeOperation = 'source-over';
     }
@@ -410,6 +433,7 @@
     function frame(ms) {
         const t = ms / 1000;
         const state = cueState(t);
+        stepColour(t);
         // Lasers only while the hero is on screen; they scroll away with the logo
         const heroOn = window.scrollY < hero.offsetHeight;
         if (heroOn || !skyClear) {
@@ -439,6 +463,17 @@
         if (on && !running) { running = true; raf = requestAnimationFrame(loop); }
         if (!on) { running = false; cancelAnimationFrame(raf); }
     }
+
+    // Colour buttons on the truss
+    const swatches = [...document.querySelectorAll('.rig-colors [data-colour]')];
+    const markPick = () => swatches.forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.colour === pick)));
+    swatches.forEach(b => b.addEventListener('click', () => {
+        pick = +b.dataset.colour;
+        try { localStorage.setItem('lightColour', String(pick)); } catch (e) {}
+        markPick();
+        if (reduceMotion) { colNow = COLOURS[pick].slice(); lastT = 0; frame(19000); }
+    }));
+    markPick();
 
     measure();
     window.addEventListener('resize', () => { measure(); if (reduceMotion) frame(19000); });
