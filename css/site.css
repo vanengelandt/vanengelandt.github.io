@@ -119,8 +119,8 @@ h1 em, h2 em { background: var(--gold-grad); background-size: 220% auto; -webkit
 .site-header .container { max-width: 1400px; }
 .brand-link { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
 .brand-link img { width: 42px; height: auto; flex: none; }
-.brand-name { font-family: var(--display); font-stretch: var(--wide); font-size: 1.12rem; font-weight: 800; letter-spacing: 0.01em; color: var(--ivory); white-space: nowrap; }
-.brand-name span { color: var(--gold); }
+/* The same VANENGELANDT wordmark as the hero, next to the logo mark */
+.brand-link img.brand-word { width: clamp(118px, 42vw, 220px); min-width: 0; flex: 0 1 auto; }
 .nav-links { display: none; align-items: center; gap: clamp(18px, 2vw, 30px); }
 .nav-links a:not(.btn) {
     position: relative; text-decoration: none; color: var(--text); font-size: 0.74rem; font-weight: 600; font-stretch: var(--wide);
@@ -134,8 +134,8 @@ h1 em, h2 em { background: var(--gold-grad); background-size: 220% auto; -webkit
 .nav-links .btn { padding: 12px 20px; }
 .nav-right { display: flex; align-items: center; gap: 14px; }
 @media (min-width: 1100px) { .nav-links { display: flex; } }
-/* Room is tight while the full menu shows: keep the logo mark, drop the wordmark */
-@media (min-width: 1100px) and (max-width: 1379px) { .brand-name { display: none; } }
+/* Room is tight while the full menu shows: a smaller wordmark */
+@media (min-width: 1100px) and (max-width: 1379px) { .brand-link img.brand-word { width: 140px; } }
 
 /* Language picker: the current code in the header, the six languages in a drop-down */
 .lang-pick { position: relative; }
@@ -179,12 +179,10 @@ h1 em, h2 em { background: var(--gold-grad); background-size: 220% auto; -webkit
 .mobile-menu a:last-child { border-bottom: 0; }
 @media (min-width: 1100px) { .mobile-menu, .mobile-menu.open { display: none; } }
 @media (max-width: 420px) {
-    .brand-name { font-size: 1.15rem; }
     .brand-link img { width: 34px; }
     .lang-current { padding: 0 9px 0 11px; }
     .nav-right { gap: 8px; }
 }
-@media (max-width: 459px) { .brand-name { display: none; } }
 @media (max-width: 600px) { .eyebrow { justify-content: center; text-align: center; } .eyebrow::before { display: none; } }
 
 /* ---------- Sections ---------- */
