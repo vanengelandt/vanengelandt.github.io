@@ -1,5 +1,5 @@
 // Hero light show: moving heads in haze lighting up the logo, run from a cue stack like a
-// lighting desk (slow moves, mirrored pair effects, dimmer and strobe hits), with steady gold lasers.
+// lighting desk (slow moves, mirrored pair effects, dimmer fades and strobe pulses), with steady gold lasers.
 (() => {
     const hero = document.getElementById('home');
     const stage = document.querySelector('.logo-symbol');   // the beams aim at the symbol
@@ -39,10 +39,10 @@
         { at: 3,    pf: 0,   df: 1.5, pos: (i, n) => ({ u: spread(i, n, 0.5), v: 0 }), dim: () => 1, laser: 'fan' },
         { at: 5,    pf: 3,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.36), v: -0.04 }), dim: () => 1, laser: 'fan' },
         { at: 9,    pf: 5,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 4.6), v: 2.4 }), dim: () => 1, fx: 'alt', rate: 1, laser: 'scissor', lf: 1.5 },
-        { at: 15,   pf: 0.4, df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0, laser: 'sheet', lf: 0.5 },
+        { at: 15,   pf: 0.4, df: 0.4,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0, laser: 'sheet', lf: 0.5 },
         { at: 15.5, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, fx: 'strobe', who: 'all', laser: 'sheet' },
         { at: 17.1, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 0, laser: 'sheet' },
-        { at: 17.5, pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, laser: 'sheet' },
+        { at: 17.5, pf: 0,   df: 0.6,   pos: (i, n) => ({ u: spread(i, n, 0.62), v: 0.02 }), dim: () => 1, laser: 'sheet' },
         { at: 20.5, pf: 6,   df: 1,   pos: (i, n) => ({ u: -spread(i, n, 1.7), v: 0.7 }), dim: () => 1, fx: 'wave', rate: 2.4, laser: 'fan', lf: 2 },
         { at: 27,   pf: 3,   df: 0.5, pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'inout', laser: 'scissor', lf: 1.5 },
         { at: 30,   pf: 0,   df: 0,   pos: (i, n) => ({ u: spread(i, n, 0.7), v: 0 }), dim: () => 1, fx: 'strobe', who: 'mid', laser: 'scissor' },
@@ -50,8 +50,23 @@
         { at: 37,   pf: 0,   df: 2.5, pos: (i, n) => ({ u: spread(i, n, 0.4), v: -0.04 }), dim: () => 0, lf: 2.5 },
     ];
     const ease = x => x <= 0 ? 0 : x >= 1 ? 1 : x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-    const STROBE_HZ = 8, STROBE_DUTY = 0.4;
-    const strobe = t => ((t * STROBE_HZ) % 1) < STROBE_DUTY;
+    // Nothing snaps: every dimmer change, effect start and effect stop has a fade time
+    const MIN_FADE = 0.35, FX_FADE = 0.6;
+    // Strobe runs as a soft pulse: quick swell up, short hold, smooth fall
+    const PULSE_HZ = 2.5;
+    const pulse = t => Math.pow(0.5 - 0.5 * Math.cos(2 * Math.PI * t * PULSE_HZ), 1.6);
+    const clamp01 = x => x < 0 ? 0 : x > 1 ? 1 : x;
+    // Dimmer multiplier an effect gives one head, `since` seconds into its cue
+    function fxLevel(c, h, since) {
+        if (c.fx === 'alt') {   // mirrored pairs crossfade against each other, holding between fades
+            const a = clamp01(0.5 + 1.6 * Math.cos(Math.PI * since * c.rate));
+            return h.alt ? a : 1 - a;
+        }
+        // Wave rolls out from the centre to both sides at once
+        if (c.fx === 'wave') return 0.12 + 0.88 * Math.max(0, Math.sin(2 * Math.PI * (since / c.rate - h.d * 0.45)));
+        if (c.fx === 'strobe' && (c.who === 'all' || (c.who === 'inout') === h.alt)) return pulse(since);
+        return 1;
+    }
 
     // Where each head points and how bright it is at show time t
     function cueState(t) {
@@ -60,17 +75,17 @@
         while (k > 0 && CUES[k].at > lt) k--;
         const cue = CUES[k], prev = CUES[(k - 1 + CUES.length) % CUES.length];
         const since = lt - cue.at;
-        const pk = cue.pf ? ease(since / cue.pf) : 1, dk = cue.df ? Math.min(1, since / cue.df) : 1;
+        const pk = cue.pf ? ease(since / cue.pf) : 1, dk = ease(since / Math.max(cue.df, MIN_FADE));
+        const fk = ease(since / FX_FADE), prevSince = since + cue.at - prev.at;
         const n = heads.length;
         return {
             cue, prev, since, lt,
             heads: heads.map(h => {
                 const a = prev.pos(h.i, n), b = cue.pos(h.i, n);
-                let level = prev.dim(h) + (cue.dim(h) - prev.dim(h)) * dk, flash = false;
-                if (cue.fx === 'alt') level *= (Math.floor(since * cue.rate) % 2 === 0) === h.alt ? 1 : 0;
-                // Wave rolls out from the centre to both sides at once
-                if (cue.fx === 'wave') level *= 0.12 + 0.88 * Math.max(0, Math.sin(2 * Math.PI * (since / cue.rate - h.d * 0.45)));
-                if (cue.fx === 'strobe' && (cue.who === 'all' || (cue.who === 'inout') === h.alt)) { flash = strobe(lt); level *= flash ? 1 : 0; }
+                const base = prev.dim(h) + (cue.dim(h) - prev.dim(h)) * dk;
+                const mult = fxLevel(prev, h, prevSince) * (1 - fk) + fxLevel(cue, h, since) * fk;
+                const level = base * mult;
+                const flash = false;
                 return { u: a.u + (b.u - a.u) * pk, v: a.v + (b.v - a.v) * pk, level, flash };
             }),
         };
