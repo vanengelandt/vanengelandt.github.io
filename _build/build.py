@@ -6,8 +6,8 @@ English lives at the root (index.html, verkoopsvoorwaarden.html) and every other
 language gets its own folder (/nl/, /fr/, /zh/, /th/, /vi/) with the text already
 in place, so search engines index each language at its own address.
 
-Sources: index.html (English, edit this one), _build/terms-template.html,
-i18n/terms.<lang>.json and the strings in js/i18n.js. Underscore folders are not
+Sources: index.html and mirrorball.html (English, edit these), _build/terms-template.html,
+i18n/terms.<lang>.json, i18n/mirrorball.<lang>.json and the strings in js/i18n.js. Underscore folders are not
 published by GitHub Pages.
 """
 import hashlib, html, json, os, re, subprocess
@@ -17,13 +17,19 @@ LANGS = ['en', 'nl', 'fr', 'zh', 'th', 'vi']
 TAG = {'zh': 'zh-Hans'}
 OG_LOCALE = {'en': 'en_GB', 'nl': 'nl_BE', 'fr': 'fr_BE', 'zh': 'zh_CN', 'th': 'th_TH', 'vi': 'vi_VN'}
 TERMS_ANCHOR = {'nl': 'sectie', 'en': 'en-section', 'fr': 'fr-article', 'zh': 'zh-tiaokuan', 'th': 'th-khor', 'vi': 'vi-dieu'}
-PAGES = {'home': 'index.html', 'terms': 'verkoopsvoorwaarden.html'}
+PAGES = {'home': 'index.html', 'terms': 'verkoopsvoorwaarden.html', 'mirrorball': 'mirrorball.html'}
 
 T = json.loads(subprocess.check_output(['node', '-e', '''
 const s = require("fs").readFileSync("js/i18n.js", "utf8");
 const m = s.match(/const T = (\\{[\\s\\S]*?\\n    \\});/);
 process.stdout.write(JSON.stringify(eval("(" + m[1] + ")")));
 ''']))
+# Product page strings live in their own files so they don't ship in js/i18n.js
+MB = {l: json.load(open(f'i18n/mirrorball.{l}.json', encoding='utf-8')) for l in LANGS}
+
+
+def strings(lang, page):
+    return {**T[lang], **MB[lang]} if page == 'mirrorball' else T[lang]
 
 
 def url(lang, page):
@@ -32,7 +38,7 @@ def url(lang, page):
 
 
 def seo_block(lang, page):
-    d = T[lang]
+    d = strings(lang, page)
     title = html.escape(html.unescape(re.sub('<[^>]+>', '', d['meta.' + page])), quote=True)
     desc = d.get('meta.' + page + 'Desc') or f"{html.unescape(d['contact.terms'])}: VanEngelandt.NET, Wevelgem."
     desc = html.escape(html.unescape(desc), quote=True)
@@ -56,7 +62,7 @@ SEO_LINE = re.compile(r'^\s*(<link rel="(canonical|alternate)"[^>]*>|<meta prope
 
 
 def render(src, lang, page):
-    d = T[lang]
+    d = strings(lang, page)
     s = src
     s = re.sub(r'<html[^>]*>', f'<html lang="{TAG.get(lang, lang)}" data-page="{page}" data-lang="{lang}">', s, count=1)
 
@@ -127,11 +133,12 @@ def stamp(s, prefix):
 
 def main():
     home_src = open('index.html', encoding='utf-8').read()
+    mb_src = open('mirrorball.html', encoding='utf-8').read()
     for lang in LANGS:
         folder = '' if lang == 'en' else lang + '/'
         if folder: os.makedirs(folder, exist_ok=True)
         prefix = '' if lang == 'en' else '../'
-        for page, src in (('home', home_src), ('terms', terms_source(lang))):
+        for page, src in (('home', home_src), ('terms', terms_source(lang)), ('mirrorball', mb_src)):
             out = stamp(render(src, lang, page), prefix)
             open(folder + PAGES[page], 'w', encoding='utf-8').write(out)
 

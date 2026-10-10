@@ -135,7 +135,7 @@ h1 em, h2 em { background: var(--gold-grad); background-size: 220% auto; -webkit
 .nav-right { display: flex; align-items: center; gap: 14px; }
 @media (min-width: 1100px) { .nav-links { display: flex; } }
 /* Room is tight while the full menu shows: a smaller wordmark */
-@media (min-width: 1100px) and (max-width: 1379px) { .brand-link img.brand-word { width: 140px; } }
+@media (min-width: 1100px) and (max-width: 1379px) { .brand-link img.brand-word { width: 140px; } .nav-links { gap: 16px; } }
 
 /* Language picker: the current code in the header, the six languages in a drop-down */
 .lang-pick { position: relative; }
