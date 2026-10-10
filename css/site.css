@@ -31,7 +31,7 @@
     --black: #050505;
     --ink: #0c0b09;
     --panel: #12100c;
-    --line: rgba(212, 175, 95, 0.18);
+    --line: rgba(201, 164, 92, 0.18);
     --line-soft: rgba(255, 255, 255, 0.07);
     --ivory: #f4efe4;
     --text: #e9e3d6;
@@ -132,6 +132,16 @@ h1 em, h2 em { background: var(--gold-grad); background-size: 220% auto; -webkit
 }
 .nav-links a:not(.btn):hover::after { transform: scaleX(1); transform-origin: left; }
 .nav-links .btn { padding: 12px 20px; }
+/* Shop: a slow gold breathe with a soft triple strobe pulse, every change faded */
+.shop-link { animation: shop-pulse 6s ease-in-out infinite; }
+@keyframes shop-pulse {
+    0%, 100% { color: var(--gold); text-shadow: 0 0 0 transparent; }
+    30% { color: var(--gold); text-shadow: 0 0 10px rgba(201, 164, 92, .55); }
+    55% { color: var(--gold); text-shadow: 0 0 2px rgba(201, 164, 92, .2); }
+    62%, 72%, 82% { color: #fff6e0; text-shadow: 0 0 6px #fff, 0 0 16px rgba(255, 220, 150, .9), 0 0 30px rgba(201, 164, 92, .6); }
+    67%, 77%, 87% { color: var(--gold); text-shadow: 0 0 4px rgba(201, 164, 92, .3); }
+}
+@media (prefers-reduced-motion: reduce) { .shop-link { animation: none; color: var(--gold); } }
 .nav-right { display: flex; align-items: center; gap: 14px; }
 @media (min-width: 1100px) { .nav-links { display: flex; } }
 /* Room is tight while the full menu shows: a smaller wordmark */
