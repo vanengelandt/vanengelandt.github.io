@@ -22,6 +22,9 @@
             'pt.fab': 'Get it on Fab',
             'pt.more': 'Learn more',
             'pt.alt': 'The PVE Mirror Ball System in Unreal Engine',
+            'vp.eyebrow': 'Unreal Engine &middot; DMX',
+            'vp.title': 'Virtual <em>production</em>',
+            'vp.text': 'Real-time sets and lighting in Unreal Engine, programmed and played live from the lighting desk over DMX. Watch the result.',
 
             'hero.eyebrow': 'Lighting &middot; Laser &middot; Video &middot; Previsualisation',
             'hero.title': 'Light that <em>defines</em> the moment.',
@@ -139,6 +142,9 @@
             'pt.fab': 'Download op Fab',
             'pt.more': 'Meer info',
             'pt.alt': 'Het PVE Mirror Ball System in Unreal Engine',
+            'vp.eyebrow': 'Unreal Engine &middot; DMX',
+            'vp.title': 'Virtuele <em>productie</em>',
+            'vp.text': 'Realtime decors en licht in Unreal Engine, live geprogrammeerd en gespeeld vanaf de lichttafel via DMX. Bekijk het resultaat.',
 
             'hero.eyebrow': 'Licht &middot; Laser &middot; Video &middot; Previsualisatie',
             'hero.title': 'Licht dat het moment <em>bepaalt</em>.',
@@ -256,6 +262,9 @@
             'pt.fab': 'Obtenir sur Fab',
             'pt.more': 'En savoir plus',
             'pt.alt': 'Le PVE Mirror Ball System dans Unreal Engine',
+            'vp.eyebrow': 'Unreal Engine &middot; DMX',
+            'vp.title': 'Production <em>virtuelle</em>',
+            'vp.text': 'Décors et lumières en temps réel dans Unreal Engine, programmés et joués en direct depuis la console lumière via DMX. Découvrez le résultat.',
 
             'hero.eyebrow': 'Lumière &middot; Laser &middot; Vidéo &middot; Prévisualisation',
             'hero.title': 'La lumière qui <em>sublime</em> l’instant.',
@@ -373,6 +382,9 @@
             'pt.fab': '在 Fab 上获取',
             'pt.more': '了解更多',
             'pt.alt': 'Unreal Engine 中的 PVE Mirror Ball System',
+            'vp.eyebrow': 'Unreal Engine &middot; DMX',
+            'vp.title': '虚拟<em>制作</em>',
+            'vp.text': '在 Unreal Engine 中实时搭建场景与灯光，通过 DMX 从灯光控台现场编程和演出。观看成果。',
 
             'hero.eyebrow': '灯光 &middot; 激光 &middot; 视频 &middot; 预可视化',
             'hero.title': '以光<em>定义</em>每一刻。',
@@ -491,6 +503,9 @@
             'pt.fab': 'Tải trên Fab',
             'pt.more': 'Tìm hiểu thêm',
             'pt.alt': 'PVE Mirror Ball System trong Unreal Engine',
+            'vp.eyebrow': 'Unreal Engine &middot; DMX',
+            'vp.title': 'Sản xuất <em>ảo</em>',
+            'vp.text': 'Bối cảnh và ánh sáng thời gian thực trong Unreal Engine, lập trình và điều khiển trực tiếp từ bàn đèn qua DMX. Xem kết quả.',
 
             'hero.eyebrow': 'Ánh sáng &middot; Laser &middot; Video &middot; Previz 3D',
             'hero.title': 'Ánh sáng <em>định hình</em> khoảnh khắc.',
@@ -609,6 +624,9 @@
             'pt.fab': 'ดาวน์โหลดบน Fab',
             'pt.more': 'ดูรายละเอียด',
             'pt.alt': 'PVE Mirror Ball System ใน Unreal Engine',
+            'vp.eyebrow': 'Unreal Engine &middot; DMX',
+            'vp.title': 'เวอร์ชวล<em>โปรดักชัน</em>',
+            'vp.text': 'ฉากและแสงแบบเรียลไทม์ใน Unreal Engine ตั้งโปรแกรมและควบคุมสดจากคอนโซลไฟผ่าน DMX ชมผลงานได้เลย',
 
             'hero.eyebrow': 'ไลท์ติ้ง &middot; เลเซอร์ &middot; วิดีโอ &middot; พรีวิช่วลไลเซชัน',
             'hero.title': 'แสงที่<em>กำหนด</em>ทุกช่วงเวลา',
