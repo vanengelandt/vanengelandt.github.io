@@ -14,3 +14,5 @@ Write a post as `_build/posts/<slug>.md`: front matter (`title`, `description`, 
     python3 _build/blog.py
 
 It writes `blog/<slug>.html`, the `blog/index.html` overview and the blog entries in `sitemap.xml`. The blog is English only; `build.py` keeps the blog pages in the sitemap when it rebuilds.
+
+`blog.py` also puts the three newest posts on the English home page (between the `blog:start` / `blog:end` markers). Run `python3 _build/build.py` afterwards so the language pages get them too.
