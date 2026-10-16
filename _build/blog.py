@@ -45,7 +45,11 @@ def read_post(path):
     m = re.match(r'---\n(.*?)\n---\n(.*)', raw, re.S)
     meta = dict(line.split(': ', 1) for line in m.group(1).splitlines() if ': ' in line)
     meta['slug'] = os.path.splitext(os.path.basename(path))[0]
-    meta['body'] = markdown.markdown(m.group(2), extensions=['tables'])
+    body = markdown.markdown(m.group(2), extensions=['tables'])
+    # Photos: <img src="...-1600.webp"> gets the 800 px version for phones and lazy loading
+    body = re.sub(r'<p><img alt="([^"]*)" src="([^"]*)-1600\.webp" /></p>',
+                  r'<figure class="photo"><img src="\2-1600.webp" srcset="\2-800.webp 800w, \2-1600.webp 1600w" sizes="(max-width: 1240px) 100vw, 1180px" alt="\1" loading="lazy" decoding="async"><figcaption>\1</figcaption></figure>', body)
+    meta['body'] = body
     return meta
 
 
@@ -82,7 +86,10 @@ STYLE = '''
             .post td + td { color: var(--muted); margin-top: 4px; }
             .post code { white-space: normal; }
         }
-        .post > h2:first-child { margin-top: 0; }
+        .post > h2:first-child, .post > .photo:first-child { margin-top: 0; }
+        .photo { margin: 40px 0; }
+        .photo img { display: block; width: 100%; height: auto; border-radius: var(--radius); box-shadow: 0 0 0 1px var(--line), 0 50px 100px -40px rgba(201, 164, 92, .35); }
+        .photo figcaption { margin-top: 12px; color: var(--muted); font-size: .84rem; }
         .post .post-list { list-style: none; padding: 0; display: grid; gap: 18px; }
         .post-card { display: block; padding: 32px 30px; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); text-decoration: none; transition: border-color .2s; }
         .post-card:hover { border-color: var(--gold); }
@@ -108,7 +115,7 @@ STYLE = '''
     </style>'''
 
 
-def page(title, desc, canonical, body, og_type='article'):
+def page(title, desc, canonical, body, og_type='article', image=None):
     full = f'{title} | VanEngelandt.NET'
     return f'''<!DOCTYPE html>
 <html lang="en">
@@ -128,7 +135,7 @@ def page(title, desc, canonical, body, og_type='article'):
     <meta property="og:description" content="{html.escape(desc)}">
     <meta property="og:type" content="{og_type}">
     <meta property="og:site_name" content="VanEngelandt.NET">
-    <meta property="og:image" content="{SITE}/images/og-image.jpg">
+    <meta property="og:image" content="{SITE}/{image or "images/og-image.jpg"}">
     <script data-goatcounter="https://vanengelandt.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
     <link rel="preload" href="../fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{css_link()}">{STYLE}
@@ -190,7 +197,7 @@ def post_page(p):
 {company()}
             </div>
         </article>'''
-    return page(p['title'], p['description'], url, body)
+    return page(p['title'], p['description'], url, body, image=p.get('image'))
 
 
 def index_page(posts):

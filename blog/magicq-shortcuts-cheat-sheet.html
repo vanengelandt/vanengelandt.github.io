@@ -52,7 +52,10 @@
             .post td + td { color: var(--muted); margin-top: 4px; }
             .post code { white-space: normal; }
         }
-        .post > h2:first-child { margin-top: 0; }
+        .post > h2:first-child, .post > .photo:first-child { margin-top: 0; }
+        .photo { margin: 40px 0; }
+        .photo img { display: block; width: 100%; height: auto; border-radius: var(--radius); box-shadow: 0 0 0 1px var(--line), 0 50px 100px -40px rgba(201, 164, 92, .35); }
+        .photo figcaption { margin-top: 12px; color: var(--muted); font-size: .84rem; }
         .post .post-list { list-style: none; padding: 0; display: grid; gap: 18px; }
         .post-card { display: block; padding: 32px 30px; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); text-decoration: none; transition: border-color .2s; }
         .post-card:hover { border-color: var(--gold); }

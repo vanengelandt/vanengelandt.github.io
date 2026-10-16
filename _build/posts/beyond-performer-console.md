@@ -4,8 +4,11 @@ description: I added Pangolin's BEYOND Performer Console to my laser setup. A ha
 date: 2026-10-16
 time: 14:30
 tag: Laser
+image: images/blog/beyond-performer-console-warm-og.jpg
 lead: My laser setup just got a proper hands-on controller: the **BEYOND Performer Console** from Pangolin Laser Systems. From now on it runs the lasers in my live shows.
 ---
+
+![My BEYOND Performer Console, all layers lit](../images/blog/beyond-performer-console-warm-1600.webp)
 
 ## What it is
 
@@ -15,6 +18,8 @@ The Performer Console is a MIDI controller made for Pangolin's BEYOND laser soft
 - **Direct access to BEYOND plugins**: colour picker, custom workspace, perfect delays, and zone flips and selections.
 - **Ready to go**: Pangolin supplies a setup file, a zone file and a MIDI map, and a free MIDI Mapping course to customise the layout with scripting.
 - **Built for the road**: it comes with a carrying case and a USB-C cable.
+
+![Same console in a cool blue colour scheme, ready for the next show](../images/blog/beyond-performer-console-blue-1600.webp)
 
 ## Why I chose it
 
