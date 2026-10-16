@@ -180,13 +180,14 @@ def post_page(p):
                 <h1>{html.escape(p["title"])}</h1>
                 <p class="lead">{inline(p["lead"])}</p>
                 <p class="meta">{nice_date(p["date"])} · Peter Van Engelandt</p>
-                <div class="company">
-{company()}
-                </div>
             </div>
         </section>
         <article class="container post">
 {re.sub(r"(<table>.*?</table>)", r'<div class="table-wrap">\1</div>', p["body"], flags=re.S)}
+            <h2>Published by</h2>
+            <div class="company">
+{company()}
+            </div>
         </article>'''
     return page(p['title'], p['description'], url, body)
 
