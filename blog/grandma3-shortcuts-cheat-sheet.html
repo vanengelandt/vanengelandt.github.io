@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>grandMA3 speed programming cheat sheet | VanEngelandt.NET</title>
+    <meta name="description" content="The grandMA3 v2.5 keys, double presses and command-line syntax for fast programming and playback, grouped by workflow. Includes what is new from v2.0 to v2.5.1.1.">
+    <meta name="theme-color" content="#050505">
+    <link rel="icon" type="image/svg+xml" href="../images/logo-mark.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://vanengelandt.net/blog/grandma3-shortcuts-cheat-sheet.html">
+    <meta property="og:url" content="https://vanengelandt.net/blog/grandma3-shortcuts-cheat-sheet.html">
+    <meta property="og:title" content="grandMA3 speed programming cheat sheet | VanEngelandt.NET">
+    <meta property="og:description" content="The grandMA3 v2.5 keys, double presses and command-line syntax for fast programming and playback, grouped by workflow. Includes what is new from v2.0 to v2.5.1.1.">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="VanEngelandt.NET">
+    <meta property="og:image" content="https://vanengelandt.net/images/og-image.jpg">
+    <script data-goatcounter="https://vanengelandt.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+    <link rel="preload" href="../fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../css/site.css?v=f8088d54">
+    <style>
+        .page-hero { position: relative; overflow: hidden; padding: 170px 0 70px; border-bottom: 1px solid var(--line);
+            background: radial-gradient(ellipse 50% 80% at 85% 0%, rgba(201, 164, 92, .16), transparent 70%),
+                        radial-gradient(ellipse 40% 60% at 5% 100%, rgba(138, 106, 44, .14), transparent 70%), var(--black); }
+        .page-hero h1 { font-size: clamp(1.6rem, 5.6vw, 3.6rem); margin: 22px 0 26px; max-width: 1100px; }
+        .page-hero .lead { max-width: 780px; margin: 0 0 30px; }
+        .meta { color: var(--muted); font-size: .86rem; margin: 0 0 30px; }
+        .company { display: flex; flex-wrap: wrap; gap: 12px; }
+        .company div { padding: 12px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(201, 164, 92, .03); color: var(--ivory); font-size: .9rem; }
+        .company small { display: block; color: var(--gold); font-size: .64rem; letter-spacing: .24em; text-transform: uppercase; line-height: 1.6; }
+        .company a { color: var(--ivory); }
+        .byline { color: var(--ivory); font-size: 1.05rem; margin: 0; }
+        .post { padding-top: 56px; padding-bottom: 110px; color: var(--text); font-weight: 300; }
+        .post h2 { font-size: clamp(1.1rem, 2.6vw, 1.6rem); margin: 64px 0 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+        .post ul { padding-left: 20px; } .post li { margin: 6px 0; }
+        .post a { color: var(--gold-light); }
+        .post strong { color: var(--ivory); font-weight: 600; }
+        .post code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .86em; color: var(--gold-light);
+            background: rgba(201, 164, 92, .08); border: 1px solid var(--line); border-radius: 3px; padding: 1px 6px; white-space: nowrap; }
+        .table-wrap { overflow-x: auto; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); }
+        .post table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+        .post th { text-align: left; color: var(--gold); font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 700; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+        .post td { padding: 10px 16px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+        .post tr:last-child td { border-bottom: 0; }
+        .post td:first-child { color: var(--ivory); width: 46%; }
+        @media (max-width: 640px) {
+            .post thead { display: none; }
+            .post table, .post tbody, .post tr, .post td { display: block; width: auto !important; }
+            .post tr { padding: 12px 16px; border-bottom: 1px solid var(--line-soft); }
+            .post td { padding: 0; border: 0; }
+            .post td + td { color: var(--muted); margin-top: 4px; }
+            .post code { white-space: normal; }
+        }
+        .post > h2:first-child, .post > .photo:first-child { margin-top: 0; }
+        .photo { margin: 40px 0; }
+        .photo img { display: block; width: 100%; height: auto; border-radius: var(--radius); box-shadow: 0 0 0 1px var(--line), 0 50px 100px -40px rgba(201, 164, 92, .35); }
+        .photo figcaption { margin-top: 12px; color: var(--muted); font-size: .84rem; }
+        .post .post-list { list-style: none; padding: 0; display: grid; gap: 18px; }
+        .post-card { display: block; padding: 32px 30px; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); text-decoration: none; transition: border-color .2s; }
+        .post-card:hover { border-color: var(--gold); }
+        .post-card h2 { margin: 10px 0 12px; border: 0; padding: 0; }
+        .post-card p { margin: 0; color: var(--text); }
+        .nav .btn-line { padding: 12px 16px; }
+        .print-only { display: none; }
+        @media print {
+            @page { margin: 14mm; }
+            html, body { background: #fff !important; color: #000; }
+            .site-header, .site-footer .footer-links { display: none !important; }
+            .print-only { display: block; margin-bottom: 18px; }
+            .print-only img { height: 46px; width: auto; }
+            .page-hero { background: none; padding: 0 0 14px; }
+            h1, h2, .post td, .post td:first-child, .post li, .post p, .post strong, .company div, .company a, .lead, .meta { color: #000 !important; }
+            h1 em { -webkit-text-fill-color: #000; background: none; }
+            .company div, .table-wrap { background: none; border-color: #bbb; }
+            .company small, .post th { color: #7a5c22; }
+            .post code { color: #000; background: #f3eee2; border-color: #d8ccae; }
+            .post { padding: 0; } .post h2 { break-after: avoid; margin-top: 26px; }
+            .post tr { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header solid">
+        <div class="container nav">
+            <a href="../index.html" class="brand-link" aria-label="VanEngelandt.NET">
+                <img src="../images/logo-mark.svg" alt="" width="42" height="42">
+                <img class="brand-word" src="../images/logo-wordmark.svg" alt="" width="898" height="102">
+            </a>
+            <div class="nav-right">
+                <a href="index.html" class="btn btn-line">Blog</a>
+                <a href="../index.html" class="btn btn-line">Website</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <div class="print-only"><img src="../brand/vanengelandt-logo-horizontal-light-bg.svg" alt="VanEngelandt.NET"></div>
+                <span class="eyebrow">grandMA3</span>
+                <h1>grandMA3 speed programming cheat sheet</h1>
+                <p class="lead">Every key combo and command-line trick from the grandMA3 v2.5 manual and the latest release notes (2.5.1.1, 7 Oct 2026), on one page. Print it with Ctrl+P.</p>
+                <p class="meta">16 October 2026 · Peter Van Engelandt</p>
+            </div>
+        </section>
+        <article class="container post">
+<ul>
+<li><code>Key + Key</code> = hold the first, press the second. <code>2×</code> = press twice. <code>MA</code> = the MA key (on onPC: <strong>Shift</strong>).</li>
+<li>Any keyword can be shortened: <code>Store Sequence 8 Cue 20 /Overwrite</code> = <code>S Seq 8 Cue 20 /O</code>.</li>
+<li>Keywords are not case-sensitive; names in quotes are.</li>
+<li>Items marked with a version (e.g. <strong>2.5</strong>) need that version or newer.</li>
+</ul>
+<h2>1. Command line and key presses</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys / syntax</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Please (PC: Enter)</td>
+<td>Run the command; empty line = activate all attributes of selection</td>
+</tr>
+<tr>
+<td>MA + Please</td>
+<td>Focus the command line</td>
+</tr>
+<tr>
+<td>Oops (Ctrl+Z)</td>
+<td>Undo last operation</td>
+</tr>
+<tr>
+<td>Esc</td>
+<td>Drop unexecuted command, close pop-up</td>
+</tr>
+<tr>
+<td>Clear 1× / 2× / 3×</td>
+<td>Deselect / deactivate values / empty programmer</td>
+</tr>
+<tr>
+<td>Hold Clear</td>
+<td>ClearAll at once</td>
+</tr>
+<tr>
+<td>Off Off</td>
+<td>Off menu (2.2+: clears command line)</td>
+</tr>
+<tr>
+<td>At 2×</td>
+<td>Normal level (runs at once)</td>
+</tr>
+<tr>
+<td>MA + At / MA + At At</td>
+<td>Integrate / Extract</td>
+</tr>
+<tr>
+<td>Hold At</td>
+<td>At Filter</td>
+</tr>
+<tr>
+<td><code>+ +</code> / <code>- -</code></td>
+<td>Dimmer +10% / -10%</td>
+</tr>
+<tr>
+<td><code>. .</code> / MA + .</td>
+<td>Zero / Default</td>
+</tr>
+<tr>
+<td>MA + /</td>
+<td>Wildcard <code>*</code> (e.g. <code>Group "Mac*"</code>)</td>
+</tr>
+<tr>
+<td>If 1× / 2× / 3× / 4×</td>
+<td>IfOutput / IfActive / IfProg / If</td>
+</tr>
+<tr>
+<td>Fixture 2×</td>
+<td>Selection</td>
+</tr>
+<tr>
+<td>Channel 2×</td>
+<td>Generic</td>
+</tr>
+<tr>
+<td>Group 2× / 3×</td>
+<td>World / Filter</td>
+</tr>
+<tr>
+<td>Preset 2× / 3×</td>
+<td>Attribute / Gel</td>
+</tr>
+<tr>
+<td>MA + Preset</td>
+<td>FeatureGroup</td>
+</tr>
+<tr>
+<td>On 2×</td>
+<td>Call</td>
+</tr>
+<tr>
+<td>Edit 2×</td>
+<td>EditSetting</td>
+</tr>
+<tr>
+<td>Delete 2× / 3×</td>
+<td>Remove / Release</td>
+</tr>
+<tr>
+<td>Copy 2× / 3×, MA + Copy</td>
+<td>Paste / Insert, Cut</td>
+</tr>
+<tr>
+<td>Assign 2×, MA + Assign</td>
+<td>Label, Set</td>
+</tr>
+<tr>
+<td>MA + Update</td>
+<td>Cook</td>
+</tr>
+<tr>
+<td>MA + 8 / 2 / 4 / 6</td>
+<td>Cursor up / down / left / right</td>
+</tr>
+<tr>
+<td>Help, then tap anything</td>
+<td>Help for that item; <code>Help Please</code> = search</td>
+</tr>
+<tr>
+<td>Hold MA + Esc 5 s</td>
+<td>Cancel a long operation</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Selecting and MAtricks</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys / syntax</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Fixture 1 Thru 10 - 6 Thru 8</code></td>
+<td>Range minus a range</td>
+</tr>
+<tr>
+<td><code>Fixture 1 Thru 5 + 9 Thru 10</code></td>
+<td>Two ranges</td>
+</tr>
+<tr>
+<td><code>+ Fixture 5 Thru 7</code> / <code>- Fixture 5 Thru 7</code></td>
+<td>Add to / remove from current selection</td>
+</tr>
+<tr>
+<td><code>Fixture Thru</code> / <code>Fixture Thru .</code></td>
+<td>All fixtures / all fixtures and subfixtures</td>
+</tr>
+<tr>
+<td><code>Fixture 301.</code></td>
+<td>Fixture and all its subfixtures</td>
+</tr>
+<tr>
+<td><code>Fixture 301.1. Thru 4 + 6</code></td>
+<td>Only pixels 4 and 6</td>
+</tr>
+<tr>
+<td><code>Group 3 If Group 5</code></td>
+<td>Only fixtures in both groups</td>
+</tr>
+<tr>
+<td>Next / Prev</td>
+<td>Step through selected fixtures one by one</td>
+</tr>
+<tr>
+<td>MA + Next / MA + Prev</td>
+<td>Next / previous MAtricks step</td>
+</tr>
+<tr>
+<td>Set key</td>
+<td>MAtricks on / off</td>
+</tr>
+<tr>
+<td><code>Set Selection MAtricks "XGroup" 2</code></td>
+<td>Odd / even (2 groups); Next/Prev toggles them</td>
+</tr>
+<tr>
+<td><code>Set Selection MAtricks "XBlock" 2</code></td>
+<td>Pairs of fixtures</td>
+</tr>
+<tr>
+<td><code>Set Selection MAtricks "XWings" 2</code></td>
+<td>Mirror from both ends (symmetric looks)</td>
+</tr>
+<tr>
+<td><code>Set Selection MAtricks "XShuffle" 4</code></td>
+<td>Random order</td>
+</tr>
+<tr>
+<td><code>Reset Selection MAtricks</code></td>
+<td>Reset MAtricks</td>
+</tr>
+<tr>
+<td><code>Store MAtricks 5</code> / <code>Call MAtricks 5</code></td>
+<td>Save / recall a MAtricks setup</td>
+</tr>
+<tr>
+<td>Align (hold = reset)</td>
+<td>Fan modes: / &lt; &gt; &gt;&lt; &lt;&gt;</td>
+</tr>
+<tr>
+<td>MA + Align</td>
+<td>Align transition mode</td>
+</tr>
+<tr>
+<td>Highlight / MA + Highlight</td>
+<td>Highlight / Lowlight</td>
+</tr>
+<tr>
+<td>Solo</td>
+<td>Others to zero</td>
+</tr>
+<tr>
+<td>Selection grid: Shift + arrows</td>
+<td>Size a rectangle</td>
+</tr>
+<tr>
+<td>Selection grid: Off + tap</td>
+<td>Knock out that fixture</td>
+</tr>
+<tr>
+<td><code>Grid 2/2 Thru 4/4</code></td>
+<td>Select by grid position</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Values, presets and timing</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys / syntax</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>At 75</code> / <code>Full</code> / <code>Zero</code></td>
+<td>Dimmer 75 / full / zero</td>
+</tr>
+<tr>
+<td><code>At 5</code> (single digit input)</td>
+<td>50%</td>
+</tr>
+<tr>
+<td><code>At + 10</code> / <code>At - 10</code></td>
+<td>Relative change (space after the sign)</td>
+</tr>
+<tr>
+<td><code>At Cue 3</code></td>
+<td>Take the values from cue 3</td>
+</tr>
+<tr>
+<td><code>Attribute "Pan" At 20</code></td>
+<td>One attribute</td>
+</tr>
+<tr>
+<td><code>At Preset 4.3</code></td>
+<td>Preset 3 of feature group 4</td>
+</tr>
+<tr>
+<td><code>SelFix Preset 1.5</code></td>
+<td>Select fixtures used in that preset</td>
+</tr>
+<tr>
+<td><code>Group 8 At Preset 2.4</code></td>
+<td>Apply preset to a group</td>
+</tr>
+<tr>
+<td><code>At 50 Fade 2</code></td>
+<td>Level with 2 s fade</td>
+</tr>
+<tr>
+<td><code>Delay 4</code></td>
+<td>4 s delay</td>
+</tr>
+<tr>
+<td>Time key / MA + Time</td>
+<td>Cycle Fade, Delay / Relative, Absolute</td>
+</tr>
+<tr>
+<td><code>At 50</code> then Time</td>
+<td>Cycle value layer (e.g. <code>At 50 Fade</code>)</td>
+</tr>
+<tr>
+<td><code>At Speed Hz 70</code></td>
+<td>Phaser speed</td>
+</tr>
+<tr>
+<td><code>At Phase 0 Thru 360</code></td>
+<td>Spread phase across selection</td>
+</tr>
+<tr>
+<td><code>At Transition 0 + Width 50</code></td>
+<td>PWM-style step</td>
+</tr>
+<tr>
+<td>Hold MA + Phaser key</td>
+<td>Phaser editor</td>
+</tr>
+<tr>
+<td><code>KnockOut Fixture 2 + 4</code></td>
+<td>Remove fixtures from programmer</td>
+</tr>
+<tr>
+<td><code>Fixture 1 At Default</code></td>
+<td>Default values</td>
+</tr>
+<tr>
+<td><code>Highlight</code> / <code>Store Highlight</code></td>
+<td>Highlight / store highlight values</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Store, update, copy, delete</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys / syntax</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Store, Please</td>
+<td>New cue in the selected sequence</td>
+</tr>
+<tr>
+<td>Store + executor key</td>
+<td>Store into that executor (empty = new sequence)</td>
+</tr>
+<tr>
+<td>Hold Store</td>
+<td>Store Settings (merge/overwrite default, cue only, tracking shield)</td>
+</tr>
+<tr>
+<td><code>Store Cue 42 "Name"</code></td>
+<td>Store and label in one go</td>
+</tr>
+<tr>
+<td><code>Store Cue 1 Thru 10 + 20 Thru 30</code></td>
+<td>Store ranges</td>
+</tr>
+<tr>
+<td><code>Store Cue + 0.1</code> / <code>Store Cue Next</code></td>
+<td>Relative cue number</td>
+</tr>
+<tr>
+<td><code>Store Sequence 4 Cue 1.2</code></td>
+<td>Store into a named sequence</td>
+</tr>
+<tr>
+<td><code>Store Cue 4 Time 6 Time 1</code></td>
+<td>Store with CueFade 6, CueDelay 1</td>
+</tr>
+<tr>
+<td><code>/Merge</code> <code>/Overwrite</code> <code>/Remove</code> (<code>/M</code> <code>/O</code> <code>/R</code>)</td>
+<td>Store options</td>
+</tr>
+<tr>
+<td><code>/CueOnly</code> / <code>/CueOnly "DimmerOnly"</code></td>
+<td>Don't track into the next cue</td>
+</tr>
+<tr>
+<td><code>Store Cue "BO*" /Merge</code></td>
+<td>Merge into every cue whose label starts with BO</td>
+</tr>
+<tr>
+<td>Update (key flashes when possible)</td>
+<td>Update menu: tap a cue to update it</td>
+</tr>
+<tr>
+<td><code>Update Preset 4.1</code> / <code>Update Cue - 1</code></td>
+<td>Update a preset / the previous cue</td>
+</tr>
+<tr>
+<td>MA + Update</td>
+<td>Cook (recipes, no editor)</td>
+</tr>
+<tr>
+<td><code>Copy Group 1 Thru 3 At 11</code></td>
+<td>Copy a range</td>
+</tr>
+<tr>
+<td><code>Copy Cue 2 At 6</code></td>
+<td>Copy cue</td>
+</tr>
+<tr>
+<td>Copy 2× / Copy 3× / MA + Copy</td>
+<td>Paste / Insert / Cut</td>
+</tr>
+<tr>
+<td><code>Move Macro 1 At 3</code></td>
+<td>Move (others shift along)</td>
+</tr>
+<tr>
+<td><code>Delete Cue 2.5</code> / Delete 2× / 3×</td>
+<td>Delete / Remove / Release</td>
+</tr>
+<tr>
+<td><code>Release Attribute "Pan"</code></td>
+<td>Release values in programmer</td>
+</tr>
+<tr>
+<td>Hold Oops</td>
+<td>Oops history window</td>
+</tr>
+<tr>
+<td><code>Assign Appearance 1 At Sequence 2 + 3 + 4</code></td>
+<td>Assign to several objects</td>
+</tr>
+<tr>
+<td><code>Label Fixture 1 Thru 10 "Mac700 1"</code></td>
+<td>Auto-numbered labels</td>
+</tr>
+<tr>
+<td>Edit 2× / MA + Edit</td>
+<td>EditSetting / Edit recipe</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Sequences, executors and playback</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys / syntax</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Go+ / Go- / Pause (large keys)</td>
+<td>Selected sequence: next / previous / pause</td>
+</tr>
+<tr>
+<td>MA + Go+ (large)</td>
+<td>Go+ on the loaded cue</td>
+</tr>
+<tr>
+<td><code>Go+ Executor 101</code></td>
+<td>Go on a specific executor</td>
+</tr>
+<tr>
+<td><code>Goto Cue 10 Executor 201 Fade 2</code></td>
+<td>Jump to a cue with your own fade</td>
+</tr>
+<tr>
+<td><code>Goto Cue Next</code> / <code>Goto Sequence 42 Cue Previous</code></td>
+<td>Relative jumps</td>
+</tr>
+<tr>
+<td>Goto 2× (<code>Load Cue 3</code>)</td>
+<td>Preload the next cue</td>
+</tr>
+<tr>
+<td><code>&lt;&lt;&lt; Cue 5</code> / <code>&gt;&gt;&gt; Cue 5</code></td>
+<td>Jump using playback timings, not cue times</td>
+</tr>
+<tr>
+<td>MA + Go-</td>
+<td>Top: back to first cue</td>
+</tr>
+<tr>
+<td>MA + Go- Go-</td>
+<td>Kill: Go here, all other playbacks off</td>
+</tr>
+<tr>
+<td>MA + Go+</td>
+<td>Temp: on while held</td>
+</tr>
+<tr>
+<td>MA + Go+ Go+</td>
+<td>Toggle on / off</td>
+</tr>
+<tr>
+<td>MA + &gt;&gt;&gt;</td>
+<td>Flash: full while held, no fade</td>
+</tr>
+<tr>
+<td><code>Swap Sequence 5</code></td>
+<td>Play this, pull other dimmers down</td>
+</tr>
+<tr>
+<td><code>Off Sequence 1</code> / <code>Off Loaded</code></td>
+<td>Switch playback off</td>
+</tr>
+<tr>
+<td>Off 2×</td>
+<td>Off menu (see and switch off what is running)</td>
+</tr>
+<tr>
+<td>Pause 2× / MA + Pause</td>
+<td>Park / Fix</td>
+</tr>
+<tr>
+<td>MA MA + Pause</td>
+<td>Desk lock</td>
+</tr>
+<tr>
+<td>Hold Learn + tap executor in tempo</td>
+<td>Learn phaser speed</td>
+</tr>
+<tr>
+<td>MA + Learn (<code>Rate1 Executor 105</code>)</td>
+<td>Rate back to 1:1</td>
+</tr>
+<tr>
+<td><code>Master 3.1 At BPM 120</code></td>
+<td>Set a speed master</td>
+</tr>
+<tr>
+<td><code>Select Executor 105</code> / Select + exec key</td>
+<td>Make it the selected sequence</td>
+</tr>
+<tr>
+<td>Assign + function + exec key</td>
+<td>Set what an executor key does</td>
+</tr>
+<tr>
+<td><code>Assign Sequence 4 At Page 2.301</code></td>
+<td>Put a sequence on an executor</td>
+</tr>
+<tr>
+<td>Page+ / Page- (hold Page- = page 1)</td>
+<td>Change page</td>
+</tr>
+<tr>
+<td><code>Freeze</code>, <code>Blind</code>, <code>Preview</code></td>
+<td>Programmer priority / no output / preview mode</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. Windows and PC keyboard (onPC)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Shift</td>
+<td>Works as the MA key</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td>Please</td>
+</tr>
+<tr>
+<td>F1</td>
+<td>At Filter</td>
+</tr>
+<tr>
+<td>F2</td>
+<td>Menu</td>
+</tr>
+<tr>
+<td>F3</td>
+<td>Command section menu</td>
+</tr>
+<tr>
+<td>F4</td>
+<td>Master controls</td>
+</tr>
+<tr>
+<td>F5</td>
+<td>Playback menu</td>
+</tr>
+<tr>
+<td>F7</td>
+<td>Custom master section</td>
+</tr>
+<tr>
+<td>F8</td>
+<td>Encoder bar menu</td>
+</tr>
+<tr>
+<td>F9</td>
+<td>Desk lock</td>
+</tr>
+<tr>
+<td>F10</td>
+<td>Keyboard shortcuts on / off (label yellow = on)</td>
+</tr>
+<tr>
+<td>Ctrl + C / V / X</td>
+<td>Copy / paste / cut in a grid</td>
+</tr>
+<tr>
+<td>Insert / Ctrl + Insert / Delete</td>
+<td>Insert / store / delete at selected grid item</td>
+</tr>
+<tr>
+<td>Ctrl + Enter</td>
+<td>Edit pop-up for selected cell</td>
+</tr>
+<tr>
+<td>Ctrl + N</td>
+<td>Toggle the new-object line</td>
+</tr>
+<tr>
+<td>Arrow keys</td>
+<td>Move cursor / selection grid cursor</td>
+</tr>
+<tr>
+<td>Double-tap a title bar</td>
+<td>Maximise window</td>
+</tr>
+<tr>
+<td>Hold MA</td>
+<td>Show pool IDs on view buttons</td>
+</tr>
+<tr>
+<td><code>Locate Group 3</code> (2.5)</td>
+<td>Jump to that pool object</td>
+</tr>
+</tbody>
+</table></div>
+<p>Your own key mapping: <code>List KeyboardShortcut</code>, or Load Defaults in the shortcut settings.</p>
+<h2>7. Cue timing, patch and macros</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys / syntax</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Cue 1 Thru 4 CueFade 5</code></td>
+<td>Fade time on several cues</td>
+</tr>
+<tr>
+<td><code>CueFade 6/12</code> / <code>CueFade 3/</code></td>
+<td>In/out fade / change in-fade only</td>
+</tr>
+<tr>
+<td><code>Cue 1 Thru 4 CueDelay 5</code></td>
+<td>Cue delay</td>
+</tr>
+<tr>
+<td><code>Store Sequence 5 Cue 3 CueFade 7/11</code></td>
+<td>Store with timing</td>
+</tr>
+<tr>
+<td><code>Cue 3</code></td>
+<td>Select the fixtures used in cue 3</td>
+</tr>
+<tr>
+<td><code>Patch Fixture 2 3.123</code></td>
+<td>Patch to universe 3 address 123</td>
+</tr>
+<tr>
+<td><code>Patch Fixture 1 Thru 10</code></td>
+<td>Open Edit Patch for a range</td>
+</tr>
+<tr>
+<td><code>Macro 5</code> / <code>Store Macro 2</code></td>
+<td>Run / store a macro</td>
+</tr>
+<tr>
+<td><code>Off Sequence 5; Delete Group 3</code></td>
+<td>Several commands on one line</td>
+</tr>
+<tr>
+<td>MA + X1 X1 (<code>Recast Preset 21.1</code>)</td>
+<td>Push preset changes into cues using it</td>
+</tr>
+<tr>
+<td><code>Cook Preset 1.1</code></td>
+<td>Cook recipes without the editor</td>
+</tr>
+<tr>
+<td><code>AutoCreate FixtureType 13 At Group 21 /OddEven</code> (2.3)</td>
+<td>Auto odd/even groups</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. New speed tricks in v2.0 to v2.5</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Keys / syntax</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.5</td>
+<td><code>Locate Group 3</code> (again = next place)</td>
+<td>Jump to where a pool object sits</td>
+</tr>
+<tr>
+<td>2.5</td>
+<td><code>Locate Page 1.201</code> / <code>Locate Reset</code></td>
+<td>Show an executor's object / go back</td>
+</tr>
+<tr>
+<td>2.5</td>
+<td>Hold List + tap object</td>
+<td>Same as Locate</td>
+</tr>
+<tr>
+<td>2.5</td>
+<td><code>FaderMaster Group * At 100</code></td>
+<td>Set group masters from the command line</td>
+</tr>
+<tr>
+<td>2.5</td>
+<td>Hold Group</td>
+<td>Masters window (group, world, speed, playback, timing)</td>
+</tr>
+<tr>
+<td>2.5</td>
+<td>Flash / Black / Swap / Temp + hold a pool object</td>
+<td>Use that action on pool objects, not just executors</td>
+</tr>
+<tr>
+<td>2.5</td>
+<td>Press MA</td>
+<td>Show index numbers on pool-style executors</td>
+</tr>
+<tr>
+<td>2.4</td>
+<td><code>At NShot 3</code></td>
+<td>Phaser runs 3 times</td>
+</tr>
+<tr>
+<td>2.4</td>
+<td><code>Fixture 1 At Preset 4.1 /Universal</code></td>
+<td>Call a preset in universal / global / selective mode</td>
+</tr>
+<tr>
+<td>2.4</td>
+<td>Preview key + sequence; Preview twice; Preview + Off</td>
+<td>Preview a sequence / switch live-preview / leave preview</td>
+</tr>
+<tr>
+<td>2.3</td>
+<td><code>Learn</code> + tap executor</td>
+<td>Set phaser speed and start by tapping</td>
+</tr>
+<tr>
+<td>2.3</td>
+<td><code>FastSync</code> / <code>ReSync</code></td>
+<td>Resync phasers at once / gradually</td>
+</tr>
+<tr>
+<td>2.3</td>
+<td><code>Store Cue + 0.1</code>, <code>Store Cue Next 2</code>, MA + / MA -</td>
+<td>Relative cue numbers</td>
+</tr>
+<tr>
+<td>2.3</td>
+<td><code>Copy Cue 21 At Cue +</code></td>
+<td>Copy and auto-number between cues</td>
+</tr>
+<tr>
+<td>2.3</td>
+<td><code>AutoCreate FixtureType 13 At Group 21 /OddEven</code></td>
+<td>Make odd/even groups automatically</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td>MA + Edit + Please / <code>EditRecipe Cue 1</code></td>
+<td>Open the recipe editor</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td><code>Store Group</code> (no number)</td>
+<td>Store in first free slot</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td><code>Assign Appearance 1 At Sequence 1 + 2 + 3</code></td>
+<td>Assign to many targets at once</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td>Ctrl+Z / Off Off / double-tap title bar</td>
+<td>Oops / clear command line / maximise window</td>
+</tr>
+<tr>
+<td>2.1</td>
+<td><code>Help Please</code> / Help twice</td>
+<td>Search help / reopen last article</td>
+</tr>
+<tr>
+<td>2.1</td>
+<td>Hold MA + Esc for 5 s</td>
+<td>Cancel a long operation</td>
+</tr>
+<tr>
+<td>2.0</td>
+<td><code>At 5</code> (single digit input)</td>
+<td>50%</td>
+</tr>
+<tr>
+<td>2.0</td>
+<td><code>/CueOnly "DimmerOnly"</code>, <code>/TrackingShield</code></td>
+<td>Protect later cues from tracking changes</td>
+</tr>
+<tr>
+<td>2.0</td>
+<td><code>AutoCreate Universal 1 At Preset 1.11 "DimmerIncrement" 25</code></td>
+<td>Build dimmer presets in steps of 25%</td>
+</tr>
+<tr>
+<td>2.0</td>
+<td>Off + tap in Selection Grid</td>
+<td>Knock out that fixture</td>
+</tr>
+<tr>
+<td>2.0</td>
+<td>Long-press an attribute / a fixture ID</td>
+<td>Calculator / jump to patch</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Before updating to 2.5:</strong> OSC uses <code>;</code> between sequence name and cue, shape pool moved (update macros), and onPC now needs Vulkan graphics.</p>
+<h2>Sources and caveats</h2>
+<ul>
+<li>No default onPC key table exists in the online help; the F-keys above are the framework shortcuts. Check yours with <code>List KeyboardShortcut</code>.</li>
+<li>grandMA2 keywords like <code>MAtricksInterleave</code> don't exist in grandMA3; use <code>Set Selection MAtricks "XGroup" 2</code>.</li>
+<li>The manual disagrees on whether one Learn press enters Learn or LearnSpeed. Test on your desk.</li>
+</ul>
+<p>Manual (v2.5): <a href="https://help.malighting.com/grandMA3/2.5/HTML/csk_syntax_rules.html">Command syntax</a> · <a href="https://help.malighting.com/grandMA3/2.5/HTML/keys.html">Keys</a> · <a href="https://help.malighting.com/grandMA3/2.5/HTML/keyword_store.html">Store</a> · <a href="https://help.malighting.com/grandMA3/2.5/HTML/keyword_update.html">Update</a> · <a href="https://help.malighting.com/grandMA3/2.5/HTML/keyword_matricks.html">MAtricks</a> · <a href="https://help.malighting.com/grandMA3/2.5/HTML/operate_select_fixtures.html">Select fixtures</a> · <a href="https://help.malighting.com/grandMA3/2.5/HTML/cue_playback.html">Cue playback</a> · <a href="https://help.malighting.com/grandMA3/2.5/HTML/do_shortcuts_framework.html">Framework shortcuts</a></p>
+<p>Release notes: <a href="https://help.malighting.com/grandMA3/2.5/HTML/rn_features-2-5.html">2.5 features</a> · <a href="https://help.malighting.com/grandMA3/2.5/HTML/rn_bug_fix_version-2-5-1-1.html">2.5.1.1</a> · <a href="https://help.malighting.com/grandMA3/2.5/HTML/rn_features-2-4.html">2.4 features</a></p>
+<p>grandMA3 is a trademark of MA Lighting. This sheet is an independent summary and is not affiliated with MA Lighting.</p>
+            <h2>Published by</h2>
+            <p class="byline">Peter Van Engelandt</p>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>&copy; 2026 VanEngelandt.NET · Peter Van Engelandt · Plaatsweg 17, 8560 Gullegem (Wevelgem), Belgium · VAT BE0671.817.248 · <a href="mailto:info@vanengelandt.net">info@vanengelandt.net</a></p>
+            <div class="footer-links">
+                <a href="../index.html#services">Services</a>
+                <a href="../mirrorball.html">Shop</a>
+                <a href="index.html">Blog</a>
+                <a href="../index.html#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
