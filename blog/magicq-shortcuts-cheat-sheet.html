@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagicQ speed programming cheat sheet | VanEngelandt.NET</title>
+    <meta name="description" content="About 200 ChamSys MagicQ shortcuts and keypad syntax for fast programming and busking, grouped by workflow. Covers stable 1.9.8.3 and beta 1.9.9.0.">
+    <meta name="theme-color" content="#050505">
+    <link rel="icon" type="image/svg+xml" href="../images/logo-mark.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://vanengelandt.net/blog/magicq-shortcuts-cheat-sheet.html">
+    <meta property="og:url" content="https://vanengelandt.net/blog/magicq-shortcuts-cheat-sheet.html">
+    <meta property="og:title" content="MagicQ speed programming cheat sheet | VanEngelandt.NET">
+    <meta property="og:description" content="About 200 ChamSys MagicQ shortcuts and keypad syntax for fast programming and busking, grouped by workflow. Covers stable 1.9.8.3 and beta 1.9.9.0.">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="VanEngelandt.NET">
+    <meta property="og:image" content="https://vanengelandt.net/images/og-image.jpg">
+    <script data-goatcounter="https://vanengelandt.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+    <link rel="preload" href="../fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../css/site.css?v=f8088d54">
+    <style>
+        .page-hero { position: relative; overflow: hidden; padding: 170px 0 70px; border-bottom: 1px solid var(--line);
+            background: radial-gradient(ellipse 50% 80% at 85% 0%, rgba(201, 164, 92, .16), transparent 70%),
+                        radial-gradient(ellipse 40% 60% at 5% 100%, rgba(138, 106, 44, .14), transparent 70%), var(--black); }
+        .page-hero h1 { font-size: clamp(1.6rem, 5.6vw, 3.6rem); margin: 22px 0 26px; max-width: 1100px; }
+        .page-hero .lead { max-width: 780px; margin: 0 0 30px; }
+        .meta { color: var(--muted); font-size: .86rem; margin: 0 0 30px; }
+        .company { display: flex; flex-wrap: wrap; gap: 12px; }
+        .company div { padding: 12px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(201, 164, 92, .03); color: var(--ivory); font-size: .9rem; }
+        .company small { display: block; color: var(--gold); font-size: .64rem; letter-spacing: .24em; text-transform: uppercase; line-height: 1.6; }
+        .company a { color: var(--ivory); }
+        .post { padding-top: 56px; padding-bottom: 110px; color: var(--text); font-weight: 300; }
+        .post h2 { font-size: clamp(1.1rem, 2.6vw, 1.6rem); margin: 64px 0 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+        .post ul { padding-left: 20px; } .post li { margin: 6px 0; }
+        .post a { color: var(--gold-light); }
+        .post strong { color: var(--ivory); font-weight: 600; }
+        .post code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .86em; color: var(--gold-light);
+            background: rgba(201, 164, 92, .08); border: 1px solid var(--line); border-radius: 3px; padding: 1px 6px; white-space: nowrap; }
+        .table-wrap { overflow-x: auto; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); }
+        .post table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+        .post th { text-align: left; color: var(--gold); font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 700; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+        .post td { padding: 10px 16px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+        .post tr:last-child td { border-bottom: 0; }
+        .post td:first-child { color: var(--ivory); width: 46%; }
+        @media (max-width: 640px) {
+            .post thead { display: none; }
+            .post table, .post tbody, .post tr, .post td { display: block; width: auto !important; }
+            .post tr { padding: 12px 16px; border-bottom: 1px solid var(--line-soft); }
+            .post td { padding: 0; border: 0; }
+            .post td + td { color: var(--muted); margin-top: 4px; }
+            .post code { white-space: normal; }
+        }
+        .post-list { list-style: none; padding: 0; display: grid; gap: 18px; }
+        .post-card { display: block; padding: 32px 30px; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); text-decoration: none; transition: border-color .2s; }
+        .post-card:hover { border-color: var(--gold); }
+        .post-card h2 { margin: 10px 0 12px; border: 0; padding: 0; }
+        .post-card p { margin: 0; color: var(--text); }
+        .nav .btn-line { padding: 12px 16px; }
+        .print-only { display: none; }
+        @media print {
+            @page { margin: 14mm; }
+            html, body { background: #fff !important; color: #000; }
+            .site-header, .site-footer .footer-links { display: none !important; }
+            .print-only { display: block; margin-bottom: 18px; }
+            .print-only img { height: 46px; width: auto; }
+            .page-hero { background: none; padding: 0 0 14px; }
+            h1, h2, .post td, .post td:first-child, .post li, .post p, .post strong, .company div, .company a, .lead, .meta { color: #000 !important; }
+            h1 em { -webkit-text-fill-color: #000; background: none; }
+            .company div, .table-wrap { background: none; border-color: #bbb; }
+            .company small, .post th { color: #7a5c22; }
+            .post code { color: #000; background: #f3eee2; border-color: #d8ccae; }
+            .post { padding: 0; } .post h2 { break-after: avoid; margin-top: 26px; }
+            .post tr { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header solid">
+        <div class="container nav">
+            <a href="../index.html" class="brand-link" aria-label="VanEngelandt.NET">
+                <img src="../images/logo-mark.svg" alt="" width="42" height="42">
+                <img class="brand-word" src="../images/logo-wordmark.svg" alt="" width="898" height="102">
+            </a>
+            <div class="nav-right">
+                <a href="index.html" class="btn btn-line">Blog</a>
+                <a href="../index.html" class="btn btn-line">Website</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <div class="print-only"><img src="../brand/vanengelandt-logo-horizontal-light-bg.svg" alt="VanEngelandt.NET"></div>
+                <span class="eyebrow">ChamSys MagicQ</span>
+                <h1>MagicQ speed programming cheat sheet</h1>
+                <p class="lead">Every shortcut and keypad trick from the MagicQ manual and the latest release notes, on one page. Covers stable <strong>1.9.8.3</strong> (27 May 2026) and beta <strong>1.9.9.0</strong> (22 Sep 2026). Print it with Ctrl+P.</p>
+                <p class="meta">16 October 2026 · Peter Van Engelandt</p>
+                <div class="company">
+                    <div><small>Business</small>VanEngelandt.NET · VanEngelandt Event Services · PVE LightSync</div>
+                    <div><small>Owner</small>Peter Van Engelandt, lighting designer</div>
+                    <div><small>Address</small>Plaatsweg 17, 8560 Gullegem (Wevelgem), Belgium</div>
+                    <div><small>VAT number</small>BE0671.817.248</div>
+                    <div><small>Email</small><a href="mailto:info@vanengelandt.net">info@vanengelandt.net</a></div>
+                    <div><small>Web</small><a href="https://vanengelandt.net/">vanengelandt.net</a></div>
+                </div>
+            </div>
+        </section>
+        <article class="container post">
+<ul>
+<li><code>+</code> between keys = hold the first, press the second. <code>S</code> = a playback's SELECT button.</li>
+<li>On PC: <code>&gt;</code> = THRU, <code>#</code> = FULL. SHIFT/CTRL on your keyboard work like the console buttons.</li>
+<li>Keypad level/time syntax with <code>/</code> needs Setup option <strong>Auto Enter on Keypad Intensity Set = No</strong>.</li>
+<li>Items marked <strong>(1.9.8+)</strong> or <strong>(1.9.9 beta)</strong> only work on that version or newer.</li>
+</ul>
+<h2>1. Selecting</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1 THRU 4 + 8 THRU 11 ENTER</code></td>
+<td>Select ranges; <code>- 7</code> removes a head</td>
+</tr>
+<tr>
+<td><code>1 THRU ENTER</code></td>
+<td>All heads of the same type upward from 1</td>
+</tr>
+<tr>
+<td><code>101 @@</code></td>
+<td>Select head 101 whatever the setup</td>
+</tr>
+<tr>
+<td><code>0 ENTER</code></td>
+<td>Deselect all</td>
+</tr>
+<tr>
+<td><code>GROUP 1 THRU 4 - 3 ENTER</code></td>
+<td>Select groups by number</td>
+</tr>
+<tr>
+<td><code>name **</code></td>
+<td>Select group by (part of) its name</td>
+</tr>
+<tr>
+<td><code>GROUP 1 * 2 ENTER</code></td>
+<td>AND ONLY: heads in both groups</td>
+</tr>
+<tr>
+<td>SHIFT + touch head/group</td>
+<td>Toggle in/out of selection</td>
+</tr>
+<tr>
+<td>ALL (nothing selected)</td>
+<td>Reselect heads from the last CLEAR</td>
+</tr>
+<tr>
+<td>SHIFT + ALL</td>
+<td>All heads of the last type selected</td>
+</tr>
+<tr>
+<td>ALT + ALL</td>
+<td>All heads of the selected type, or snap colour (manual says both; test it)</td>
+</tr>
+<tr>
+<td>CTRL + ALL</td>
+<td>All heads active in the programmer</td>
+</tr>
+<tr>
+<td>Hold ALL + palette / <code>50 ENTER</code> / <code>@ 60 ENTER</code> / S</td>
+<td>Reselect heads using that palette / at 50%+ / at exactly 60% / in that playback step</td>
+</tr>
+<tr>
+<td>Hold ALL</td>
+<td>Selection order toolbar (normal, reverse, centre in/out)</td>
+</tr>
+<tr>
+<td>SHIFT + RANDOM SELECT</td>
+<td>Shuffle selection order</td>
+</tr>
+<tr>
+<td>NEXT HEAD / PREV HEAD</td>
+<td>Single mode, one head at a time; ALL exits</td>
+</tr>
+<tr>
+<td>SHIFT + SINGLE</td>
+<td>PAIR mode (symmetric pairs)</td>
+</tr>
+<tr>
+<td>ODD/EVEN, then NEXT HEAD</td>
+<td>Odds, then evens</td>
+</tr>
+<tr>
+<td>Hold ODD/EVEN (PC: SHIFT + ODD/EVEN)</td>
+<td>Toolbar: 3s, 4s, segments, groups, chunks, col tags</td>
+</tr>
+<tr>
+<td><code>1+2 NEXT HEAD</code> / <code>3 THRU 5 NEXT HEAD</code></td>
+<td>Sub-select by position in the selection</td>
+</tr>
+<tr>
+<td><code>0 NEXT HEAD</code></td>
+<td>Invert the sub-selection</td>
+</tr>
+<tr>
+<td>Hold NEXT HEAD + palette</td>
+<td>Sub-select heads using that palette</td>
+</tr>
+<tr>
+<td>SHIFT + NEXT/PREV HEAD</td>
+<td>Step through elements (1.9.8+)</td>
+</tr>
+<tr>
+<td><code>101.2 ENTER</code>, <code>.1 &gt; 3 ENTER</code>, <code>.&gt; ENTER</code></td>
+<td>Elements: head 101 el. 2 / el. 1-3 / all; <code>. ENTER</code> cancels</td>
+</tr>
+<tr>
+<td><code>10 . 1 . 2 THRU 5 ENTER</code></td>
+<td>Elements 2-5 of function 1 on head 10</td>
+</tr>
+</tbody>
+</table></div>
+<h2>2. Intensity, times and attributes</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>1 THRU 4 @ 40</code> / <code>@ FULL</code> / <code>@ +10</code></td>
+<td>Set level / full / relative</td>
+</tr>
+<tr>
+<td><code>@ 4</code> = 40%, <code>@ .4</code> or <code>@ 04</code> = 4%</td>
+<td>Level shorthand</td>
+</tr>
+<tr>
+<td><code>@ 80 / 5</code></td>
+<td>Level with 5 s fade</td>
+</tr>
+<tr>
+<td><code>@ / 2 / 5</code></td>
+<td>2 s delay, 5 s fade</td>
+</tr>
+<tr>
+<td><code>@ FULL / 3 *</code></td>
+<td>Fade split over 3 s across heads</td>
+</tr>
+<tr>
+<td><code>/ 0 &gt; 5</code> (or <code>/ 5 &gt; 0</code>)</td>
+<td>Spread fades 0 to 5 s (reverse order works)</td>
+</tr>
+<tr>
+<td><code>GROUP 2 @ 10 THRU 20</code></td>
+<td>Intensity FX between 10% and 20%</td>
+</tr>
+<tr>
+<td><code>* 1 . 50 @ FULL</code></td>
+<td>Raw DMX channels 1-50 to full</td>
+</tr>
+<tr>
+<td><code>- -</code> after a selection</td>
+<td>REM DIM: all other programmer heads to 0</td>
+</tr>
+<tr>
+<td>LOCATE / hold POS+LOCATE</td>
+<td>Locate all / only that attribute</td>
+</tr>
+<tr>
+<td>SHIFT / CTRL / CTRL+SHIFT + LOCATE</td>
+<td>Lamp on / reset / lamp off</td>
+</tr>
+<tr>
+<td>HIGHLIGHT / SHIFT + HIGHLIGHT / CTRL + HIGHLIGHT</td>
+<td>Highlight / lowlight / solo</td>
+</tr>
+<tr>
+<td>SHIFT + encoder</td>
+<td>Fine (16-bit)</td>
+</tr>
+<tr>
+<td>Encoder push / SHIFT + push</td>
+<td>Next / previous wheel slot</td>
+</tr>
+<tr>
+<td><code>SET 3500</code> + CTC soft button</td>
+<td>Type an exact attribute value</td>
+</tr>
+<tr>
+<td><code>SET -</code> + rotate soft button</td>
+<td>Reverse rotation</td>
+</tr>
+<tr>
+<td>FLIP / MIRROR soft buttons</td>
+<td>Flip pan+tilt / invert pan only</td>
+</tr>
+<tr>
+<td>Hold FAN (PC: SHIFT + FAN toolbar)</td>
+<td>Fan mode: parts, segments, groups, chunks</td>
+</tr>
+<tr>
+<td>FAN + NEXT/PREV HEAD</td>
+<td>Cycle fan type: asymmetric, symmetric, end</td>
+</tr>
+<tr>
+<td>FAN + LOCATE</td>
+<td>Fan back to asymmetric</td>
+</tr>
+<tr>
+<td><code>GROUP 8 COL 4 BEAM 5 ENTER</code></td>
+<td>Apply palettes from the keypad</td>
+</tr>
+<tr>
+<td><code>GROUP 8 @ FULL FX 3 ENTER</code></td>
+<td>Full plus FX palette 3</td>
+</tr>
+<tr>
+<td>SHIFT + SQUARE OFF (Intensity window)</td>
+<td>Invert levels (SQUARE OFF snaps to 0/full)</td>
+</tr>
+</tbody>
+</table></div>
+<h2>3. Record, clear, include, copy</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RECORD + S</td>
+<td>Record to a playback</td>
+</tr>
+<tr>
+<td><code>6/2.0 ENTER</code> after RECORD</td>
+<td>Record to playback 6, cue 2.0</td>
+</tr>
+<tr>
+<td>name + RECORD</td>
+<td>Record and name in one go</td>
+</tr>
+<tr>
+<td>SHIFT + RECORD</td>
+<td>Record options (REC TYPE, masks, LOCK MASK)</td>
+</tr>
+<tr>
+<td>Hold S + RECORD (or <code>REC 0 ENTER</code>)</td>
+<td>Merge into the current cue</td>
+</tr>
+<tr>
+<td>Hold <code>+</code> / <code>-</code> + RECORD</td>
+<td>Record merge / record remove, then pick target</td>
+</tr>
+<tr>
+<td>Hold UPDATE + RECORD</td>
+<td>Update, then pick target</td>
+</tr>
+<tr>
+<td>Hold <code>/</code> + RECORD</td>
+<td>Record cue only</td>
+</tr>
+<tr>
+<td>Hold <code>*</code> + RECORD</td>
+<td>Selected heads only (<code>* +</code> merge, <code>* -</code> remove)</td>
+</tr>
+<tr>
+<td>ALL + RECORD</td>
+<td>Record entire state</td>
+</tr>
+<tr>
+<td>THRU + RECORD</td>
+<td>Snapshot of the whole output</td>
+</tr>
+<tr>
+<td>Hold POS/COL/BEAM/INT + RECORD</td>
+<td>Record only that attribute type</td>
+</tr>
+<tr>
+<td>CTRL + RECORD</td>
+<td>Record DMX input (Art-Net capture)</td>
+</tr>
+<tr>
+<td>CLEAR / SHIFT + CLEAR / <code>5 CLEAR</code></td>
+<td>Clear all / selected heads only / over 5 s</td>
+</tr>
+<tr>
+<td>SHIFT + CTRL + CLEAR</td>
+<td>Force all LTP channels to 0</td>
+</tr>
+<tr>
+<td><code>10 BLIND</code></td>
+<td>Enter blind over 10 s</td>
+</tr>
+<tr>
+<td><code>*</code> + SET / Hold SET + soft button</td>
+<td>Make attributes active</td>
+</tr>
+<tr>
+<td><code>*</code> + REMOVE / REMOVE + encoder</td>
+<td>Knock out all / one attribute from programmer</td>
+</tr>
+<tr>
+<td>SHIFT + ACTIVE (Prog window)</td>
+<td>Load all attributes of selected heads</td>
+</tr>
+<tr>
+<td><code>INC S</code> / <code>INC 2 S</code> / <code>INC POS COL S</code></td>
+<td>Include current cue / cue 2 / only pos+col</td>
+</tr>
+<tr>
+<td><code>GROUP 1 INC S</code></td>
+<td>Include just those heads from the cue</td>
+</tr>
+<tr>
+<td>ALL + INCLUDE</td>
+<td>Include entire state</td>
+</tr>
+<tr>
+<td><code>INCLUDE @ 40</code> + S</td>
+<td>Include at 40%</td>
+</tr>
+<tr>
+<td>CTRL + INCLUDE, ENTER</td>
+<td>Include DMX input for selected heads</td>
+</tr>
+<tr>
+<td>UPDATE / SHIFT + UPDATE</td>
+<td>Re-record last included / force update</td>
+</tr>
+<tr>
+<td><code>1 THRU 2 COPY 5 THRU 8 ENTER</code></td>
+<td>Copy programmer data between heads</td>
+</tr>
+<tr>
+<td><code>1 THRU 2 COPY POS COL 5 THRU 8 ENTER</code></td>
+<td>Copy only position and colour</td>
+</tr>
+<tr>
+<td><code>GROUP 1 COPY GROUP 2</code> + S</td>
+<td>Copy heads inside a cue</td>
+</tr>
+<tr>
+<td>CTRL + Z / CTRL + Y (PC), SHIFT + UNDO</td>
+<td>Undo / redo</td>
+</tr>
+</tbody>
+</table></div>
+<h2>4. Palettes and fan timing</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RECORD + palette entry</td>
+<td>Store selected heads (merges with what is there)</td>
+</tr>
+<tr>
+<td><code>RECORD COL 5 ENTER</code></td>
+<td>Record palette from keypad</td>
+</tr>
+<tr>
+<td>SHIFT + RECORD, REC INT</td>
+<td>Put intensity into a palette</td>
+</tr>
+<tr>
+<td>CTRL + ALL, then RECORD</td>
+<td>Re-record so every changed head updates</td>
+</tr>
+<tr>
+<td>UPDATE + RECORD</td>
+<td>Update only attributes already in the palette</td>
+</tr>
+<tr>
+<td>INCLUDE + entry, then UPDATE</td>
+<td>Edit a palette</td>
+</tr>
+<tr>
+<td>CTRL + RECORD + entry</td>
+<td>Capture palette from DMX input</td>
+</tr>
+<tr>
+<td>name + SET + entry</td>
+<td>Name a palette</td>
+</tr>
+<tr>
+<td><code>3</code> + palette</td>
+<td>Apply with 3 s fade</td>
+</tr>
+<tr>
+<td><code>0 THRU 3</code> + palette</td>
+<td>Delay spread 0-3 s over heads</td>
+</tr>
+<tr>
+<td><code>0 THRU 3 / 1</code> + palette</td>
+<td>Spread delay with 1 s fade</td>
+</tr>
+<tr>
+<td><code>3 *</code> + palette</td>
+<td>Fan the time across heads</td>
+</tr>
+<tr>
+<td><code>3 */</code> / <code>3 *+</code> / <code>3 *-</code> / <code>3 *.</code></td>
+<td>Reverse / into centre / centre out / random</td>
+</tr>
+<tr>
+<td><code>*</code> alone + palette</td>
+<td>Reuse the last fan time</td>
+</tr>
+<tr>
+<td><code>2+4</code> + palette</td>
+<td>Fades from 2 s up to 4 s across heads</td>
+</tr>
+<tr>
+<td><code>*..</code> / <code>*//</code> / <code>*++</code> / <code>*--</code></td>
+<td>Group grid: left-right / right-left / out-in / in-out</td>
+</tr>
+<tr>
+<td><code>COL 5 / 4 * ENTER</code></td>
+<td>Keypad palette with fanned time</td>
+</tr>
+<tr>
+<td>SHIFT + STEAL PALETTE</td>
+<td>Update palettes matched by name/icon</td>
+</tr>
+<tr>
+<td>SHIFT + UNLINK ALL PALETTE</td>
+<td>Unlink all palettes of that type</td>
+</tr>
+<tr>
+<td><code>X/Y</code> + SET CIE (1.9.7+)</td>
+<td>Store CIE xy colour in a palette</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. FX</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Encoder X / X button</td>
+<td>Speed / stop-start FX</td>
+</tr>
+<tr>
+<td>Encoder Y / Y button</td>
+<td>Crossfade / tap tempo</td>
+</tr>
+<tr>
+<td>SHIFT + Y</td>
+<td>Attack / decay</td>
+</tr>
+<tr>
+<td>Encoder C</td>
+<td>Width</td>
+</tr>
+<tr>
+<td>Encoder D / SHIFT + D</td>
+<td>Size / oversize up to 800%</td>
+</tr>
+<tr>
+<td>Encoder F / SHIFT + F</td>
+<td>Segments / chunks</td>
+</tr>
+<tr>
+<td><code>.2</code> in Segments field</td>
+<td>2 chunks; <code>0</code> back to segments</td>
+</tr>
+<tr>
+<td>ADD FX / ADD GROUP FX / CHANGE FX</td>
+<td>Add FX / group FX / swap waveform</td>
+</tr>
+<tr>
+<td>SHIFT + ADD FX 0 SIZE</td>
+<td>Zero-size FX to override other playbacks</td>
+</tr>
+<tr>
+<td>SHIFT + MAKE FX</td>
+<td>Turn a chase into an FX</td>
+</tr>
+<tr>
+<td>SHIFT + JOIN FX / SPLIT FX</td>
+<td>Join / split multiple FX</td>
+</tr>
+<tr>
+<td>BLIND BLIND</td>
+<td>Restart FX</td>
+</tr>
+<tr>
+<td>Press and release BLIND</td>
+<td>Busk an FX in and out</td>
+</tr>
+<tr>
+<td>CTRL + any TAP</td>
+<td>Resync FX to start</td>
+</tr>
+<tr>
+<td>One Shot, Bounce, PosDimCol FX (1.9.8+)</td>
+<td>1-4 shot FX, bounce directions, combined pos/dim/col</td>
+</tr>
+</tbody>
+</table></div>
+<h2>6. Cue stacks and editing cues</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S x2 / S x3</td>
+<td>Open Cue Stack window / its options</td>
+</tr>
+<tr>
+<td>SHIFT + S double press</td>
+<td>Cue window at the current cue</td>
+</tr>
+<tr>
+<td><code>COPY CUE 1 THRU 2 @ 5 ENTER</code></td>
+<td>Copy cues 1-2 to cue 5</td>
+</tr>
+<tr>
+<td><code>COPY CUE 3 THRU 5 @ ENTER</code></td>
+<td>Copy cues to the end of the stack</td>
+</tr>
+<tr>
+<td><code>MOVE CUE 1 THRU 2 @ 5 ENTER</code></td>
+<td>Move cues</td>
+</tr>
+<tr>
+<td><code>REMOVE CUE 1 THRU 2 ENTER</code></td>
+<td>Remove cues</td>
+</tr>
+<tr>
+<td><code>INCLUDE CUE 2 ENTER</code></td>
+<td>Include cue 2 into programmer</td>
+</tr>
+<tr>
+<td>SHIFT + COPY</td>
+<td>Unlinked copy (default copy is linked)</td>
+</tr>
+<tr>
+<td>Hold COPY, select several, release</td>
+<td>Multi-copy</td>
+</tr>
+<tr>
+<td><code>RECORD MERGE 2 THRU 4</code> + S</td>
+<td>Merge programmer into cues 2-4</td>
+</tr>
+<tr>
+<td>Hold S, <code>1 @ FULL THRU</code></td>
+<td>Head 1 to full in all cues</td>
+</tr>
+<tr>
+<td>Hold S, <code>1 @ .. THRU</code></td>
+<td>Remove head 1 intensity from all cues</td>
+</tr>
+<tr>
+<td>SHIFT + LINK / UNLINK CUE</td>
+<td>Link / unlink cue at cursor</td>
+</tr>
+<tr>
+<td>SHIFT + BLOCK CUE / UNBLOCK CUE</td>
+<td>Block / unblock tracking</td>
+</tr>
+<tr>
+<td><code>1 THRU 5 THRU</code> in fade field</td>
+<td>Symmetric fade times into centre</td>
+</tr>
+<tr>
+<td><code>SET CUE 1 TIME 2 ENTER</code> (1.9.8+)</td>
+<td>2 s fade on cue 1 from keypad</td>
+</tr>
+<tr>
+<td><code>SET CUE 1 TIME COL 2 ENTER</code> (1.9.8+)</td>
+<td>Fade time for one attribute</td>
+</tr>
+<tr>
+<td><code>SET CUE 1 THRU 5 TIME 3 ENTER</code> (1.9.8+)</td>
+<td>Time on a range of cues</td>
+</tr>
+<tr>
+<td><code>SET CUE TIME 5 ENTER</code> (1.9.8+)</td>
+<td>Release time</td>
+</tr>
+<tr>
+<td>CTRL + cue/stack in Store</td>
+<td>Restart it</td>
+</tr>
+<tr>
+<td>SHIFT + ENTER on Halt field</td>
+<td>Advanced halt: timecode, scheduled, remote</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. Playback, release and busking</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S + GO / S + PAUSE</td>
+<td>Step forward / back with no fade</td>
+</tr>
+<tr>
+<td>SHIFT + GO (wing)</td>
+<td>Pause</td>
+</tr>
+<tr>
+<td>S + FLASH</td>
+<td>Make this stack latest-touched (take back control)</td>
+</tr>
+<tr>
+<td>SHIFT + FLASH</td>
+<td>Toggle a fader-less playback</td>
+</tr>
+<tr>
+<td>Cue ID, then manual GO</td>
+<td>Jump to a cue</td>
+</tr>
+<tr>
+<td>SHIFT + RELEASE / <code>3</code> SHIFT + RELEASE</td>
+<td>Release all / over 3 s</td>
+</tr>
+<tr>
+<td>Hold one S + SHIFT + RELEASE</td>
+<td>Release all except that one</td>
+</tr>
+<tr>
+<td>ALT + RELEASE</td>
+<td>Release holdover playbacks</td>
+</tr>
+<tr>
+<td>CTRL + RELEASE</td>
+<td>Release all test playbacks</td>
+</tr>
+<tr>
+<td><code>3</code> RELEASE (playback selected)</td>
+<td>Release that playback over 3 s</td>
+</tr>
+<tr>
+<td>SHIFT + SEL, S source, S target</td>
+<td>Move an active playback</td>
+</tr>
+<tr>
+<td>Hold S + crossfader</td>
+<td>Manual crossfade</td>
+</tr>
+<tr>
+<td><code>PAGE 5</code> / <code>PAGE 34 *</code></td>
+<td>Go to page / preload page</td>
+</tr>
+<tr>
+<td>Hold S + soft button Y</td>
+<td>Tap to time on that playback</td>
+</tr>
+<tr>
+<td>Hold S + encoder X</td>
+<td>Playback rate</td>
+</tr>
+<tr>
+<td>RESET ALL RATE</td>
+<td>All rates back to 100%</td>
+</tr>
+<tr>
+<td>Speed master: FLASH / GO / PAUSE</td>
+<td>Tap / run / halt</td>
+</tr>
+<tr>
+<td>Speed master: SHIFT + GO / SHIFT + PAUSE</td>
+<td>Double / halve</td>
+</tr>
+<tr>
+<td>Speed master: CTRL + FLASH</td>
+<td>Resync all its FX</td>
+</tr>
+<tr>
+<td><code>[time]</code> + palette</td>
+<td>Busk a palette in with a fade</td>
+</tr>
+<tr>
+<td>CTRL + BIG GO</td>
+<td>Record a Live Macro; BIG GO runs it</td>
+</tr>
+<tr>
+<td>Programmer master: FLASH</td>
+<td>Bump programmer to 100%</td>
+</tr>
+<tr>
+<td>Prog Store: REC PS / ACT PS</td>
+<td>Store / recall programmer states (PS1-10)</td>
+</tr>
+<tr>
+<td>DBO</td>
+<td>Hold: HTP to zero (LTP stays)</td>
+</tr>
+<tr>
+<td>Hold Next Page + press Prev Page on a bank (1.9.8+)</td>
+<td>Swap that bank only</td>
+</tr>
+</tbody>
+</table></div>
+<h2>8. Timecode and timeline</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHIFT + RECORD TC</td>
+<td>Learn timing: press GO along with the music</td>
+</tr>
+<tr>
+<td><code>/</code> in the Wait field</td>
+<td>Set cue to the current incoming timecode</td>
+</tr>
+<tr>
+<td>SHIFT + encoder Y</td>
+<td>Nudge all selected timecodes</td>
+</tr>
+<tr>
+<td>SHIFT + encoder D</td>
+<td>Timecode offset</td>
+</tr>
+<tr>
+<td>SHIFT + soft button D</td>
+<td>Timecode on/off without confirm</td>
+</tr>
+<tr>
+<td>Encoder X press (timeline)</td>
+<td>Play / pause</td>
+</tr>
+<tr>
+<td>Encoder E</td>
+<td>Zoom</td>
+</tr>
+<tr>
+<td>SHIFT + click-drag</td>
+<td>Box-select items</td>
+</tr>
+<tr>
+<td>COPY, then click timeline</td>
+<td>Paste at that point</td>
+</tr>
+<tr>
+<td>SHIFT + CONFIG TC LOOP</td>
+<td>Set up a timecode loop</td>
+</tr>
+<tr>
+<td>REC double press (1.9.8+)</td>
+<td>Record a cue at the playhead</td>
+</tr>
+<tr>
+<td>AUTO/MANUAL BEATS (1.9.8+)</td>
+<td>Beat grid: A/B start-end, C BPM, D insert</td>
+</tr>
+<tr>
+<td>Record new TC Track</td>
+<td>Record live GOs, flashes and faders to a track</td>
+</tr>
+</tbody>
+</table></div>
+<h2>9. Patching</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ENTER at address prompt</td>
+<td>Next free address</td>
+</tr>
+<tr>
+<td><code>10@20</code></td>
+<td>10 heads from address 20</td>
+</tr>
+<tr>
+<td><code>10@2-20</code></td>
+<td>10 heads, universe 2 address 20</td>
+</tr>
+<tr>
+<td><code>10@+2-1</code></td>
+<td>First free address on universe 2</td>
+</tr>
+<tr>
+<td><code>4/40</code></td>
+<td>4 heads, 40 channels apart</td>
+</tr>
+<tr>
+<td><code>10 @ 7-2 * 201</code></td>
+<td>Head numbers start at 201</td>
+</tr>
+<tr>
+<td><code>@ 0</code></td>
+<td>Patch without address</td>
+</tr>
+<tr>
+<td><code>2-1/</code></td>
+<td>Readdress selection keeping gaps</td>
+</tr>
+<tr>
+<td><code>u</code> or REMOVE in DMX field</td>
+<td>Unpatch, keep programming</td>
+</tr>
+<tr>
+<td>SHIFT + cursor, CLONE HEAD</td>
+<td>Clone heads with programming</td>
+</tr>
+<tr>
+<td><code>1 THRU 4 SHIFT COPY 10 THRU 20 ENTER</code></td>
+<td>Copy head programming</td>
+</tr>
+<tr>
+<td>SHIFT + ADD VDIM / REMOVE VDIM</td>
+<td>Add / remove virtual dimmers</td>
+</tr>
+<tr>
+<td>SHIFT + EDIT HEAD</td>
+<td>Open Head Editor for that head</td>
+</tr>
+</tbody>
+</table></div>
+<h2>10. Windows, navigation and PC keyboard</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHIFT + CLOSE</td>
+<td>Close all windows</td>
+</tr>
+<tr>
+<td>CTRL + top soft button</td>
+<td>Recall layouts 1-12</td>
+</tr>
+<tr>
+<td>RECORD + CTRL + top soft button</td>
+<td>Record a layout</td>
+</tr>
+<tr>
+<td>CTRL + PROG / CTRL + OUT</td>
+<td>Programmer info / Output info window</td>
+</tr>
+<tr>
+<td><code>2 OUT</code>, <code>2 EXEC</code>, <code>2 GROUP</code></td>
+<td>Second copy of a window</td>
+</tr>
+<tr>
+<td>CTRL + SETUP</td>
+<td>Net Manager</td>
+</tr>
+<tr>
+<td>CTRL + BEAM (1.9.7+)</td>
+<td>Framing blades window</td>
+</tr>
+<tr>
+<td>SET SET</td>
+<td>On-screen keyboard</td>
+</tr>
+<tr>
+<td>SHIFT + SET</td>
+<td>Icon chooser</td>
+</tr>
+<tr>
+<td>SHIFT + MOVE</td>
+<td>Drag-move mode</td>
+</tr>
+<tr>
+<td>SHIFT / CTRL + cursors</td>
+<td>Multi-select in any window</td>
+</tr>
+<tr>
+<td>ALT + cursors</td>
+<td>Page up/down/left/right</td>
+</tr>
+<tr>
+<td>Double-click window title</td>
+<td>Window size dialog</td>
+</tr>
+<tr>
+<td>CTRL + C / V / A (PC)</td>
+<td>Copy / paste / select all</td>
+</tr>
+<tr>
+<td>CTRL + F (PC, Normal keyboard mode)</td>
+<td>Find</td>
+</tr>
+<tr>
+<td>CTRL + Q (PC)</td>
+<td>Exit full-screen Execute</td>
+</tr>
+<tr>
+<td>CTRL + BACKSPACE</td>
+<td>Clear the command line</td>
+</tr>
+<tr>
+<td>ALT + ADD/SWAP</td>
+<td>Screenshot to screenshots folder</td>
+</tr>
+<tr>
+<td>Hold SELECT + Execute item</td>
+<td>View that item (FX/chase speed)</td>
+</tr>
+<tr>
+<td>CTRL + SHIFT (Output heads view)</td>
+<td>Raw 16-bit DMX values</td>
+</tr>
+</tbody>
+</table></div>
+<h2>11. New speed tricks in 1.9.7 to 1.9.9</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Keys / feature</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.9.9 beta</td>
+<td><code>chase#100</code> in name keyboard</td>
+<td>Auto-numbered names: chase100, chase101...</td>
+</tr>
+<tr>
+<td>1.9.9 beta</td>
+<td>Assign Special, Prog Store</td>
+<td>All PS1-PS10 on an Execute grid in one go</td>
+</tr>
+<tr>
+<td>1.9.9 beta</td>
+<td>Assign Special, Live Macro</td>
+<td>Rec / End / Go buttons in Execute</td>
+</tr>
+<tr>
+<td>1.9.9 beta</td>
+<td>Setup, Always Show Record Options = No (Rec Rec)</td>
+<td>REC REC records into the window, not to playbacks</td>
+</tr>
+<tr>
+<td>1.9.8</td>
+<td><code>SET CUE n TIME ...</code></td>
+<td>Cue times from the keypad (see section 6)</td>
+</tr>
+<tr>
+<td>1.9.8</td>
+<td><code>. NEXT HEAD</code> / SHIFT + NEXT HEAD</td>
+<td>Step global elements / head elements</td>
+</tr>
+<tr>
+<td>1.9.8</td>
+<td>Record over a group or palette in Execute</td>
+<td>Re-records the item itself</td>
+</tr>
+<tr>
+<td>1.9.8</td>
+<td>SHIFT + EDIT HEAD (Group window)</td>
+<td>Head Editor for selected head</td>
+</tr>
+<tr>
+<td>1.9.8</td>
+<td>Hold bank Next Page + Prev Page</td>
+<td>Swap one bank's page only</td>
+</tr>
+<tr>
+<td>1.9.8</td>
+<td><code>&lt;num&gt; @ 0</code> in patch</td>
+<td>Patch that many unpatched heads</td>
+</tr>
+<tr>
+<td>1.9.8</td>
+<td>One Shot / Bounce FX, chunks in FX</td>
+<td>Hits that stop after 1-4 shots</td>
+</tr>
+<tr>
+<td>1.9.8</td>
+<td>Speed masters on Exec faders, named</td>
+<td>Faster BPM busking</td>
+</tr>
+<tr>
+<td>1.9.7</td>
+<td>Hold ODD/EVEN (PC: SHIFT + ODD/EVEN)</td>
+<td>Odd/even toolbar: parts, segments, chunks, pairs, grid order</td>
+</tr>
+<tr>
+<td>1.9.7</td>
+<td>Hold ALL / SHIFT + ALL</td>
+<td>Select order toolbar (normal after random)</td>
+</tr>
+<tr>
+<td>1.9.7</td>
+<td><code>name **</code></td>
+<td>Select group by name</td>
+</tr>
+<tr>
+<td>1.9.7</td>
+<td>Macro <code>998R</code></td>
+<td>Release all except the current playback</td>
+</tr>
+<tr>
+<td>1.9.7</td>
+<td>Type % on a Playbacks window fader</td>
+<td>Set fader level directly</td>
+</tr>
+</tbody>
+</table></div>
+<h2>Sources and caveats</h2>
+<ul>
+<li>The manual itself contradicts on two points: <strong>CTRL + CLEAR</strong> (all heads to 0 vs. all channels to defaults) and <strong>ALT + ALL</strong> (all heads of the selected type vs. snap colour). Test these on your version.</li>
+<li>No F1-F12 keyboard table was reachable; the PC keys above are the ones the manual mentions.</li>
+<li>1.9.9.0 is beta at the time of writing.</li>
+</ul>
+<p>Manual (1.9.9.x): <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/programmer.html">Programmer</a> · <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/selecting.html">Selecting</a> · <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/dimmer_levels.html">Intensity</a> · <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/controlling_intelligent_heads.html">Attributes</a> · <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/palletes.html">Palettes</a> · <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/FX_engine.html">FX</a> · <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/editing_cues.html">Editing cues</a> · <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/cue_stacks.html">Cue stacks</a> · <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/playback.html">Playback</a> · <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/busking.html">Busking</a> · <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/patching.html">Patching</a> · <a href="https://docs.chamsys.co.uk/magicq/1.9.9.x/manual/console_layout.html">Layout</a></p>
+<p>Change notes: <a href="https://docs.chamsys.co.uk/magicq-change-notes/stable/version1-9-9/v1.9.9-change-notes.html">1.9.9</a> · <a href="https://docs.chamsys.co.uk/magicq-change-notes/stable/version1-9-8/v1.9.8-change-notes.html">1.9.8</a> · <a href="https://docs.chamsys.co.uk/magicq-change-notes/stable/version1-9-7/v1.9.7-change-notes.html">1.9.7</a> · <a href="https://downloads.chamsys.co.uk/magicq">Downloads</a></p>
+<p>MagicQ and ChamSys are trademarks of ChamSys Ltd. This sheet is an independent summary and is not affiliated with ChamSys.</p>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>&copy; 2026 VanEngelandt.NET · Peter Van Engelandt · Plaatsweg 17, 8560 Gullegem (Wevelgem), Belgium · VAT BE0671.817.248 · <a href="mailto:info@vanengelandt.net">info@vanengelandt.net</a></p>
+            <div class="footer-links">
+                <a href="../index.html#services">Services</a>
+                <a href="../mirrorball.html">Shop</a>
+                <a href="index.html">Blog</a>
+                <a href="../index.html#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

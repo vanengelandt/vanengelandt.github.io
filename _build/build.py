@@ -10,7 +10,7 @@ Sources: index.html and mirrorball.html (English, edit these), _build/terms-temp
 i18n/terms.<lang>.json, i18n/mirrorball.<lang>.json and the strings in js/i18n.js. Underscore folders are not
 published by GitHub Pages.
 """
-import hashlib, html, json, os, re, subprocess
+import glob, hashlib, html, json, os, re, subprocess
 
 SITE = 'https://vanengelandt.net/'
 LANGS = ['en', 'nl', 'fr', 'zh', 'th', 'vi']
@@ -90,7 +90,7 @@ def render(src, lang, page):
     s = s.replace('    <meta property="og:type"', block + '    <meta property="og:type"', 1)
 
     if lang != 'en':
-        s = re.sub(r'((?:href|src|data-full)=")((?:css|js|fonts|images|brand)/)', r'\1../\2', s)
+        s = re.sub(r'((?:href|src|data-full)=")((?:css|js|fonts|images|brand|blog)/)', r'\1../\2', s)
         s = re.sub(r'srcset="[^"]*"', lambda m: re.sub(r'(["\s])(images/)', r'\1../\2', m.group(0)), s)
     return s
 
@@ -150,7 +150,13 @@ def main():
     open('sitemap.xml', 'w', encoding='utf-8').write(
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
-        + '\n'.join(urls) + '\n</urlset>\n')
+        + '\n'.join(urls) + '\n' + blog_urls() + '</urlset>\n')
+
+
+def blog_urls():
+    # The blog is English only; _build/blog.py makes the pages, this keeps them in the sitemap
+    pages = sorted(os.path.basename(f) for f in glob.glob('blog/*.html'))
+    return ''.join(f'  <url>\n    <loc>https://vanengelandt.net/blog/{"" if p == "index.html" else p}</loc>\n  </url>\n' for p in pages)
 
 
 if __name__ == '__main__':

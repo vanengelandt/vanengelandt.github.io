@@ -180,4 +180,10 @@
     <xhtml:link rel="alternate" hreflang="vi" href="https://vanengelandt.net/vi/mirrorball.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://vanengelandt.net/mirrorball.html"/>
   </url>
+  <url>
+    <loc>https://vanengelandt.net/blog/</loc>
+  </url>
+  <url>
+    <loc>https://vanengelandt.net/blog/magicq-shortcuts-cheat-sheet.html</loc>
+  </url>
 </urlset>
