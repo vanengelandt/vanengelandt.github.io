@@ -44,7 +44,8 @@
         .post th { text-align: left; color: var(--gold); font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 700; padding: 14px 16px; border-bottom: 1px solid var(--line); }
         .post td { padding: 10px 16px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
         .post tr:last-child td { border-bottom: 0; }
-        .post td:first-child { color: var(--ivory); width: 46%; }
+        .post td:first-child { color: var(--ivory); }
+        .post td:first-child:nth-last-child(2) { width: 46%; }
         @media (max-width: 640px) {
             .post thead { display: none; }
             .post table, .post tbody, .post tr, .post td { display: block; width: auto !important; }
