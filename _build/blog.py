@@ -228,6 +228,16 @@ def main():
         open(f'blog/{p["slug"]}.html', 'w', encoding='utf-8').write(post_page(p))
     open('blog/index.html', 'w', encoding='utf-8').write(index_page(posts))
 
+    # Home page: the three newest posts between the blog markers (build.py copies them to every language)
+    home = open('index.html', encoding='utf-8').read()
+    cards = '\n'.join(f'''                    <li><a class="blog-card" href="blog/{p["slug"]}.html">
+                        <span class="eyebrow">{html.escape(p["tag"])} · {'.'.join(reversed(p["date"].split('-')))}</span>
+                        <h3>{html.escape(p["title"])}</h3>
+                        <p>{html.escape(p["description"])}</p>
+                    </a></li>''' for p in posts[:3])
+    home = re.sub(r'(<!-- blog:start -->).*?(\s*<!-- blog:end -->)', lambda m: m.group(1) + '\n                <ul class="blog-cards">\n' + cards + '\n                </ul>' + m.group(2), home, flags=re.S)
+    open('index.html', 'w', encoding='utf-8').write(home)
+
     # Sitemap: replace any earlier blog entries, then append the current ones
     sm = open('sitemap.xml', encoding='utf-8').read()
     sm = re.sub(r'  <url>\n    <loc>https://vanengelandt\.net/blog/[^<]*</loc>\n  </url>\n', '', sm)
