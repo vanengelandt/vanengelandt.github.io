@@ -52,7 +52,8 @@
             .post td + td { color: var(--muted); margin-top: 4px; }
             .post code { white-space: normal; }
         }
-        .post-list { list-style: none; padding: 0; display: grid; gap: 18px; }
+        .post > h2:first-child { margin-top: 0; }
+        .post .post-list { list-style: none; padding: 0; display: grid; gap: 18px; }
         .post-card { display: block; padding: 32px 30px; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); text-decoration: none; transition: border-color .2s; }
         .post-card:hover { border-color: var(--gold); }
         .post-card h2 { margin: 10px 0 12px; border: 0; padding: 0; }
@@ -101,6 +102,11 @@
         </section>
         <div class="container post">
             <ul class="post-list">
+                <li><a class="post-card" href="beyond-performer-console.html">
+                    <span class="eyebrow">Laser · 16 October 2026</span>
+                    <h2>New in my kit: the BEYOND Performer Console</h2>
+                    <p>I added Pangolin&#x27;s BEYOND Performer Console to my laser setup. A hands-on MIDI controller for BEYOND that I will use to run the lasers in my future shows.</p>
+                </a></li>
                 <li><a class="post-card" href="magicq-shortcuts-cheat-sheet.html">
                     <span class="eyebrow">ChamSys MagicQ · 16 October 2026</span>
                     <h2>MagicQ speed programming cheat sheet</h2>

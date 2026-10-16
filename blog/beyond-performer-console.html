@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New in my kit: the BEYOND Performer Console | VanEngelandt.NET</title>
+    <meta name="description" content="I added Pangolin&#x27;s BEYOND Performer Console to my laser setup. A hands-on MIDI controller for BEYOND that I will use to run the lasers in my future shows.">
+    <meta name="theme-color" content="#050505">
+    <link rel="icon" type="image/svg+xml" href="../images/logo-mark.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://vanengelandt.net/blog/beyond-performer-console.html">
+    <meta property="og:url" content="https://vanengelandt.net/blog/beyond-performer-console.html">
+    <meta property="og:title" content="New in my kit: the BEYOND Performer Console | VanEngelandt.NET">
+    <meta property="og:description" content="I added Pangolin&#x27;s BEYOND Performer Console to my laser setup. A hands-on MIDI controller for BEYOND that I will use to run the lasers in my future shows.">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="VanEngelandt.NET">
+    <meta property="og:image" content="https://vanengelandt.net/images/og-image.jpg">
+    <script data-goatcounter="https://vanengelandt.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+    <link rel="preload" href="../fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="../css/site.css?v=f8088d54">
+    <style>
+        .page-hero { position: relative; overflow: hidden; padding: 170px 0 70px; border-bottom: 1px solid var(--line);
+            background: radial-gradient(ellipse 50% 80% at 85% 0%, rgba(201, 164, 92, .16), transparent 70%),
+                        radial-gradient(ellipse 40% 60% at 5% 100%, rgba(138, 106, 44, .14), transparent 70%), var(--black); }
+        .page-hero h1 { font-size: clamp(1.6rem, 5.6vw, 3.6rem); margin: 22px 0 26px; max-width: 1100px; }
+        .page-hero .lead { max-width: 780px; margin: 0 0 30px; }
+        .meta { color: var(--muted); font-size: .86rem; margin: 0 0 30px; }
+        .company { display: flex; flex-wrap: wrap; gap: 12px; }
+        .company div { padding: 12px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(201, 164, 92, .03); color: var(--ivory); font-size: .9rem; }
+        .company small { display: block; color: var(--gold); font-size: .64rem; letter-spacing: .24em; text-transform: uppercase; line-height: 1.6; }
+        .company a { color: var(--ivory); }
+        .post { padding-top: 56px; padding-bottom: 110px; color: var(--text); font-weight: 300; }
+        .post h2 { font-size: clamp(1.1rem, 2.6vw, 1.6rem); margin: 64px 0 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+        .post ul { padding-left: 20px; } .post li { margin: 6px 0; }
+        .post a { color: var(--gold-light); }
+        .post strong { color: var(--ivory); font-weight: 600; }
+        .post code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .86em; color: var(--gold-light);
+            background: rgba(201, 164, 92, .08); border: 1px solid var(--line); border-radius: 3px; padding: 1px 6px; white-space: nowrap; }
+        .table-wrap { overflow-x: auto; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); }
+        .post table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+        .post th { text-align: left; color: var(--gold); font-size: .66rem; letter-spacing: .22em; text-transform: uppercase; font-weight: 700; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+        .post td { padding: 10px 16px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+        .post tr:last-child td { border-bottom: 0; }
+        .post td:first-child { color: var(--ivory); width: 46%; }
+        @media (max-width: 640px) {
+            .post thead { display: none; }
+            .post table, .post tbody, .post tr, .post td { display: block; width: auto !important; }
+            .post tr { padding: 12px 16px; border-bottom: 1px solid var(--line-soft); }
+            .post td { padding: 0; border: 0; }
+            .post td + td { color: var(--muted); margin-top: 4px; }
+            .post code { white-space: normal; }
+        }
+        .post > h2:first-child { margin-top: 0; }
+        .post .post-list { list-style: none; padding: 0; display: grid; gap: 18px; }
+        .post-card { display: block; padding: 32px 30px; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); text-decoration: none; transition: border-color .2s; }
+        .post-card:hover { border-color: var(--gold); }
+        .post-card h2 { margin: 10px 0 12px; border: 0; padding: 0; }
+        .post-card p { margin: 0; color: var(--text); }
+        .nav .btn-line { padding: 12px 16px; }
+        .print-only { display: none; }
+        @media print {
+            @page { margin: 14mm; }
+            html, body { background: #fff !important; color: #000; }
+            .site-header, .site-footer .footer-links { display: none !important; }
+            .print-only { display: block; margin-bottom: 18px; }
+            .print-only img { height: 46px; width: auto; }
+            .page-hero { background: none; padding: 0 0 14px; }
+            h1, h2, .post td, .post td:first-child, .post li, .post p, .post strong, .company div, .company a, .lead, .meta { color: #000 !important; }
+            h1 em { -webkit-text-fill-color: #000; background: none; }
+            .company div, .table-wrap { background: none; border-color: #bbb; }
+            .company small, .post th { color: #7a5c22; }
+            .post code { color: #000; background: #f3eee2; border-color: #d8ccae; }
+            .post { padding: 0; } .post h2 { break-after: avoid; margin-top: 26px; }
+            .post tr { break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header solid">
+        <div class="container nav">
+            <a href="../index.html" class="brand-link" aria-label="VanEngelandt.NET">
+                <img src="../images/logo-mark.svg" alt="" width="42" height="42">
+                <img class="brand-word" src="../images/logo-wordmark.svg" alt="" width="898" height="102">
+            </a>
+            <div class="nav-right">
+                <a href="index.html" class="btn btn-line">Blog</a>
+                <a href="../index.html" class="btn btn-line">Website</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <div class="print-only"><img src="../brand/vanengelandt-logo-horizontal-light-bg.svg" alt="VanEngelandt.NET"></div>
+                <span class="eyebrow">Laser</span>
+                <h1>New in my kit: the BEYOND Performer Console</h1>
+                <p class="lead">My laser setup just got a proper hands-on controller: the <strong>BEYOND Performer Console</strong> from Pangolin Laser Systems. From now on it runs the lasers in my live shows.</p>
+                <p class="meta">16 October 2026 · Peter Van Engelandt</p>
+            </div>
+        </section>
+        <article class="container post">
+<h2>What it is</h2>
+<p>The Performer Console is a MIDI controller made for Pangolin's BEYOND laser software. It is laid out the way BEYOND already works, so the important functions sit under my fingers instead of behind a mouse.</p>
+<ul>
+<li><strong>Four control layers</strong>, so one surface covers far more than its size suggests.</li>
+<li><strong>Direct access to BEYOND plugins</strong>: colour picker, custom workspace, perfect delays, and zone flips and selections.</li>
+<li><strong>Ready to go</strong>: Pangolin supplies a setup file, a zone file and a MIDI map, and a free MIDI Mapping course to customise the layout with scripting.</li>
+<li><strong>Built for the road</strong>: it comes with a carrying case and a USB-C cable.</li>
+</ul>
+<h2>Why I chose it</h2>
+<p>Lasers are at their best when they are played, not just triggered. A mouse is fine for building content, but on show night I want to react to the music and the room: bring a beam in slowly, hold a symmetrical look, then hit hard on the drop.</p>
+<p>With a dedicated surface I can:</p>
+<ul>
+<li><strong>Busk live</strong> with the same feel as my lighting desk.</li>
+<li><strong>Control zones and colours instantly</strong>, without hunting through menus.</li>
+<li><strong>Keep the look tight and deliberate</strong>: slow, controlled movement, strong hits, clean symmetrical shapes in a dark room.</li>
+</ul>
+<h2>In my future shows</h2>
+<p>The BEYOND Performer Console is now part of my standard kit for laser design and operation at events. If you are planning a show with lasers, lighting and video from one designer, <a href="../index.html#contact">get in touch</a>.</p>
+<p>More details on the console: <a href="https://pangolin.com/products/beyond-performer-console">Pangolin – BEYOND Performer Console</a>.</p>
+            <h2>Published by</h2>
+            <div class="company">
+                    <div><small>Business</small>VanEngelandt.NET · VanEngelandt Event Services · PVE LightSync</div>
+                    <div><small>Owner</small>Peter Van Engelandt, lighting designer</div>
+                    <div><small>Address</small>Plaatsweg 17, 8560 Gullegem (Wevelgem), Belgium</div>
+                    <div><small>VAT number</small>BE0671.817.248</div>
+                    <div><small>Email</small><a href="mailto:info@vanengelandt.net">info@vanengelandt.net</a></div>
+                    <div><small>Web</small><a href="https://vanengelandt.net/">vanengelandt.net</a></div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <p>&copy; 2026 VanEngelandt.NET · Peter Van Engelandt · Plaatsweg 17, 8560 Gullegem (Wevelgem), Belgium · VAT BE0671.817.248 · <a href="mailto:info@vanengelandt.net">info@vanengelandt.net</a></p>
+            <div class="footer-links">
+                <a href="../index.html#services">Services</a>
+                <a href="../mirrorball.html">Shop</a>
+                <a href="index.html">Blog</a>
+                <a href="../index.html#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

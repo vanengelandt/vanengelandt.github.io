@@ -82,7 +82,8 @@ STYLE = '''
             .post td + td { color: var(--muted); margin-top: 4px; }
             .post code { white-space: normal; }
         }
-        .post-list { list-style: none; padding: 0; display: grid; gap: 18px; }
+        .post > h2:first-child { margin-top: 0; }
+        .post .post-list { list-style: none; padding: 0; display: grid; gap: 18px; }
         .post-card { display: block; padding: 32px 30px; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); text-decoration: none; transition: border-color .2s; }
         .post-card:hover { border-color: var(--gold); }
         .post-card h2 { margin: 10px 0 12px; border: 0; padding: 0; }
@@ -214,7 +215,7 @@ def index_page(posts):
 
 
 def main():
-    posts = sorted((read_post(f) for f in glob.glob('_build/posts/*.md')), key=lambda p: p['date'], reverse=True)
+    posts = sorted((read_post(f) for f in glob.glob('_build/posts/*.md')), key=lambda p: (p['date'], p.get('time', '')), reverse=True)
     os.makedirs('blog', exist_ok=True)
     for p in posts:
         open(f'blog/{p["slug"]}.html', 'w', encoding='utf-8').write(post_page(p))
