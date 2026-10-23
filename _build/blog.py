@@ -92,6 +92,8 @@ STYLE = '''
         .photo { margin: 40px 0; }
         .photo img { display: block; width: 100%; height: auto; border-radius: var(--radius); box-shadow: 0 0 0 1px var(--line), 0 50px 100px -40px rgba(201, 164, 92, .35); }
         .photo figcaption { margin-top: 12px; color: var(--muted); font-size: .84rem; }
+        .video { position: relative; aspect-ratio: 16 / 9; margin: 40px 0; border-radius: var(--radius); overflow: hidden; background: #000; box-shadow: 0 0 0 1px var(--line), 0 50px 100px -40px rgba(201, 164, 92, .35); }
+        .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
         .post .post-list { list-style: none; padding: 0; display: grid; gap: 18px; }
         .post-card { display: block; padding: 32px 30px; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--panel); text-decoration: none; transition: border-color .2s; }
         .post-card:hover { border-color: var(--gold); }
